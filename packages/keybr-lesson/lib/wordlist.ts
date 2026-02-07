@@ -10,7 +10,12 @@ import { Lesson } from "./lesson.ts";
 import { lessonProps } from "./settings.ts";
 import { Target } from "./target.ts";
 import { generateFragment } from "./text/fragment.ts";
-import { mangledWords, randomWords, uniqueWords } from "./text/words.ts";
+import {
+  endsWithSmallTsu,
+  mangledWords,
+  randomWords,
+  uniqueWords,
+} from "./text/words.ts";
 
 export class WordListLesson extends Lesson {
   readonly wordList: WordList;
@@ -24,8 +29,10 @@ export class WordListLesson extends Lesson {
     super(settings, keyboard, model);
     const wordListSize = settings.get(lessonProps.wordList.wordListSize);
     const longWordsOnly = settings.get(lessonProps.wordList.longWordsOnly);
+    const isJapanese = model.language.id === "ja";
     this.wordList = filterWordList(wordList, this.codePoints)
       .filter((word) => !longWordsOnly || word.length > 3)
+      .filter((word) => !isJapanese || !endsWithSmallTsu(word))
       .slice(0, wordListSize);
   }
 

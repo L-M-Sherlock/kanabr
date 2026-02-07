@@ -11,6 +11,7 @@ import { lessonProps } from "./settings.ts";
 import { Target } from "./target.ts";
 import { generateFragment } from "./text/fragment.ts";
 import {
+  endsWithSmallTsu,
   mangledWords,
   mixKanaScripts,
   phoneticWords,
@@ -32,11 +33,15 @@ export class GuidedLesson extends Lesson {
       model.language.id === "ja"
         ? new Set(model.letters.map(({ codePoint }) => codePoint))
         : this.codePoints;
-    this.dictionary = new Dictionary(
-      filterWordList(wordList, dictCodePoints).filter(
-        (word) => word.length > 2,
-      ),
+    let dictionaryWords = filterWordList(wordList, dictCodePoints).filter(
+      (word) => word.length > 2,
     );
+    if (model.language.id === "ja") {
+      dictionaryWords = dictionaryWords.filter(
+        (word) => !endsWithSmallTsu(word),
+      );
+    }
+    this.dictionary = new Dictionary(dictionaryWords);
   }
 
   override get letters() {
@@ -158,8 +163,7 @@ export class GuidedLesson extends Lesson {
       return [...letters].sort(
         (a, b) =>
           (order.get(a.codePoint) ?? unknown) -
-            (order.get(b.codePoint) ?? unknown) ||
-          a.codePoint - b.codePoint,
+            (order.get(b.codePoint) ?? unknown) || a.codePoint - b.codePoint,
       );
     }
 

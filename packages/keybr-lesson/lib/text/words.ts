@@ -14,7 +14,29 @@ export function phoneticWords(
   random: RNG,
 ): WordGenerator {
   return () => {
-    return model.nextWord(filter, random) || null;
+    if (model.language.id !== "ja") {
+      return model.nextWord(filter, random) || null;
+    }
+    let attempt = 0;
+    while (attempt < 10) {
+      const word = model.nextWord(filter, random);
+      if (word == null || word === "") {
+        return null;
+      }
+      if (!endsWithSmallTsu(word)) {
+        return word;
+      }
+      attempt++;
+    }
+    const word = model.nextWord(filter, random);
+    if (word == null || word === "") {
+      return null;
+    }
+    if (endsWithSmallTsu(word)) {
+      const trimmed = word.slice(0, -1);
+      return trimmed !== "" ? trimmed : null;
+    }
+    return word;
   };
 }
 
@@ -182,4 +204,12 @@ function toKatakana(text: string): string {
 function isHiraganaCodePoint(codePoint: number): boolean {
   // Basic Hiragana block. Katakana equivalents are at +0x60.
   return codePoint >= 0x3041 && codePoint <= 0x3096;
+}
+
+export function endsWithSmallTsu(word: string): boolean {
+  if (word === "") {
+    return false;
+  }
+  const last = [...word].at(-1);
+  return last === "っ" || last === "ッ";
 }

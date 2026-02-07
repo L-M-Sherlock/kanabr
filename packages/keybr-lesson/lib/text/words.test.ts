@@ -1,7 +1,12 @@
 import { test } from "node:test";
 import { FakeRNGStream } from "@keybr/rand";
 import { equal, isNull } from "rich-assert";
-import { randomWords, uniqueWords, wordSequence } from "./words.ts";
+import {
+  endsWithSmallTsu,
+  randomWords,
+  uniqueWords,
+  wordSequence,
+} from "./words.ts";
 
 test("random words", () => {
   const rng = FakeRNGStream(3);
@@ -44,4 +49,11 @@ test("unique words", () => {
   equal(words(), "c");
   equal(words(), "a");
   equal(words(), "b");
+});
+
+test("ends with small tsu", () => {
+  equal(endsWithSmallTsu("あっ"), true);
+  equal(endsWithSmallTsu("アッ"), true);
+  equal(endsWithSmallTsu("あ"), false);
+  equal(endsWithSmallTsu(""), false);
 });
