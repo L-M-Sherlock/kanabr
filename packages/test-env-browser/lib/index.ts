@@ -1,3 +1,4 @@
+import { after } from "node:test";
 import restrictedGlobals from "confusing-browser-globals";
 import {
   IDBCursor,
@@ -19,7 +20,14 @@ import { polyfillAnimationFrames } from "./fake-animation-frames.ts";
 import { FakeCanvasRenderingContext2D } from "./fake-canvas.ts";
 import { FakeResizeObserver } from "./fake-resize-observer.ts";
 
-install(create(), global);
+const jsdom = create();
+install(jsdom, global);
+
+// Ensure JSDOM resources (timers, event listeners) don't keep the test runner
+// alive after tests complete.
+after(() => {
+  jsdom.window.close();
+});
 
 function create(): JSDOM {
   const jsdom = new JSDOM(undefined, {

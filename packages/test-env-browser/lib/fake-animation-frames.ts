@@ -6,25 +6,26 @@ export function polyfillAnimationFrames(window: DOMWindow): void {
   window.requestAnimationFrame = (callback: FrameRequestCallback): number => {
     const callbackId = id++;
     callbacks.set(callbackId, callback);
-    setImmediate(() => {
-      const callback = callbacks.get(callbackId);
-      if (callback != null) {
-        callbacks.delete(callbackId);
-        callback(performance.now());
-      }
-    });
     return callbackId;
   };
   window.cancelAnimationFrame = (callbackId: number): void => {
     callbacks.delete(callbackId);
   };
   window.flushAnimationFrames = async (): Promise<void> => {
+    // Run queued frames synchronously. This avoids runaway animation loops
+    // keeping the event loop alive in tests.
+    let rounds = 0;
     while (callbacks.size > 0) {
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        });
-      });
+      if (rounds++ > 1000) {
+        throw new Error(`flushAnimationFrames exceeded 1000 rounds`);
+      }
+      const pending = [...callbacks.values()];
+      callbacks.clear();
+      for (const callback of pending) {
+        callback(performance.now());
+      }
+      // Allow effects/microtasks triggered by callbacks to settle.
+      await Promise.resolve();
     }
   };
 }
