@@ -9,6 +9,12 @@ export function ProgressOverviewSection({
 }: {
   keyStatsMap: KeyStatsMap;
 }) {
+  const minRowHeightRem = 1.2;
+  const minHeightRem = 35;
+  const heightRem = Math.max(
+    minHeightRem,
+    keyStatsMap.letters.length * minRowHeightRem,
+  );
   return (
     <Figure>
       <Figure.Caption>
@@ -31,7 +37,7 @@ export function ProgressOverviewSection({
         <ProgressOverviewChart
           keyStatsMap={keyStatsMap}
           width="100%"
-          height="35rem"
+          height={`${heightRem}rem`}
         />
       </ChartWrapper>
 
