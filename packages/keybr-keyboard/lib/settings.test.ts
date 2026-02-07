@@ -9,8 +9,8 @@ import { KeyboardOptions, keyboardProps } from "./settings.ts";
 test("use default settings", () => {
   const options = KeyboardOptions.default();
 
-  equal(options.language, Language.EN);
-  equal(options.layout, Layout.EN_US);
+  equal(options.language, Language.JA);
+  equal(options.layout, Layout.JA_ROMAJI);
   equal(options.geometry, Geometry.ANSI_101);
   equal(options.zones, ZoneMod.STANDARD);
 });
@@ -18,8 +18,8 @@ test("use default settings", () => {
 test("read default settings", () => {
   const options = KeyboardOptions.from(new Settings());
 
-  equal(options.language, Language.EN);
-  equal(options.layout, Layout.EN_US);
+  equal(options.language, Language.JA);
+  equal(options.layout, Layout.JA_ROMAJI);
   equal(options.geometry, Geometry.ANSI_101);
   equal(options.zones, ZoneMod.STANDARD);
 });
