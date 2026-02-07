@@ -13,7 +13,9 @@ function getPublicDir() {
 process.env.DATA_DIR ??= getDataDir();
 process.env.PUBLIC_DIR ??= getPublicDir();
 
-process.env.DATABASE_CLIENT ??= "mysql";
+// Default to SQLite for hermetic tests. Override with DATABASE_CLIENT=mysql to
+// run MySQL-backed integration tests.
+process.env.DATABASE_CLIENT ??= "sqlite";
 process.env.DATABASE_HOST ??= "127.0.0.1";
 process.env.DATABASE_PORT ??= "3306";
 process.env.DATABASE_DATABASE ??= "keybr_tests";
