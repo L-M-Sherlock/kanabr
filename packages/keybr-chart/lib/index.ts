@@ -3,6 +3,7 @@ export * from "./Chart.tsx";
 export * from "./dist/index.ts";
 export * from "./geometry.ts";
 export * from "./graph.ts";
+export * from "./KanaFrequencyHeatmap.tsx";
 export * from "./KeyDetailsChart.tsx";
 export * from "./KeyFrequencyHeatmap.tsx";
 export * from "./KeyFrequencyHistogram.tsx";

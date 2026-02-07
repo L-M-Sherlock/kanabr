@@ -11,6 +11,7 @@ import { DataScript } from "./profile/DataScript.tsx";
 import { ExplainProfile } from "./profile/ExplainProfile.tsx";
 import { FooterSection } from "./profile/FooterSection.tsx";
 import { HistogramsSection } from "./profile/HistogramsSection.tsx";
+import { KanaFrequencyHeatmapSection } from "./profile/KanaFrequencyHeatmapSection.tsx";
 import { KeyFrequencyHeatmapSection } from "./profile/KeyFrequencyHeatmapSection.tsx";
 import { KeyFrequencyHistogramSection } from "./profile/KeyFrequencyHistogramSection.tsx";
 import { KeySpeedChartSection } from "./profile/KeySpeedChartSection.tsx";
@@ -63,6 +64,8 @@ function Content({ keyStatsMap }: { keyStatsMap: KeyStatsMap }) {
       <KeyFrequencyHistogramSection keyStatsMap={keyStatsMap} />
 
       <KeyFrequencyHeatmapSection keyStatsMap={keyStatsMap} />
+
+      <KanaFrequencyHeatmapSection keyStatsMap={keyStatsMap} />
 
       <CalendarSection dailyStatsMap={dailyStatsMap} />
 

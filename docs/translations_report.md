@@ -1,6 +1,6 @@
 # English
 
-Translated: 348 messages, 4804 words
+Translated: 351 messages, 4824 words
 
 Untranslated: 0 messages, 0 words
 
@@ -8,7 +8,7 @@ Untranslated: 0 messages, 0 words
 
 Translated: 339 messages, 4744 words
 
-Untranslated: 9 messages, 60 words
+Untranslated: 12 messages, 80 words
 
 * *Letters*
 * *Volume:*
@@ -16,6 +16,9 @@ Untranslated: 9 messages, 60 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -24,12 +27,15 @@ Untranslated: 9 messages, 60 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -38,12 +44,15 @@ Untranslated: 7 messages, 58 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -52,12 +61,15 @@ Untranslated: 7 messages, 58 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -66,7 +78,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 310 messages, 3556 words
 
-Untranslated: 36 messages, 1226 words
+Untranslated: 39 messages, 1246 words
 
 * *Errors*
 * *Zones:*
@@ -78,23 +90,23 @@ Untranslated: 36 messages, 1226 words
 * *Repeat each word:*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
 * *The previous keys are also above the target speed*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Generate lessons that resemble the specified programming lan...*
 * *Practice punctuation characters that are specific to a progr...*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *This is a histogram of the accuracies of all users, and your...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Show color coding of the keyboard zones. Use this option to ...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* *Generate typing lessons from the text of a book. All keys ar...*
-* *Highlight a key that must to be pressed next. Use this optio...*
 * ...
 
 # Czech
 
 Translated: 336 messages, 4740 words
 
-Untranslated: 12 messages, 64 words
+Untranslated: 15 messages, 84 words
 
 * *Font:*
 * *Reset*
@@ -105,6 +117,9 @@ Untranslated: 12 messages, 64 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -113,7 +128,7 @@ Untranslated: 12 messages, 64 words
 
 Translated: 331 messages, 4689 words
 
-Untranslated: 15 messages, 93 words
+Untranslated: 18 messages, 113 words
 
 * *Score*
 * *Layout*
@@ -126,6 +141,9 @@ Untranslated: 15 messages, 93 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -135,7 +153,7 @@ Untranslated: 15 messages, 93 words
 
 Translated: 339 messages, 4744 words
 
-Untranslated: 9 messages, 60 words
+Untranslated: 12 messages, 80 words
 
 * *Position*
 * *Alphabet:*
@@ -143,6 +161,9 @@ Untranslated: 9 messages, 60 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -151,12 +172,15 @@ Untranslated: 9 messages, 60 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -165,7 +189,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 77 messages, 1126 words
 
-Untranslated: 264 messages, 3620 words
+Untranslated: 267 messages, 3640 words
 
 * *GO!*
 * *Copy*
@@ -193,12 +217,15 @@ Untranslated: 264 messages, 3620 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -207,7 +234,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 338 messages, 4743 words
 
-Untranslated: 10 messages, 61 words
+Untranslated: 13 messages, 81 words
 
 * *GO!*
 * *Font:*
@@ -216,6 +243,9 @@ Untranslated: 10 messages, 61 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -224,7 +254,7 @@ Untranslated: 10 messages, 61 words
 
 Translated: 287 messages, 2823 words
 
-Untranslated: 59 messages, 1959 words
+Untranslated: 62 messages, 1979 words
 
 * *Books*
 * *Zones:*
@@ -240,19 +270,19 @@ Untranslated: 59 messages, 1959 words
 * *Repeat each word:*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
 * *Keyboard hardware emulates layout*
 * *Switch the current interface layout.*
 * *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Generate lessons that resemble the specified programming lan...*
-* *Practice punctuation characters that are specific to a progr...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * ...
 
 # Finnish
 
 Translated: 208 messages, 2284 words
 
-Untranslated: 134 messages, 2464 words
+Untranslated: 137 messages, 2484 words
 
 * *GO!*
 * *Time*
@@ -280,7 +310,7 @@ Untranslated: 134 messages, 2464 words
 
 Translated: 44 messages, 583 words
 
-Untranslated: 296 messages, 4152 words
+Untranslated: 299 messages, 4172 words
 
 * *GO!*
 * *Copy*
@@ -308,7 +338,7 @@ Untranslated: 296 messages, 4152 words
 
 Translated: 333 messages, 4544 words
 
-Untranslated: 15 messages, 260 words
+Untranslated: 18 messages, 280 words
 
 * *Zones:*
 * *Options*
@@ -319,6 +349,9 @@ Untranslated: 15 messages, 260 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -330,7 +363,7 @@ Untranslated: 15 messages, 260 words
 
 Translated: 337 messages, 4735 words
 
-Untranslated: 11 messages, 69 words
+Untranslated: 14 messages, 89 words
 
 * *Zones:*
 * *Smoothness:*
@@ -340,6 +373,9 @@ Untranslated: 11 messages, 69 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -348,12 +384,15 @@ Untranslated: 11 messages, 69 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -362,7 +401,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 337 messages, 4740 words
 
-Untranslated: 11 messages, 64 words
+Untranslated: 14 messages, 84 words
 
 * *Font:*
 * *Reset*
@@ -371,7 +410,10 @@ Untranslated: 11 messages, 64 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
 * *Premium account price:*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -380,12 +422,15 @@ Untranslated: 11 messages, 64 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -394,7 +439,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 339 messages, 4744 words
 
-Untranslated: 9 messages, 60 words
+Untranslated: 12 messages, 80 words
 
 * *GO!*
 * *Volume:*
@@ -402,6 +447,9 @@ Untranslated: 9 messages, 60 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -410,7 +458,7 @@ Untranslated: 9 messages, 60 words
 
 Translated: 95 messages, 1742 words
 
-Untranslated: 246 messages, 3004 words
+Untranslated: 249 messages, 3024 words
 
 * *GO!*
 * *Copy*
@@ -438,7 +486,7 @@ Untranslated: 246 messages, 3004 words
 
 Translated: 334 messages, 4738 words
 
-Untranslated: 13 messages, 64 words
+Untranslated: 16 messages, 84 words
 
 * *Font:*
 * *Layout*
@@ -450,6 +498,9 @@ Untranslated: 13 messages, 64 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -458,12 +509,15 @@ Untranslated: 13 messages, 64 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -472,7 +526,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 145 messages, 1297 words
 
-Untranslated: 201 messages, 3485 words
+Untranslated: 204 messages, 3505 words
 
 * *Copy*
 * *Done*
@@ -500,7 +554,7 @@ Untranslated: 201 messages, 3485 words
 
 Translated: 298 messages, 3096 words
 
-Untranslated: 47 messages, 1677 words
+Untranslated: 50 messages, 1697 words
 
 * *Katakana ratio:*
 * *Key sounds only*
@@ -509,26 +563,26 @@ Untranslated: 47 messages, 1677 words
 * *Show romaji helper*
 * *No accuracy streaks.*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
 * *Practice numbers only.*
 * *The difference from the average value.*
 * *Sort letters in the order of keyboard keys*
 * *Download all your typing data in JSON format.*
 * *Help us translate keybr.com into your language.*
 * *The detailed statistics regarding your learning progress.*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Permanently delete all of your typing data and reset statist...*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *This is a histogram of the accuracies of all users, and your...*
 * *Adjust the number of words in the lesson text. Making lesson...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Show color coding of the keyboard zones. Use this option to ...*
-* *Make unlocked kana appear regularly even when the current fo...*
 * ...
 
 # Mongolian
 
 Translated: 16 messages, 378 words
 
-Untranslated: 322 messages, 4328 words
+Untranslated: 325 messages, 4348 words
 
 * *GO!*
 * *Copy*
@@ -556,7 +610,7 @@ Untranslated: 322 messages, 4328 words
 
 Translated: 158 messages, 2338 words
 
-Untranslated: 184 messages, 2411 words
+Untranslated: 187 messages, 2431 words
 
 * *Done*
 * *Help*
@@ -584,12 +638,15 @@ Untranslated: 184 messages, 2411 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -598,7 +655,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 333 messages, 4736 words
 
-Untranslated: 14 messages, 66 words
+Untranslated: 17 messages, 86 words
 
 * *Score*
 * *Zones:*
@@ -611,6 +668,9 @@ Untranslated: 14 messages, 66 words
 * *Premium account*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -619,12 +679,15 @@ Untranslated: 14 messages, 66 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -633,7 +696,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 338 messages, 4743 words
 
-Untranslated: 10 messages, 61 words
+Untranslated: 13 messages, 81 words
 
 * *Layout*
 * *Layout:*
@@ -642,6 +705,9 @@ Untranslated: 10 messages, 61 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -650,7 +716,7 @@ Untranslated: 10 messages, 61 words
 
 Translated: 318 messages, 4597 words
 
-Untranslated: 28 messages, 185 words
+Untranslated: 31 messages, 205 words
 
 * *Books*
 * *Layout*
@@ -678,7 +744,7 @@ Untranslated: 28 messages, 185 words
 
 Translated: 298 messages, 3587 words
 
-Untranslated: 43 messages, 1173 words
+Untranslated: 46 messages, 1193 words
 
 * *Font:*
 * *Layout*
@@ -699,19 +765,22 @@ Untranslated: 43 messages, 1173 words
 * *Show romaji helper*
 * *Start in {countDown}*
 * *Balance kana frequency*
-* *Premium account price:*
+* *Kana Frequency Heatmap*
 * ...
 
 # Russian
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -720,13 +789,16 @@ Untranslated: 7 messages, 58 words
 
 Translated: 340 messages, 4745 words
 
-Untranslated: 8 messages, 59 words
+Untranslated: 11 messages, 79 words
 
 * *Syntax:*
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -735,7 +807,7 @@ Untranslated: 8 messages, 59 words
 
 Translated: 192 messages, 3519 words
 
-Untranslated: 155 messages, 1283 words
+Untranslated: 158 messages, 1303 words
 
 * *Copy*
 * *Done*
@@ -763,7 +835,7 @@ Untranslated: 155 messages, 1283 words
 
 Translated: 43 messages, 684 words
 
-Untranslated: 297 messages, 4051 words
+Untranslated: 300 messages, 4071 words
 
 * *GO!*
 * *Copy*
@@ -791,7 +863,7 @@ Untranslated: 297 messages, 4051 words
 
 Translated: 338 messages, 4743 words
 
-Untranslated: 10 messages, 61 words
+Untranslated: 13 messages, 81 words
 
 * *Layout*
 * *Layout:*
@@ -800,6 +872,9 @@ Untranslated: 10 messages, 61 words
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -808,7 +883,7 @@ Untranslated: 10 messages, 61 words
 
 Translated: 329 messages, 4635 words
 
-Untranslated: 17 messages, 147 words
+Untranslated: 20 messages, 167 words
 
 * *Zones:*
 * *Sound theme:*
@@ -820,7 +895,10 @@ Untranslated: 17 messages, 147 words
 * *Repeat each word:*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
 * *Premium account price:*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *This is a histogram of the accuracies of all users, and your...*
 * *Show a helper bar with your current romaji composition and s...*
@@ -832,7 +910,7 @@ Untranslated: 17 messages, 147 words
 
 Translated: 227 messages, 2126 words
 
-Untranslated: 116 messages, 2623 words
+Untranslated: 119 messages, 2643 words
 
 * *Books*
 * *Font:*
@@ -860,12 +938,15 @@ Untranslated: 116 messages, 2623 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -874,7 +955,7 @@ Untranslated: 7 messages, 58 words
 
 Translated: 275 messages, 2745 words
 
-Untranslated: 70 messages, 2028 words
+Untranslated: 73 messages, 2048 words
 
 * *Visit*
 * *Typing*
@@ -895,20 +976,23 @@ Untranslated: 70 messages, 2028 words
 * *Repeat each word:*
 * *Show romaji helper*
 * *Balance kana frequency*
-* *Premium account price:*
+* *Kana Frequency Heatmap*
 * ...
 
 # Simplified Chinese
 
 Translated: 340 messages, 4739 words
 
-Untranslated: 8 messages, 65 words
+Untranslated: 11 messages, 85 words
 
 * *M|T|W|T|F|S|S*
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -917,12 +1001,15 @@ Untranslated: 8 messages, 65 words
 
 Translated: 341 messages, 4746 words
 
-Untranslated: 7 messages, 58 words
+Untranslated: 10 messages, 78 words
 
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
@@ -931,13 +1018,16 @@ Untranslated: 7 messages, 58 words
 
 Translated: 340 messages, 4745 words
 
-Untranslated: 8 messages, 59 words
+Untranslated: 11 messages, 79 words
 
 * *GO!*
 * *Katakana ratio:*
 * *Key sounds only*
 * *Show romaji helper*
 * *Balance kana frequency*
+* *Kana Frequency Heatmap*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *This chart shows relative kana frequencies in gojuon order.*
 * *Mix katakana into guided lessons for Japanese. A higher valu...*
 * *Show a helper bar with your current romaji composition and s...*
 * *Make unlocked kana appear regularly even when the current fo...*
