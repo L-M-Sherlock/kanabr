@@ -9,6 +9,12 @@ export function KeySpeedHistogramSection({
 }: {
   keyStatsMap: KeyStatsMap;
 }) {
+  const minWidthRem = 45;
+  const perKeyRem = 1.4;
+  const widthRem = Math.max(
+    minWidthRem,
+    keyStatsMap.letters.length * perKeyRem,
+  );
   return (
     <Figure>
       <Figure.Caption>
@@ -27,10 +33,10 @@ export function KeySpeedHistogramSection({
         </Figure.Description>
       </Explainer>
 
-      <ChartWrapper>
+      <ChartWrapper scrollX={true}>
         <KeySpeedHistogram
           keyStatsMap={keyStatsMap}
-          width="100%"
+          width={`${widthRem}rem`}
           height="18rem"
         />
       </ChartWrapper>
