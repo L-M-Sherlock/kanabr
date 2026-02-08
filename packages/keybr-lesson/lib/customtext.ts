@@ -28,7 +28,9 @@ export class CustomTextLesson extends Lesson {
   }
 
   override generate(lessonKeys: LessonKeys, rng: RNGStream) {
-    return generateFragment(this.settings, this.#makeWordGenerator(rng));
+    return generateFragment(this.settings, this.#makeWordGenerator(rng), {
+      baseLength: this.model.language.id === "ja" ? 50 : 100,
+    });
   }
 
   #makeWordGenerator(rng: RNGStream) {

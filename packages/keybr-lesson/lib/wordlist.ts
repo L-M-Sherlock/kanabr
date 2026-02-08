@@ -58,6 +58,7 @@ export class WordListLesson extends Lesson {
     );
     return generateFragment(this.settings, words, {
       repeatWords: this.settings.get(lessonProps.repeatWords),
+      baseLength: this.model.language.id === "ja" ? 50 : 100,
     });
   }
 }

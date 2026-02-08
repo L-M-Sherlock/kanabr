@@ -5,9 +5,13 @@ import { type WordGenerator } from "./words.ts";
 export function generateFragment(
   settings: Settings,
   nextWord: WordGenerator,
-  { repeatWords = 1 }: { readonly repeatWords?: number } = {},
+  {
+    repeatWords = 1,
+    baseLength = 100,
+  }: { readonly repeatWords?: number; readonly baseLength?: number } = {},
 ): string {
-  const length = 50 + Math.round(settings.get(lessonProps.length) * 100);
+  const length =
+    baseLength + Math.round(settings.get(lessonProps.length) * 100);
   const words: string[] = [];
   let wordsLength = 0;
   while (true) {

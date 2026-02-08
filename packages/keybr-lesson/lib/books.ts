@@ -54,7 +54,9 @@ export class BooksLesson extends Lesson {
   }
 
   override generate() {
-    return generateFragment(this.settings, wordSequence(this.wordList, this));
+    return generateFragment(this.settings, wordSequence(this.wordList, this), {
+      baseLength: this.model.language.id === "ja" ? 50 : 100,
+    });
   }
 
   #flattenContent(content: Content) {
