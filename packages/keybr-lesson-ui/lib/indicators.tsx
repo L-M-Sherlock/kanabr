@@ -63,14 +63,16 @@ export const KeySetRow = memo(function KeySetRow({
           defaultMessage: "All keys",
         })}
       />
-      <KeySet
-        id={names?.keySet}
-        className={styles.value}
-        lessonKeys={lessonKeys}
-        onKeyHoverIn={onKeyHoverIn}
-        onKeyHoverOut={onKeyHoverOut}
-        onKeyClick={onKeyClick}
-      />
+      <div className={styles.value}>
+        <KeySet
+          id={names?.keySet}
+          className={styles.keySet}
+          lessonKeys={lessonKeys}
+          onKeyHoverIn={onKeyHoverIn}
+          onKeyHoverOut={onKeyHoverOut}
+          onKeyClick={onKeyClick}
+        />
+      </div>
     </div>
   );
 });

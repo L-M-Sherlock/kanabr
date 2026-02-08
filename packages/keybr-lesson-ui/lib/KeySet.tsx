@@ -34,9 +34,15 @@ export const KeySet = ({
         relayEvent(ref.current!, event, onKeyClick);
       }}
     >
-      {[...lessonKeys].map((lessonKey) => (
-        <Key key={lessonKey.letter.codePoint} lessonKey={lessonKey} />
-      ))}
+      {[...lessonKeys].flatMap((lessonKey, index, array) => {
+        const nodes = [
+          <Key key={lessonKey.letter.codePoint} lessonKey={lessonKey} />,
+        ];
+        if ((index + 1) % 20 === 0 && index < array.length - 1) {
+          nodes.push(<br key={`break-${index}`} />);
+        }
+        return nodes;
+      })}
     </span>
   );
 };
