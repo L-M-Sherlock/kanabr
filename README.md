@@ -118,6 +118,11 @@ npm run test
 - Bugs / features: issues and PRs are welcome
 - Translations: see `docs/translations.md`
 
+## Acknowledgements
+
+kanabr is based on the original keybr.com project by aradzie:
+`https://github.com/aradzie/keybr.com`.
+
 ## License
 
 Released under the GNU Affero General Public License v3.0.
