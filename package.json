@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "keybr.com",
+  "description": "Adaptive Japanese kana typing practice (hiragana + katakana) with romaji input.",
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://www.keybr.com",
