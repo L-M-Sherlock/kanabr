@@ -10,7 +10,11 @@ import {
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export function KeyboardOrderProp(): ReactNode {
+export function KeyboardOrderProp({
+  disabled = false,
+}: {
+  readonly disabled?: boolean;
+} = {}): ReactNode {
   const { formatMessage } = useIntl();
   const { settings, updateSettings } = useSettings();
   return (
@@ -22,6 +26,7 @@ export function KeyboardOrderProp(): ReactNode {
               id: "setting.keyboardOrder.label",
               defaultMessage: "Sort letters in the order of keyboard keys",
             })}
+            disabled={disabled}
             checked={settings.get(lessonProps.guided.keyboardOrder)}
             onChange={(value) => {
               updateSettings(

@@ -9,6 +9,7 @@ export type TabListProps = {
 
 export type TabProps = {
   readonly children?: ReactNode;
+  readonly disabled?: boolean;
   readonly label: ReactNode;
   readonly title?: string;
 };

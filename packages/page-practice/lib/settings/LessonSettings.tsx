@@ -1,3 +1,4 @@
+import { useKeyboard } from "@keybr/keyboard";
 import {
   type BooksLesson,
   type CodeLesson,
@@ -12,7 +13,7 @@ import {
 import { LessonLoader } from "@keybr/lesson-loader";
 import { type Settings, useSettings } from "@keybr/settings";
 import { Tab, TabList } from "@keybr/widget";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { BooksLessonSettings } from "./lesson/BooksLessonSettings.tsx";
 import { CodeLessonSettings } from "./lesson/CodeLessonSettings.tsx";
@@ -26,14 +27,37 @@ import { WordListLessonSettings } from "./lesson/WordListLessonSettings.tsx";
 export function LessonSettings(): ReactNode {
   const { formatMessage } = useIntl();
   const { settings, updateSettings } = useSettings();
+  const keyboard = useKeyboard();
+  const isJaRomaji = keyboard.layout.id === "ja-romaji";
+  const lessonType = settings.get(lessonProps.type);
+  const lessonTypeDisabled =
+    isJaRomaji &&
+    (lessonType === LessonType.WORDLIST ||
+      lessonType === LessonType.BOOKS ||
+      lessonType === LessonType.CUSTOM ||
+      lessonType === LessonType.CODE);
+  const isLessonTypeDisabled = (type: LessonType): boolean =>
+    isJaRomaji &&
+    (type === LessonType.WORDLIST ||
+      type === LessonType.BOOKS ||
+      type === LessonType.CUSTOM ||
+      type === LessonType.CODE);
+
+  useEffect(() => {
+    if (lessonTypeDisabled) {
+      updateSettings(settings.set(lessonProps.type, LessonType.GUIDED));
+    }
+  }, [lessonTypeDisabled, settings, updateSettings]);
+
   return (
     <>
       <TabList
-        selectedIndex={LessonType.ALL.indexOf(settings.get(lessonProps.type))}
+        selectedIndex={LessonType.ALL.indexOf(lessonType)}
         onSelect={(index) => {
-          updateSettings(
-            settings.set(lessonProps.type, LessonType.ALL.at(index)),
-          );
+          const next = LessonType.ALL.at(index);
+          if (!isLessonTypeDisabled(next)) {
+            updateSettings(settings.set(lessonProps.type, next));
+          }
         }}
       >
         <Tab
@@ -47,24 +71,28 @@ export function LessonSettings(): ReactNode {
             id: "t_Common_words",
             defaultMessage: "Common words",
           })}
+          disabled={isLessonTypeDisabled(LessonType.WORDLIST)}
         />
         <Tab
           label={formatMessage({
             id: "t_Books",
             defaultMessage: "Books",
           })}
+          disabled={isLessonTypeDisabled(LessonType.BOOKS)}
         />
         <Tab
           label={formatMessage({
             id: "t_Custom_text",
             defaultMessage: "Custom text",
           })}
+          disabled={isLessonTypeDisabled(LessonType.CUSTOM)}
         />
         <Tab
           label={formatMessage({
             id: "t_Source_code",
             defaultMessage: "Source code",
           })}
+          disabled={isLessonTypeDisabled(LessonType.CODE)}
         />
         <Tab
           label={formatMessage({

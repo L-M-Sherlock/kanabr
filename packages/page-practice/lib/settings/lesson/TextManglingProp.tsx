@@ -1,4 +1,5 @@
 import { useIntlNumbers } from "@keybr/intl";
+import { useKeyboard } from "@keybr/keyboard";
 import { lessonProps } from "@keybr/lesson";
 import { useSettings } from "@keybr/settings";
 import {
@@ -15,6 +16,8 @@ import { FormattedMessage } from "react-intl";
 export function TextManglingProp(): ReactNode {
   const { formatPercents } = useIntlNumbers();
   const { settings, updateSettings } = useSettings();
+  const keyboard = useKeyboard();
+  const isJaRomaji = keyboard.layout.id === "ja-romaji";
   return (
     <>
       <FieldList>
@@ -30,6 +33,7 @@ export function TextManglingProp(): ReactNode {
             min={0}
             max={100}
             step={1}
+            disabled={isJaRomaji}
             value={Math.round(settings.get(lessonProps.capitals) * 100)}
             onChange={(value) => {
               updateSettings(settings.set(lessonProps.capitals, value / 100));

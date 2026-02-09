@@ -15,21 +15,40 @@ export function TabList({
   const [focused, setFocused] = useState(false);
   const tabs = Children.toArray(children) as ReactElement<TabProps>[];
   const selectedTab = tabs[selectedIndex];
-  const select = (selectedIndex: number): void => {
-    if (!disabled && onSelect != null) {
-      if (selectedIndex < 0) {
-        selectedIndex = tabs.length - 1;
-      } else if (selectedIndex >= tabs.length) {
-        selectedIndex = 0;
+
+  const isTabDisabled = (index: number): boolean => {
+    const tab = tabs[index];
+    return disabled || tab == null || tab.props.disabled === true;
+  };
+
+  const findEnabled = (
+    startIndex: number,
+    direction: -1 | 1,
+  ): number | null => {
+    const { length } = tabs;
+    if (length === 0) {
+      return null;
+    }
+    for (let i = 0; i < length; i++) {
+      const index = (startIndex + direction * (i + 1) + length) % length;
+      if (!isTabDisabled(index)) {
+        return index;
       }
-      onSelect(selectedIndex);
+    }
+    return null;
+  };
+
+  const selectPrev = () => {
+    const index = findEnabled(selectedIndex, -1);
+    if (index != null && onSelect != null) {
+      onSelect(index);
     }
   };
-  const selectPrev = () => {
-    select(selectedIndex - 1);
-  };
   const selectNext = () => {
-    select(selectedIndex + 1);
+    const index = findEnabled(selectedIndex, 1);
+    if (index != null && onSelect != null) {
+      onSelect(index);
+    }
   };
   const hotkeys = useHotkeysHandler({
     ["ArrowLeft"]: selectPrev,
@@ -46,6 +65,7 @@ export function TabList({
   );
   tabs.forEach((tab, index) => {
     const selected = tab === selectedTab;
+    const itemDisabled = isTabDisabled(index);
     if (index > 0) {
       items.push(
         <span
@@ -58,16 +78,17 @@ export function TabList({
       <span
         key={`item-${index}`}
         ref={(element) => {
-          if (focused && selected) {
+          if (!itemDisabled && focused && selected) {
             element?.focus();
           }
         }}
         className={clsx(
           styles.item,
           selected ? styles.item_active : styles.item_inactive,
-          disabled && styles.disabled,
+          itemDisabled && styles.disabled,
+          itemDisabled && styles.item_disabled,
         )}
-        tabIndex={!disabled && selected ? 0 : undefined}
+        tabIndex={!itemDisabled && selected ? 0 : undefined}
         title={tab.props.title}
         onFocus={(event) => {
           setFocused(true);
@@ -83,10 +104,12 @@ export function TabList({
         }}
         onClick={(event) => {
           event.preventDefault();
-          select(index);
-          setFocused(true);
+          if (!itemDisabled && onSelect != null) {
+            onSelect(index);
+            setFocused(true);
+          }
         }}
-        onKeyDown={hotkeys}
+        onKeyDown={!itemDisabled ? hotkeys : undefined}
       >
         {tab.props.label}
       </span>,
