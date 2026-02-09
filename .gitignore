@@ -15,6 +15,7 @@ build/
 out/
 tmp/
 sandbox/
+vercel-dist/
 .vscode/
 .idea/
 *.tsbuildinfo

@@ -2,12 +2,17 @@ import { ProfilePage, PublicProfilePage } from "@keybr/page-profile";
 import { PublicResultLoader, ResultLoader } from "@keybr/result-loader";
 import { useParams } from "react-router";
 import { ProfileLoader } from "../loader/ProfileLoader.tsx";
+import { KEYBR_STATIC } from "../static.ts";
+import { StaticNotice } from "../StaticNotice.tsx";
 
 export default function Page() {
   const { userId = "me" } = useParams();
   if (userId === "me") {
     return <Profile />;
   } else {
+    if (KEYBR_STATIC) {
+      return <StaticNotice feature="Public profiles" />;
+    }
     return <PublicProfile userId={userId} />;
   }
 }

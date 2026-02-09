@@ -150,6 +150,9 @@ export default [
     plugins: [
       new webpack.DefinePlugin({
         ...ENV,
+        "process.env.KEYBR_STATIC": JSON.stringify(
+          process.env.KEYBR_STATIC ?? "",
+        ),
         "typeof window": JSON.stringify("undefined"),
       }),
       new MiniCssExtractPlugin(),
@@ -215,6 +218,9 @@ export default [
     plugins: [
       new webpack.DefinePlugin({
         ...ENV,
+        "process.env.KEYBR_STATIC": JSON.stringify(
+          process.env.KEYBR_STATIC ?? "",
+        ),
         "typeof window": JSON.stringify("object"),
       }),
       new MiniCssExtractPlugin({

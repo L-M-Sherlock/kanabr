@@ -11,6 +11,7 @@ import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 import { NavLink } from "react-router";
 import * as styles from "./NavMenu.module.less";
+import { KEYBR_STATIC } from "./static.ts";
 import { SubMenu } from "./SubMenu.tsx";
 import { ThemeSwitcher } from "./themes/ThemeSwitcher.tsx";
 
@@ -38,13 +39,17 @@ export function NavMenu({ currentPath }: { readonly currentPath: string }) {
         <MenuItemLink page={Pages.help} />
       </MenuItem>
 
-      <MenuItem>
-        <MenuItemLink page={Pages.highScores} />
-      </MenuItem>
+      {KEYBR_STATIC || (
+        <MenuItem>
+          <MenuItemLink page={Pages.highScores} />
+        </MenuItem>
+      )}
 
-      <MenuItem>
-        <MenuItemLink page={Pages.multiplayer} />
-      </MenuItem>
+      {KEYBR_STATIC || (
+        <MenuItem>
+          <MenuItemLink page={Pages.multiplayer} />
+        </MenuItem>
+      )}
 
       <MenuItem>
         <MenuItemLink page={Pages.typingTest} />
@@ -67,21 +72,27 @@ function MenuItem({ children }: { readonly children: ReactNode }) {
 
 function AccountLink({ user }: { readonly user: AnyUser }) {
   const { formatMessage } = useIntl();
+  const path = KEYBR_STATIC ? Pages.profile.path : Pages.account.path;
   return (
     <NavLink
       className={({ isActive }) =>
         clsx(styles.accountLink, isActive && styles.isActive)
       }
-      to={Pages.account.path}
+      to={path}
     >
       <Avatar user={user.id != null ? user : null} size="large" />
       <span className={styles.userName}>
         {user.id != null
           ? user.name
-          : formatMessage({
-              id: "t_Sing_In",
-              defaultMessage: "Sign-In",
-            })}
+          : KEYBR_STATIC
+            ? formatMessage({
+                id: "static.menu.localData",
+                defaultMessage: "Local data",
+              })
+            : formatMessage({
+                id: "t_Sing_In",
+                defaultMessage: "Sign-In",
+              })}
       </span>
     </NavLink>
   );

@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://www.keybr.com",
+  "engines": {
+    "node": ">=22"
+  },
   "license": "GPL-3",
   "author": "Aliaksandr Radzivanovich <aradzivanovich@gmail.com>",
   "repository": {
@@ -15,7 +18,7 @@
     "scripts"
   ],
   "scripts": {
-    "postinstall": "husky && patch-package",
+    "postinstall": "(husky || true) && patch-package",
     "config-lint": "node scripts/config-lint.js",
     "translate": "node scripts/translate.js",
     "clean": "lage clean --no-cache",
@@ -27,6 +30,7 @@
     "stylelint-fix": "stylelint '{**/*,*}.{less,css}' --fix",
     "format": "prettier '{**/*,*}.{js,ts,tsx,less,css}' --write",
     "build": "env NODE_ENV=production webpack",
+    "build-vercel": "env NODE_ENV=production KEYBR_STATIC=1 webpack && node --import @keybr/tsl scripts/build-vercel-static.ts",
     "build-dev": "env NODE_ENV=development webpack",
     "watch": "env NODE_ENV=development webpack --watch",
     "start": "env NODE_ENV=development node --enable-source-maps ./root/index.js",

@@ -70,6 +70,30 @@ Open `http://localhost:3000/` in a browser.
 npm run test
 ```
 
+### Deploy to Vercel (static mode)
+
+This repo can be built as a static SPA for Vercel (no server, no cloud DB).
+In this mode, user progress is stored locally in the browser (IndexedDB /
+localStorage), similar to `qwerty-learner`.
+
+Limitations in static mode:
+- No account/login
+- No public profiles
+- No high scores
+- No multiplayer
+
+In static mode, go to **Profile** to export/import your local data.
+
+Build output goes to `vercel-dist/`:
+
+```bash
+npm run build-vercel
+```
+
+Optional build-time env vars:
+- `KEYBR_BASE_URL` (default: `http://localhost:3000/`)
+- `KEYBR_LOCALE` (default: `en`)
+
 ## Can I contribute?
 
 Yes!

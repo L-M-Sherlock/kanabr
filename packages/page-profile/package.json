@@ -16,7 +16,10 @@
     "@keybr/phonetic-model": "*",
     "@keybr/phonetic-model-loader": "*",
     "@keybr/result": "*",
+    "@keybr/result-io": "*",
+    "@keybr/result-loader": "*",
     "@keybr/settings": "*",
+    "@keybr/themes": "*",
     "@keybr/widget": "*"
   },
   "devDependencies": {},
