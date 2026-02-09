@@ -1210,31 +1210,9 @@ Untranslated: 84 messages, 2132 words
 
 # Simplified Chinese
 
-Translated: 340 messages, 4739 words
+Translated: 363 messages, 4921 words
 
-Untranslated: 22 messages, 169 words
-
-* *Local data*
-* *Export data*
-* *Import data*
-* *M|T|W|T|F|S|S*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* ...
+Untranslated: 0 messages, 0 words
 
 # Traditional Chinese
 
