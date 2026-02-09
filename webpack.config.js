@@ -153,6 +153,9 @@ export default [
         "process.env.KEYBR_STATIC": JSON.stringify(
           process.env.KEYBR_STATIC ?? "",
         ),
+        "process.env.KEYBR_DEFAULT_LAYOUT_FROM_LOCALE": JSON.stringify(
+          process.env.KEYBR_DEFAULT_LAYOUT_FROM_LOCALE ?? "",
+        ),
         "typeof window": JSON.stringify("undefined"),
       }),
       new MiniCssExtractPlugin(),
@@ -220,6 +223,9 @@ export default [
         ...ENV,
         "process.env.KEYBR_STATIC": JSON.stringify(
           process.env.KEYBR_STATIC ?? "",
+        ),
+        "process.env.KEYBR_DEFAULT_LAYOUT_FROM_LOCALE": JSON.stringify(
+          process.env.KEYBR_DEFAULT_LAYOUT_FROM_LOCALE ?? "",
         ),
         "typeof window": JSON.stringify("object"),
       }),
