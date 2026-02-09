@@ -1,58 +1,70 @@
-[![CI](https://github.com/aradzie/keybr.com/actions/workflows/ci.yml/badge.svg)](https://github.com/aradzie/keybr.com/actions/workflows/ci.yml)
-
-# [keybr.com](https://www.keybr.com/) is not (just) a typing test
+# kanabr（静态优先）
 
 <p align="center">
     <img src="assets/screenshot.png" alt="screenshot" width="600"/>
 </p>
 
-It's the smartest way to learn touch typing and improve your typing speed.
-On the surface, it looks pretty simple: it shows you a piece of text, and you type it out.
-But the devil is in the details — keybr.com offers a few unique features:
-
-* keybr.com tracks every single keystroke and computes statistics for each individual key.
-* It automatically generates lessons that focus on your weakest keys.
-* You can set your own target typing speed, and it tracks your progress toward that goal.
-* It starts with a small set of the most frequent letters in your language.
-* More letters are added once you reach the target speed with the current ones.
-* It can even predict how many more lessons you will need to complete to reach your target speed.
-* It provides a beautiful profile page with detailed graphs showing your learning progress.
-* It offers plenty of modes and configuration options.
+kanabr 是一个以 **日语假名（ひらがな / カタカナ）** 练习为中心的打字学习应用，
+保留了 keybr 的自适应课程引擎：跟踪每个按键的统计、自动生成更针对薄弱按键的练习内容、
+并用图表展示长期进步。
 
 <p align="center">
     <img src="docs/assets/graph.png" alt="screenshot" width="600"/>
 </p>
 
-## Project overview
+## 静态优先（推荐）
 
-This repository is a fork focused on Japanese kana practice using romaji input
-(hiragana + katakana), while keeping the original keybr adaptive lesson engine.
-It prioritizes a practical learning flow for beginners and supports both
-Hepburn and Kunrei romaji variants.
+本仓库默认以“静态 SPA”方式使用：**无需云端数据库、无需自建服务端**，可直接部署到
+Vercel / GitHub Pages / 任意静态站点。
 
-## Usage
+静态模式下，用户进度保存在本机浏览器（IndexedDB / localStorage）。因此：
+- 换浏览器/清除站点数据后会丢失进度（除非你先导出）
+- 不支持账号登录、公榜、多人等依赖服务端的功能
 
-### Install
+> 需要服务端能力时仍可运行“服务端模式”（见后文）。
+
+## 快速开始（静态模式）
 
 ```bash
 npm install
 ```
 
-### Build (development)
+构建静态产物（输出到 `vercel-dist/`）：
 
 ```bash
-npm run build-dev
+npm run build-vercel
 ```
 
-### Run locally
+本地预览静态站点（任选其一）：
 
 ```bash
-APP_URL=http://localhost:3000/ npm start
+npx serve vercel-dist
+# 或
+python3 -m http.server 3000 -d vercel-dist
 ```
 
-Open `http://localhost:3000/` in a browser.
+然后打开终端提示的地址。
 
-### Japanese kana (romaji) mode
+## 部署到 Vercel（静态模式）
+
+Vercel 配置建议：
+- Build Command: `npm run build-vercel`
+- Output Directory: `vercel-dist`
+
+可选构建期环境变量：
+- `KEYBR_BASE_URL`（默认 `http://localhost:3000/`）
+- `KEYBR_LOCALE`（默认 `en`）
+- `KEYBR_COLOR`（默认 `system`）
+- `KEYBR_FONT`（默认 `open-sans`）
+
+## 本地数据：导入 / 导出
+
+静态模式下进入 **Profile**：
+- **Export data**：导出本地数据（打字历史 + 设置 + 偏好 + 主题）到 `keybr-local-data.json`
+- **Import data**：导入 JSON 并覆盖当前本地数据（支持 `keybr-local-data.json`，也兼容旧的 `typing-data.json`）
+- **Reset local data**：清空所有本地数据并恢复默认值
+
+## 日语假名（罗马字输入）模式
 
 1. Open the Practice page and click the settings button (gear icon).
 2. Go to **Keyboard**:
@@ -64,48 +76,43 @@ Open `http://localhost:3000/` in a browser.
 4. (Optional) In **Keyboard**, toggle **Show romaji helper** if you want to see
    suggested romaji spellings for the next kana.
 
-### Tests
+## 开发模式（可选）
+
+开发构建（webpack，`NODE_ENV=development`）：
+
+```bash
+npm run build-dev
+```
+
+持续构建：
+
+```bash
+npm run watch
+```
+
+## 服务端模式（可选）
+
+如果你想要账号/登录、公开资料、公榜、多人等功能，需要运行服务端。
+
+最简单方式是使用 sqlite（无需 MySQL）：
+
+```bash
+cp .env.example .env
+npm start
+```
+
+> `.env.example` 默认 `DATABASE_CLIENT=sqlite`，数据库文件为 `DATABASE_FILENAME`。
+
+## 测试
 
 ```bash
 npm run test
 ```
 
-### Deploy to Vercel (static mode)
+## 贡献
 
-This repo can be built as a static SPA for Vercel (no server, no cloud DB).
-In this mode, user progress is stored locally in the browser (IndexedDB /
-localStorage), similar to `qwerty-learner`.
-
-Limitations in static mode:
-- No account/login
-- No public profiles
-- No high scores
-- No multiplayer
-
-In static mode, go to **Profile** to export/import your local data.
-
-Build output goes to `vercel-dist/`:
-
-```bash
-npm run build-vercel
-```
-
-Optional build-time env vars:
-- `KEYBR_BASE_URL` (default: `http://localhost:3000/`)
-- `KEYBR_LOCALE` (default: `en`)
-
-## Can I contribute?
-
-Yes!
-
-* **[Give us a ⭐️.](https://github.com/aradzie/keybr.com)** Help this project gain visibility and stand out.
-* **[Report a bug.](https://github.com/aradzie/keybr.com/issues)** If something is not working, let us know.
-* **[Suggest a feature.](https://github.com/aradzie/keybr.com/issues)** We are open to new ideas.
-* **[Translate.](./docs/translations.md)** If you want to see keybr.com in your language.
-* **[Getting started.](./docs/getting_started.md)** Launch a local instance of keybr.com, make a pull request.
-* **[Add a keyboard.](docs/custom_keyboard.md)** Add a custom keyboard to keybr.com
-* **[Add a language.](docs/custom_language.md)** Add a custom language to keybr.com
-* **[Join our Discord server](https://discord.gg/gY4RA4enVH).** To discuss things in a less formal way.
+- Bug / Feature：欢迎提 issue / PR
+- 翻译：见 `docs/translations.md`
 
 ## License
 
