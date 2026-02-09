@@ -5,7 +5,7 @@ import {
   resultToJson,
 } from "@keybr/result-io";
 import { openResultStorage } from "@keybr/result-loader";
-import { Settings,useSettings } from "@keybr/settings";
+import { Settings, useSettings } from "@keybr/settings";
 import { useTheme } from "@keybr/themes";
 import { Button, Field, FieldList, Icon } from "@keybr/widget";
 import { mdiDeleteForever, mdiDownload, mdiUpload } from "@mdi/js";
@@ -212,7 +212,7 @@ function useCommands() {
           // Results (persist), then reload to pick up fresh provider state.
           const importedResults = (bundle.results ?? [])
             .map((json) => resultFromJson(json as any))
-            .filter((r) => r != null);
+            .filter((r): r is NonNullable<typeof r> => r != null);
 
           const storage = openResultStorage({
             type: "private",
@@ -220,8 +220,7 @@ function useCommands() {
           });
           await storage.clear();
           if (importedResults.length > 0) {
-             
-            await storage.append(importedResults as any);
+            await storage.append(importedResults);
           }
 
           window.alert(
