@@ -22,6 +22,7 @@ import {
   Field,
   FieldList,
   FieldSet,
+  Link,
   OptionList,
 } from "@keybr/widget";
 import { memo, type ReactNode, useEffect, useState } from "react";
@@ -63,6 +64,36 @@ function LayoutProp(): ReactNode {
   const { compare } = useCollator();
   const { settings, updateSettings } = useSettings();
   const options = KeyboardOptions.from(settings);
+  const supportedLanguage = Language.JA;
+  const supportedLayouts = Layout.selectableLayouts(supportedLanguage);
+  const layoutId =
+    supportedLayouts.find((x) => x.id === options.layout.id)?.id ??
+    Layout.JA_ROMAJI.id;
+  const languageId = options.language.id;
+  const geometryId = options.geometry.id;
+  const zonesId = options.zones.id;
+
+  useEffect(() => {
+    if (languageId !== supportedLanguage.id) {
+      const geometry = Geometry.ALL.get(geometryId);
+      const zones = ZoneMod.ALL.get(zonesId);
+      updateSettings(
+        KeyboardOptions.default()
+          .withLayout(Layout.JA_ROMAJI)
+          .withGeometry(geometry)
+          .withZones(zones)
+          .save(settings),
+      );
+    }
+  }, [
+    geometryId,
+    languageId,
+    settings,
+    supportedLanguage,
+    updateSettings, //
+    zonesId,
+  ]);
+
   return (
     <>
       <FieldList>
@@ -71,23 +102,14 @@ function LayoutProp(): ReactNode {
         </Field>
         <Field>
           <OptionList
-            options={options
-              .selectableLanguages()
+            disabled={true}
+            options={[supportedLanguage]
               .map((item) => ({
                 value: item.id,
                 name: formatLanguageName(item),
               }))
               .sort((a, b) => compare(a.name, b.name))}
-            value={options.language.id}
-            onSelect={(id) => {
-              updateSettings(
-                options
-                  .withLanguage(Language.ALL.get(id))
-                  .withGeometry(options.geometry)
-                  .withZones(options.zones)
-                  .save(settings),
-              );
-            }}
+            value={supportedLanguage.id}
           />
         </Field>
         <Field>
@@ -95,14 +117,14 @@ function LayoutProp(): ReactNode {
         </Field>
         <Field>
           <OptionList
-            options={options.selectableLayouts().map((item) => ({
+            options={supportedLayouts.map((item) => ({
               value: item.id,
               name:
-                item.language.id === options.language.id
+                item.language.id === supportedLanguage.id
                   ? formatLayoutName(item)
                   : formatFullLayoutName(item),
             }))}
-            value={options.layout.id}
+            value={layoutId}
             onSelect={(id) => {
               updateSettings(
                 options
@@ -115,6 +137,16 @@ function LayoutProp(): ReactNode {
           />
         </Field>
       </FieldList>
+      <Explainer>
+        <Description>
+          Kanabr supports Japanese layouts only. For other languages and
+          keyboard layouts, use{" "}
+          <Link href="https://www.keybr.com/" target="_blank">
+            keybr.com
+          </Link>
+          .
+        </Description>
+      </Explainer>
       <FieldList>
         <Field>
           <CheckBox

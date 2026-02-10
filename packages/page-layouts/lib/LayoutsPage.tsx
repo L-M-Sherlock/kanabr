@@ -6,15 +6,22 @@ import {
 } from "@keybr/keyboard";
 import { Alphabet } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
-import { Article, Field, FieldList, OptionList } from "@keybr/widget";
-import { useState } from "react";
+import {
+  Article,
+  Description,
+  Explainer,
+  Field,
+  FieldList,
+  Link,
+  OptionList,
+} from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
 import { CustomLayoutDesignerToggler } from "./custom/CustomLayoutDesignerToggler.tsx";
 import { KeyFrequencyHeatmap } from "./KeyFrequencyHeatmap.tsx";
 
 export function LayoutsPage() {
   const { formatLanguageName } = useFormattedNames();
-  const [language, setLanguage] = useState(Language.EN);
+  const language = Language.JA;
   const keyboards = Layout.ALL.filter(
     (layout) => layout.language === language,
   ).map((layout) => loadKeyboard(layout));
@@ -30,6 +37,16 @@ export function LayoutsPage() {
           "<p>It is easier to type when the most frequent keys are on the home row, and when the most frequent key pairs are typed with different fingers and hands. Therefore an efficient layout has the largest circles on the home row. It also has arcs that are evenly distributed across the keyboard, long and horizontal, rather than short and diagonal, because it indicates the frequent switching of fingers and hands.</p>"
         }
       />
+      <Explainer>
+        <Description>
+          Kanabr supports Japanese layouts only. For other languages and
+          keyboard layouts, use{" "}
+          <Link href="https://www.keybr.com/" target="_blank">
+            keybr.com
+          </Link>
+          .
+        </Description>
+      </Explainer>
       <dl>
         <dt>
           <FormattedMessage
@@ -98,14 +115,14 @@ export function LayoutsPage() {
         </Field>
         <Field>
           <OptionList
-            options={Language.ALL.map((item) => ({
-              name: formatLanguageName(item),
-              value: item.id,
-            }))}
+            disabled={true}
+            options={[
+              {
+                name: formatLanguageName(language),
+                value: language.id,
+              },
+            ]}
             value={language.id}
-            onSelect={(id) => {
-              setLanguage(Language.ALL.get(id));
-            }}
           />
         </Field>
       </FieldList>
