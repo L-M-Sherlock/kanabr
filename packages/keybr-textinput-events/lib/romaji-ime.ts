@@ -482,6 +482,8 @@ const ENTRIES = [
   { romaji: "syu", kana: "しゅ", priority: 1 },
   { romaji: "sho", kana: "しょ", priority: 0 },
   { romaji: "syo", kana: "しょ", priority: 1 },
+  { romaji: "she", kana: "しぇ", priority: 0 },
+  { romaji: "sye", kana: "しぇ", priority: 1 },
   { romaji: "cha", kana: "ちゃ", priority: 0 },
   { romaji: "tya", kana: "ちゃ", priority: 1 },
   { romaji: "chu", kana: "ちゅ", priority: 0 },
@@ -511,6 +513,8 @@ const ENTRIES = [
   { romaji: "zya", kana: "じゃ", priority: 2 },
   { romaji: "ju", kana: "じゅ", priority: 0 },
   { romaji: "jyu", kana: "じゅ", priority: 1 },
+  { romaji: "je", kana: "じぇ", priority: 0 },
+  { romaji: "jye", kana: "じぇ", priority: 1 },
   { romaji: "jyo", kana: "じょ", priority: 1 },
   { romaji: "jo", kana: "じょ", priority: 0 },
 

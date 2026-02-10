@@ -47,6 +47,18 @@ test("fa -> ふぁ", () => {
   deepEqual(cps, ["ふ".codePointAt(0)!, "ぁ".codePointAt(0)!]);
 });
 
+test("she -> しぇ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("s", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("e", { timeStamp: 3 }));
+  deepEqual(cps, ["し".codePointAt(0)!, "ぇ".codePointAt(0)!]);
+});
+
+test("je -> じぇ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("j", { timeStamp: 1 }), ch("e", { timeStamp: 2 }));
+  deepEqual(cps, ["じ".codePointAt(0)!, "ぇ".codePointAt(0)!]);
+});
+
 test("wha -> うぁ", () => {
   const ime = new RomajiIme();
   const cps = collect(ime, ch("w", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
