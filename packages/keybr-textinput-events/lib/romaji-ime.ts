@@ -230,6 +230,10 @@ export function romajiOptionsForKana(kana: string): readonly string[] {
   if (kana === "ん" || kana === "ン") {
     return ["nn", "n'", "n+consonant"];
   }
+  if (kana === "っ" || kana === "ッ") {
+    const list = REVERSE.get("っ") ?? [];
+    return ["double consonant", ...list];
+  }
   const list = REVERSE.get(kana);
   return list ?? [];
 }

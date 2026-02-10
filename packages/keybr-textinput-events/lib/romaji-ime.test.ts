@@ -246,3 +246,7 @@ test("invalid romaji keeps preedit and swallows boundary", () => {
 test("romaji options for ん", () => {
   deepEqual(romajiOptionsForKana("ん"), ["nn", "n'", "n+consonant"]);
 });
+
+test("romaji options for っ prioritizes double consonant", () => {
+  deepEqual(romajiOptionsForKana("っ").at(0), "double consonant");
+});
