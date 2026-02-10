@@ -245,10 +245,8 @@ function findBestMatch(root: TrieNode, input: string): Match | null {
       break;
     }
     if (node.outputs.length > 0) {
-      const output = [...node.outputs].sort(
-        (a, b) => a.priority - b.priority,
-      )[0];
-      best = { romaji: input.slice(0, i + 1), output };
+      // Outputs are pre-sorted by priority in buildTrie.
+      best = { romaji: input.slice(0, i + 1), output: node.outputs[0] };
     }
   }
   return best;
@@ -289,6 +287,7 @@ function buildTrie(
     node.outputs.push({ kana, priority });
   }
   const freeze = (node: MutableNode): TrieNode => {
+    node.outputs.sort((a, b) => a.priority - b.priority);
     const children = new Map<string, TrieNode>();
     for (const [k, v] of node.children) {
       children.set(k, freeze(v));
