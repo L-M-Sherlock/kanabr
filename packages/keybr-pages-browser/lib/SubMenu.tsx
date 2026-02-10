@@ -70,7 +70,7 @@ function LocaleSwitcher({ currentPath }: { readonly currentPath: string }) {
     primary.push(
       <StaticLink
         className={styles.localeLink}
-        href={Pages.intlPath(currentPath, defaultLocale)}
+        href={intlPathIncludingDefaultLocale(currentPath, defaultLocale)}
       >
         {formatLocalLanguageName(defaultLocale)}
       </StaticLink>,
@@ -99,4 +99,12 @@ function LocaleSwitcher({ currentPath }: { readonly currentPath: string }) {
       <span className={styles.localeList}>{...secondary}</span>
     </>
   );
+}
+
+function intlPathIncludingDefaultLocale(path: string, locale: string): string {
+  return locale === defaultLocale
+    ? path === "/"
+      ? `/${locale}`
+      : `/${locale}${path}`
+    : Pages.intlPath(path, locale);
 }
