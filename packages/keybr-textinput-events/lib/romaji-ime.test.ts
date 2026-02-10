@@ -59,6 +59,36 @@ test("je -> じぇ", () => {
   deepEqual(cps, ["じ".codePointAt(0)!, "ぇ".codePointAt(0)!]);
 });
 
+test("wi -> うぃ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("w", { timeStamp: 1 }), ch("i", { timeStamp: 2 }));
+  deepEqual(cps, ["う".codePointAt(0)!, "ぃ".codePointAt(0)!]);
+});
+
+test("ye -> いぇ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("y", { timeStamp: 1 }), ch("e", { timeStamp: 2 }));
+  deepEqual(cps, ["い".codePointAt(0)!, "ぇ".codePointAt(0)!]);
+});
+
+test("qa -> くぁ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("q", { timeStamp: 1 }), ch("a", { timeStamp: 2 }));
+  deepEqual(cps, ["く".codePointAt(0)!, "ぁ".codePointAt(0)!]);
+});
+
+test("tsa -> つぁ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("t", { timeStamp: 1 }), ch("s", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
+  deepEqual(cps, ["つ".codePointAt(0)!, "ぁ".codePointAt(0)!]);
+});
+
+test("va -> ゔぁ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("v", { timeStamp: 1 }), ch("a", { timeStamp: 2 }));
+  deepEqual(cps, ["ゔ".codePointAt(0)!, "ぁ".codePointAt(0)!]);
+});
+
 test("wha -> うぁ", () => {
   const ime = new RomajiIme();
   const cps = collect(ime, ch("w", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
@@ -116,14 +146,19 @@ test("kka -> っか", () => {
 test("invalid romaji keeps preedit and swallows boundary", () => {
   const ime = new RomajiIme();
   const r1 = ime.consume(ch("q", { timeStamp: 1 }));
-  equal(r1.valid, false);
+  equal(r1.valid, true);
   equal(r1.preedit, "q");
   deepEqual(r1.events, []);
 
-  const r2 = ime.consume(space(2));
+  const r2 = ime.consume(ch("x", { timeStamp: 2 }));
   equal(r2.valid, false);
-  equal(r2.preedit, "q");
+  equal(r2.preedit, "qx");
   deepEqual(r2.events, []);
+
+  const r3 = ime.consume(space(3));
+  equal(r3.valid, false);
+  equal(r3.preedit, "qx");
+  deepEqual(r3.events, []);
 });
 
 test("romaji options for ん", () => {

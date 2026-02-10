@@ -362,6 +362,10 @@ const ENTRIES = [
   { romaji: "ku", kana: "く", priority: 0 },
   { romaji: "ke", kana: "け", priority: 0 },
   { romaji: "ko", kana: "こ", priority: 0 },
+  { romaji: "qa", kana: "くぁ", priority: 0 },
+  { romaji: "qi", kana: "くぃ", priority: 0 },
+  { romaji: "qe", kana: "くぇ", priority: 0 },
+  { romaji: "qo", kana: "くぉ", priority: 0 },
 
   // S
   { romaji: "sa", kana: "さ", priority: 0 },
@@ -377,6 +381,10 @@ const ENTRIES = [
   { romaji: "ti", kana: "ち", priority: 1 },
   { romaji: "tsu", kana: "つ", priority: 0 },
   { romaji: "tu", kana: "つ", priority: 1 },
+  { romaji: "tsa", kana: "つぁ", priority: 0 },
+  { romaji: "tsi", kana: "つぃ", priority: 0 },
+  { romaji: "tse", kana: "つぇ", priority: 0 },
+  { romaji: "tso", kana: "つぉ", priority: 0 },
   { romaji: "te", kana: "て", priority: 0 },
   { romaji: "to", kana: "と", priority: 0 },
   { romaji: "thi", kana: "てぃ", priority: 0 },
@@ -413,6 +421,7 @@ const ENTRIES = [
   { romaji: "ya", kana: "や", priority: 0 },
   { romaji: "yu", kana: "ゆ", priority: 0 },
   { romaji: "yo", kana: "よ", priority: 0 },
+  { romaji: "ye", kana: "いぇ", priority: 0 },
 
   // R
   { romaji: "ra", kana: "ら", priority: 0 },
@@ -424,6 +433,8 @@ const ENTRIES = [
   // W
   { romaji: "wa", kana: "わ", priority: 0 },
   { romaji: "wo", kana: "を", priority: 0 },
+  { romaji: "wi", kana: "うぃ", priority: 0 },
+  { romaji: "we", kana: "うぇ", priority: 0 },
   { romaji: "wha", kana: "うぁ", priority: 0 },
   { romaji: "whi", kana: "うぃ", priority: 0 },
   { romaji: "whu", kana: "うぅ", priority: 0 },
@@ -537,6 +548,13 @@ const ENTRIES = [
   { romaji: "lyo", kana: "ょ", priority: 1 },
   { romaji: "xtsu", kana: "っ", priority: 0 },
   { romaji: "ltsu", kana: "っ", priority: 1 },
+
+  // V (hiragana)
+  { romaji: "vu", kana: "ゔ", priority: 0 },
+  { romaji: "va", kana: "ゔぁ", priority: 0 },
+  { romaji: "vi", kana: "ゔぃ", priority: 0 },
+  { romaji: "ve", kana: "ゔぇ", priority: 0 },
+  { romaji: "vo", kana: "ゔぉ", priority: 0 },
 ];
 
 const TRIE = buildTrie(ENTRIES);
