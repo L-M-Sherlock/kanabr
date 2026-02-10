@@ -47,6 +47,48 @@ test("fa -> ふぁ", () => {
   deepEqual(cps, ["ふ".codePointAt(0)!, "ぁ".codePointAt(0)!]);
 });
 
+test("wha -> うぁ", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("w", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
+  deepEqual(cps, ["う".codePointAt(0)!, "ぁ".codePointAt(0)!]);
+});
+
+test("thi/thu/twu -> てぃ/てゅ/とぅ", () => {
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("t", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("i", { timeStamp: 3 }));
+    deepEqual(cps, ["て".codePointAt(0)!, "ぃ".codePointAt(0)!]);
+  }
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("t", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("u", { timeStamp: 3 }));
+    deepEqual(cps, ["て".codePointAt(0)!, "ゅ".codePointAt(0)!]);
+  }
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("t", { timeStamp: 1 }), ch("w", { timeStamp: 2 }), ch("u", { timeStamp: 3 }));
+    deepEqual(cps, ["と".codePointAt(0)!, "ぅ".codePointAt(0)!]);
+  }
+});
+
+test("dhi/dhu/dwu -> でぃ/でゅ/どぅ", () => {
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("d", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("i", { timeStamp: 3 }));
+    deepEqual(cps, ["で".codePointAt(0)!, "ぃ".codePointAt(0)!]);
+  }
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("d", { timeStamp: 1 }), ch("h", { timeStamp: 2 }), ch("u", { timeStamp: 3 }));
+    deepEqual(cps, ["で".codePointAt(0)!, "ゅ".codePointAt(0)!]);
+  }
+  {
+    const ime = new RomajiIme();
+    const cps = collect(ime, ch("d", { timeStamp: 1 }), ch("w", { timeStamp: 2 }), ch("u", { timeStamp: 3 }));
+    deepEqual(cps, ["ど".codePointAt(0)!, "ぅ".codePointAt(0)!]);
+  }
+});
+
 test("n + space keeps preedit and swallows space", () => {
   const ime = new RomajiIme();
   const cps = collect(ime, ch("n", { timeStamp: 1 }), space(2));

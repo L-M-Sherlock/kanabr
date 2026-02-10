@@ -379,6 +379,9 @@ const ENTRIES = [
   { romaji: "tu", kana: "つ", priority: 1 },
   { romaji: "te", kana: "て", priority: 0 },
   { romaji: "to", kana: "と", priority: 0 },
+  { romaji: "thi", kana: "てぃ", priority: 0 },
+  { romaji: "thu", kana: "てゅ", priority: 0 },
+  { romaji: "twu", kana: "とぅ", priority: 0 },
 
   // N
   { romaji: "na", kana: "な", priority: 0 },
@@ -421,6 +424,11 @@ const ENTRIES = [
   // W
   { romaji: "wa", kana: "わ", priority: 0 },
   { romaji: "wo", kana: "を", priority: 0 },
+  { romaji: "wha", kana: "うぁ", priority: 0 },
+  { romaji: "whi", kana: "うぃ", priority: 0 },
+  { romaji: "whu", kana: "うぅ", priority: 0 },
+  { romaji: "whe", kana: "うぇ", priority: 0 },
+  { romaji: "who", kana: "うぉ", priority: 0 },
 
   // G
   { romaji: "ga", kana: "が", priority: 0 },
@@ -443,6 +451,9 @@ const ENTRIES = [
   { romaji: "du", kana: "づ", priority: 1 },
   { romaji: "de", kana: "で", priority: 0 },
   { romaji: "do", kana: "ど", priority: 0 },
+  { romaji: "dhi", kana: "でぃ", priority: 0 },
+  { romaji: "dhu", kana: "でゅ", priority: 0 },
+  { romaji: "dwu", kana: "どぅ", priority: 0 },
 
   // B
   { romaji: "ba", kana: "ば", priority: 0 },
