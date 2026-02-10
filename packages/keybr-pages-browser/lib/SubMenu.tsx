@@ -15,12 +15,6 @@ export function SubMenu({ currentPath }: { readonly currentPath: string }) {
   return (
     <div className={styles.root}>
       <GithubLink />
-      <RouterLink to={Pages.termsOfService.path}>
-        {formatMessage(Pages.termsOfService.link.label)}
-      </RouterLink>
-      <RouterLink to={Pages.privacyPolicy.path}>
-        {formatMessage(Pages.privacyPolicy.link.label)}
-      </RouterLink>
       <LocaleSwitcher currentPath={currentPath} />
     </div>
   );

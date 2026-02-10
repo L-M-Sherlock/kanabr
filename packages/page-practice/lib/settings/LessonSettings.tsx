@@ -31,17 +31,19 @@ export function LessonSettings(): ReactNode {
   const isJaRomaji = keyboard.layout.id === "ja-romaji";
   const lessonType = settings.get(lessonProps.type);
   const lessonTypeDisabled =
-    isJaRomaji &&
-    (lessonType === LessonType.WORDLIST ||
-      lessonType === LessonType.BOOKS ||
-      lessonType === LessonType.CUSTOM ||
-      lessonType === LessonType.CODE);
+    lessonType === LessonType.NUMBERS ||
+    (isJaRomaji &&
+      (lessonType === LessonType.WORDLIST ||
+        lessonType === LessonType.BOOKS ||
+        lessonType === LessonType.CUSTOM ||
+        lessonType === LessonType.CODE));
   const isLessonTypeDisabled = (type: LessonType): boolean =>
-    isJaRomaji &&
-    (type === LessonType.WORDLIST ||
-      type === LessonType.BOOKS ||
-      type === LessonType.CUSTOM ||
-      type === LessonType.CODE);
+    type === LessonType.NUMBERS ||
+    (isJaRomaji &&
+      (type === LessonType.WORDLIST ||
+        type === LessonType.BOOKS ||
+        type === LessonType.CUSTOM ||
+        type === LessonType.CODE));
 
   useEffect(() => {
     if (lessonTypeDisabled) {
@@ -99,6 +101,7 @@ export function LessonSettings(): ReactNode {
             id: "t_Numbers",
             defaultMessage: "Numbers",
           })}
+          disabled={isLessonTypeDisabled(LessonType.NUMBERS)}
         />
       </TabList>
       <LessonLoader>
