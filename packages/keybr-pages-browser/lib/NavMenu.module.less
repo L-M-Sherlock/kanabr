@@ -68,7 +68,7 @@
     display: grid;
     position: static;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: 3rem;
+    grid-auto-rows: minmax(3rem, auto);
     gap: 0.25rem;
     align-items: stretch;
     justify-content: center;
@@ -96,6 +96,7 @@
 
   .item:last-child {
     grid-column: 1 / -1;
+    align-items: stretch;
   }
 
   .link {
