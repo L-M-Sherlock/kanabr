@@ -26,9 +26,12 @@
 
 @media (max-width: 48rem) {
   .root {
+    flex-direction: column;
+    gap: 0.25rem;
     padding-inline: 0.5rem;
     padding-block: 0.25rem;
-    text-align: start;
+    font-size: 0.7rem;
+    text-align: center;
   }
 
   .localeList {
@@ -37,23 +40,5 @@
     margin-inline: 0;
     overflow: hidden;
     white-space: normal;
-  }
-}
-
-@media (max-width: 48rem) {
-  .root {
-    flex-direction: row;
-    gap: 0.75rem;
-    padding-block: 0;
-    font-size: 0.75rem;
-    text-align: start;
-  }
-
-  .localeList {
-    display: none;
-  }
-
-  .extLink {
-    display: none;
   }
 }

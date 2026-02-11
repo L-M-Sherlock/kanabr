@@ -65,10 +65,10 @@
 
 @media (max-width: 48rem) {
   .root {
-    display: flex;
+    display: grid;
     position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 3rem;
     gap: 0.25rem;
     align-items: stretch;
     justify-content: center;
@@ -80,12 +80,12 @@
     overflow: hidden;
     background-color: var(--background-color);
     box-shadow: var(--Surface__box-shadow);
+    touch-action: pan-y;
     backdrop-filter: var(--Surface__backdrop-filter);
   }
 
   .item {
     display: flex;
-    flex: 1 0 20%;
     justify-content: center;
   }
 
@@ -94,11 +94,16 @@
     border-block-start: none;
   }
 
+  .item:last-child {
+    grid-column: 1 / -1;
+  }
+
   .link {
     justify-content: center;
-    block-size: 2.75rem;
+    inline-size: 100%;
+    block-size: 3rem;
     padding-inline: 0.75rem;
-    line-height: 2.75rem;
+    line-height: 3rem;
   }
 
   .label {
