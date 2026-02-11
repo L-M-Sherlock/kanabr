@@ -52,14 +52,6 @@ export function NavMenu({ currentPath }: { readonly currentPath: string }) {
       )}
 
       <MenuItem>
-        <MenuItemLink page={Pages.typingTest} />
-      </MenuItem>
-
-      <MenuItem>
-        <MenuItemLink page={Pages.layouts} />
-      </MenuItem>
-
-      <MenuItem>
         <SubMenu currentPath={currentPath} />
       </MenuItem>
     </div>
