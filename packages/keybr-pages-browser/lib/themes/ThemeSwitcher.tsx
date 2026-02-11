@@ -1,3 +1,10 @@
+import {
+  allLocales,
+  defaultLocale,
+  useIntlDisplayNames,
+  usePreferredLocale,
+} from "@keybr/intl";
+import { Pages } from "@keybr/pages-shared";
 import { COLORS, FONTS, useTheme } from "@keybr/themes";
 import {
   Dialog,
@@ -12,18 +19,25 @@ import {
   mdiArrowExpandAll,
   mdiFormatFont,
   mdiThemeLightDark,
+  mdiTranslate,
 } from "@mdi/js";
 import { clsx } from "clsx";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { defineMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 import * as styles from "./ThemeSwitcher.module.less";
 
 const LazyThemeDesigner = lazy(() => import("./LazyThemeDesigner.tsx"));
 
 export function ThemeSwitcher() {
   const { color, font, switchColor, switchFont } = useTheme();
-  const [open, setOpen] = useState(null as "color" | "font" | null);
+  const [open, setOpen] = useState(
+    null as "color" | "font" | "language" | null,
+  );
   const [design, setDesign] = useState(false);
+  const { pathname, search, hash } = useLocation();
+  const { formatLocalLanguageName } = useIntlDisplayNames();
+  const preferredLocale = usePreferredLocale();
   return (
     <div className={styles.root}>
       {design && (
@@ -77,6 +91,31 @@ export function ThemeSwitcher() {
           onSelect={(id) => {
             setOpen(null);
             switchFont(id);
+          }}
+        />
+      </Popover>
+      <Popover
+        open={open === "language"}
+        anchor={
+          <IconButton
+            icon={<Icon shape={mdiTranslate} />}
+            onClick={() => {
+              setOpen(open === "language" ? null : "language");
+            }}
+          />
+        }
+        offset={10}
+      >
+        <LanguageMenu
+          selectedId={preferredLocale}
+          options={allLocales.map((locale) => ({
+            value: locale,
+            name: formatLocalLanguageName(locale),
+          }))}
+          onSelect={(value) => {
+            setOpen(null);
+            const next = intlPathIncludingDefaultLocale(pathname, value);
+            window.location.assign(`${next}${search}${hash}`);
           }}
         />
       </Popover>
@@ -166,6 +205,27 @@ function FontMenu({
   );
 }
 
+function LanguageMenu({
+  selectedId,
+  options,
+  onSelect,
+}: {
+  readonly selectedId: string;
+  readonly options: readonly OptionListOption[];
+  readonly onSelect: (id: string) => void;
+}) {
+  const selected = options.find(({ value }) => value === selectedId);
+  return (
+    <Menu
+      options={options}
+      selectedOption={selected ?? options[0]}
+      onSelect={({ value }) => {
+        onSelect(value);
+      }}
+    />
+  );
+}
+
 function Menu({
   options,
   selectedOption,
@@ -201,4 +261,12 @@ function Menu({
       ))}
     </ul>
   );
+}
+
+function intlPathIncludingDefaultLocale(path: string, locale: string): string {
+  return locale === defaultLocale
+    ? path === "/"
+      ? `/${locale}`
+      : `/${locale}${path}`
+    : Pages.intlPath(path, locale);
 }

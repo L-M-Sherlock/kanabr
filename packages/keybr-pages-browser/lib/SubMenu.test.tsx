@@ -1,9 +1,5 @@
 import { test } from "node:test";
-import {
-  defaultLocale,
-  FakeIntlProvider,
-  PreferredLocaleContext,
-} from "@keybr/intl";
+import { FakeIntlProvider, PreferredLocaleContext } from "@keybr/intl";
 import { PageDataContext } from "@keybr/pages-shared";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
@@ -29,45 +25,15 @@ test("render", () => {
       <PreferredLocaleContext.Provider value="pl">
         <FakeIntlProvider>
           <MemoryRouter>
-            <SubMenu currentPath="/page" />
+            <SubMenu />
           </MemoryRouter>
         </FakeIntlProvider>
       </PreferredLocaleContext.Provider>
     </PageDataContext.Provider>,
   );
 
-  isNotNull(r.queryByText("Polski"));
-
-  r.unmount();
-});
-
-test("default locale is visible", () => {
-  const r = render(
-    <PageDataContext.Provider
-      value={{
-        base: "https://www.keybr.com/",
-        locale: defaultLocale,
-        user: null,
-        publicUser: {
-          id: "userId",
-          name: "userName",
-          imageUrl: "imageUrl",
-          premium: false,
-        },
-        settings: null,
-      }}
-    >
-      <PreferredLocaleContext.Provider value={defaultLocale}>
-        <FakeIntlProvider>
-          <MemoryRouter>
-            <SubMenu currentPath="/" />
-          </MemoryRouter>
-        </FakeIntlProvider>
-      </PreferredLocaleContext.Provider>
-    </PageDataContext.Provider>,
-  );
-
-  isNotNull(r.queryByText("English"));
+  isNotNull(r.queryByText("Github"));
+  isNotNull(r.queryByText("keybr.com"));
 
   r.unmount();
 });

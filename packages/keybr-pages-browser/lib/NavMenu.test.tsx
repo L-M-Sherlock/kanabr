@@ -33,7 +33,6 @@ test("render", () => {
   );
 
   isNotNull(r.queryByText("userName"));
-  isNotNull(r.queryByText("Polski"));
 
   r.unmount();
 });
