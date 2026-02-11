@@ -1,9 +1,4 @@
-import {
-  allLocales,
-  defaultLocale,
-  useIntlDisplayNames,
-  usePreferredLocale,
-} from "@keybr/intl";
+import { allLocales, defaultLocale, usePreferredLocale } from "@keybr/intl";
 import { Pages } from "@keybr/pages-shared";
 import { COLORS, FONTS, useTheme } from "@keybr/themes";
 import {
@@ -36,7 +31,6 @@ export function ThemeSwitcher() {
   );
   const [design, setDesign] = useState(false);
   const { pathname, search, hash } = useLocation();
-  const { formatLocalLanguageName } = useIntlDisplayNames();
   const preferredLocale = usePreferredLocale();
   return (
     <div className={styles.root}>
@@ -110,7 +104,7 @@ export function ThemeSwitcher() {
           selectedId={preferredLocale}
           options={allLocales.map((locale) => ({
             value: locale,
-            name: formatLocalLanguageName(locale),
+            name: locale,
           }))}
           onSelect={(value) => {
             setOpen(null);
