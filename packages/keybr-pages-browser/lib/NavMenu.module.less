@@ -68,13 +68,13 @@
     display: grid;
     position: static;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: minmax(3rem, auto);
+    grid-auto-rows: minmax(3.5rem, auto);
     gap: 0.25rem;
     align-items: stretch;
     justify-content: center;
     max-inline-size: none;
     padding-inline: 0.25rem;
-    padding-block: 0.5rem;
+    padding-block: 0.75rem;
     padding-block-end: env(safe-area-inset-bottom);
     border-block-start: var(--separator-border);
     overflow: hidden;
@@ -100,15 +100,20 @@
   }
 
   .link {
+    flex-direction: column;
+    gap: 0.25rem;
     justify-content: center;
     inline-size: 100%;
-    block-size: 3rem;
+    block-size: auto;
     padding-inline: 0.75rem;
-    line-height: 3rem;
+    padding-block: 0.5rem;
+    line-height: 1.2;
   }
 
   .label {
-    display: none;
+    display: inline-block;
+    font-size: 0.65rem;
+    line-height: 1;
   }
 
   .accountLink {
