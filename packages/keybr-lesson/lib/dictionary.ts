@@ -9,10 +9,16 @@ import {
 export class Dictionary implements Iterable<string> {
   readonly #words: Word[] = [];
   readonly #dict = new Map<CodePoint, Word[]>();
+  readonly #normalizeCodePoint: (codePoint: CodePoint) => CodePoint;
 
-  constructor(wordList: WordList) {
+  constructor(
+    wordList: WordList,
+    normalizeCodePoint: (codePoint: CodePoint) => CodePoint = (codePoint) =>
+      codePoint,
+  ) {
+    this.#normalizeCodePoint = normalizeCodePoint;
     for (const item of wordList) {
-      const word = new Word(item);
+      const word = new Word(item, this.#normalizeCodePoint);
       this.#words.push(word);
       for (const codePoint of word.codePoints) {
         let list = this.#dict.get(codePoint);
@@ -35,7 +41,7 @@ export class Dictionary implements Iterable<string> {
   find({ codePoints, focusedCodePoint }: Filter): WordList {
     let words = this.#words;
     if (focusedCodePoint != null) {
-      words = this.#dict.get(focusedCodePoint) ?? [];
+      words = this.#dict.get(this.#normalizeCodePoint(focusedCodePoint)) ?? [];
     }
     if (codePoints != null) {
       words = words.filter((word) => word.matches(codePoints));
@@ -48,9 +54,12 @@ class Word {
   readonly value: string;
   readonly codePoints: readonly CodePoint[];
 
-  constructor(value: string) {
+  constructor(
+    value: string,
+    normalizeCodePoint: (codePoint: CodePoint) => CodePoint,
+  ) {
     this.value = value;
-    this.codePoints = [...toCodePoints(value)];
+    this.codePoints = [...toCodePoints(value)].map(normalizeCodePoint);
   }
 
   matches(codePoints: CodePointSet): boolean {
@@ -65,7 +74,11 @@ class Word {
 export const filterWordList = (
   words: WordList,
   codePoints: CodePointSet,
+  normalizeCodePoint: (codePoint: CodePoint) => CodePoint = (codePoint) =>
+    codePoint,
 ): string[] =>
   words.filter((word) =>
-    [...toCodePoints(word)].every((codePoint) => codePoints.has(codePoint)),
+    [...toCodePoints(word)].every((codePoint) =>
+      codePoints.has(normalizeCodePoint(codePoint)),
+    ),
   );

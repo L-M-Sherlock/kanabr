@@ -1,6 +1,16 @@
 import { describe, it, test } from "node:test";
-import { Language, Layout, loadKeyboard, Ngram1, Ngram2 } from "@keybr/keyboard";
-import { FakePhoneticModel, Letter, PhoneticModel } from "@keybr/phonetic-model";
+import {
+  Language,
+  Layout,
+  loadKeyboard,
+  Ngram1,
+  Ngram2,
+} from "@keybr/keyboard";
+import {
+  FakePhoneticModel,
+  Letter,
+  PhoneticModel,
+} from "@keybr/phonetic-model";
 import { LCG } from "@keybr/rand";
 import { makeKeyStatsMap } from "@keybr/result";
 import { Settings } from "@keybr/settings";
@@ -196,7 +206,10 @@ test("order japanese letters by gojuon", () => {
     ),
   );
 
-  equal([...lessonKeys].map((k) => String(k.letter)).join(""), "あいうえおかき");
+  equal(
+    [...lessonKeys].map((k) => String(k.letter)).join(""),
+    "あいうえおかき",
+  );
 });
 
 test("balance japanese kana in guided text", () => {
@@ -346,6 +359,57 @@ test("generate text with natural words", () => {
     "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa " +
       "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe",
   );
+});
+
+test("generate japanese natural words from katakana list without script conversion", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, true)
+    .set(lessonProps.japanese.katakanaRatio, 1);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["か", "な", "た"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      return "かな";
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(
+    settings,
+    keyboard,
+    model,
+    ["かなた", "かなた"],
+    { katakanaWordList: ["カナタ", "カタナ"] },
+  );
+  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+  equal(text.includes("カナタ") || text.includes("カタナ"), true);
+  equal(text.includes("かなた"), false);
+  equal(text.includes("かたな"), false);
 });
 
 describe("unlock keys", () => {

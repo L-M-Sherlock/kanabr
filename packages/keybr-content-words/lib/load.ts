@@ -1,6 +1,11 @@
 import { type WordList } from "@keybr/content";
 import { Language } from "@keybr/keyboard";
 
+export type JapaneseWordLists = {
+  readonly hiragana: WordList;
+  readonly katakana: WordList;
+};
+
 export async function loadWordList(language: Language): Promise<WordList> {
   switch (language) {
     case Language.AR:
@@ -216,4 +221,17 @@ export async function loadWordList(language: Language): Promise<WordList> {
     default:
       throw new Error();
   }
+}
+
+export async function loadJapaneseWordLists(): Promise<JapaneseWordLists> {
+  const [hiragana, katakana] = await Promise.all([
+    import(/* webpackChunkName: "words-ja" */ "./data/words-ja.json", {
+      with: { type: "json" },
+    }).then((module) => module.default),
+    import(
+      /* webpackChunkName: "words-ja-katakana" */ "./data/words-ja-katakana.json",
+      { with: { type: "json" } }
+    ).then((module) => module.default),
+  ]);
+  return { hiragana, katakana };
 }

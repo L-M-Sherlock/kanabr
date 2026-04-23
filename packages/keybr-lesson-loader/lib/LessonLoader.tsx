@@ -1,5 +1,5 @@
 import { loadContent } from "@keybr/content-books";
-import { loadWordList } from "@keybr/content-words";
+import { loadJapaneseWordLists, loadWordList } from "@keybr/content-words";
 import { catchError } from "@keybr/debug";
 import { KeyboardOptions, useKeyboard } from "@keybr/keyboard";
 import {
@@ -70,8 +70,14 @@ function useLoader(model: PhoneticModel): Lesson | null {
         case LessonType.GUIDED: {
           const { language } = KeyboardOptions.from(settings);
           const wordList = await loadWordList(language);
+          const japaneseWordLists =
+            language.id === "ja" ? await loadJapaneseWordLists() : undefined;
           if (!didCancel) {
-            setResult(new GuidedLesson(settings, keyboard, model, wordList));
+            setResult(
+              new GuidedLesson(settings, keyboard, model, wordList, {
+                katakanaWordList: japaneseWordLists?.katakana,
+              }),
+            );
           }
           break;
         }

@@ -1,4 +1,4 @@
-import { type GuidedLesson } from "@keybr/lesson";
+import { type GuidedLesson, lessonProps } from "@keybr/lesson";
 import { Description, Explainer, FieldSet } from "@keybr/widget";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,7 +44,9 @@ export function GuidedLessonSettings({
           lesson.keyboard.layout.id === "ja-romaji" && (
             <>
               <BalanceKanaProp />
-              <KatakanaRatioProp />
+              {lesson.settings.get(lessonProps.guided.naturalWords) && (
+                <KatakanaRatioProp />
+              )}
             </>
           )}
         <AlphabetSizeProp />

@@ -13,7 +13,6 @@ import { generateFragment } from "./text/fragment.ts";
 import {
   endsWithSmallTsu,
   mangledWords,
-  mixKanaScripts,
   phoneticWords,
   randomWords,
   uniqueWords,
@@ -21,27 +20,25 @@ import {
 
 export class GuidedLesson extends Lesson {
   readonly dictionary: Dictionary;
+  readonly katakanaDictionary: Dictionary | null;
 
   constructor(
     settings: Settings,
     keyboard: Keyboard,
     model: PhoneticModel,
     wordList: WordList,
+    {
+      katakanaWordList,
+    }: {
+      readonly katakanaWordList?: WordList;
+    } = {},
   ) {
     super(settings, keyboard, model);
-    const dictCodePoints =
-      model.language.id === "ja"
-        ? new Set(model.letters.map(({ codePoint }) => codePoint))
-        : this.codePoints;
-    let dictionaryWords = filterWordList(wordList, dictCodePoints).filter(
-      (word) => word.length > 2,
-    );
-    if (model.language.id === "ja") {
-      dictionaryWords = dictionaryWords.filter(
-        (word) => !endsWithSmallTsu(word),
-      );
-    }
-    this.dictionary = new Dictionary(dictionaryWords);
+    this.dictionary = this.#createDictionary(wordList);
+    this.katakanaDictionary =
+      model.language.id === "ja" && katakanaWordList != null
+        ? this.#createDictionary(katakanaWordList, normalizeJapaneseCodePoint)
+        : null;
   }
 
   override get letters() {
@@ -138,15 +135,6 @@ export class GuidedLesson extends Lesson {
       },
       rng,
     );
-    if (this.model.language.id === "ja") {
-      words = mixKanaScripts(
-        words,
-        {
-          katakanaRatio: this.settings.get(lessonProps.japanese.katakanaRatio),
-        },
-        rng,
-      );
-    }
     return generateFragment(this.settings, words, {
       repeatWords: this.settings.get(lessonProps.repeatWords),
       baseLength: this.model.language.id === "ja" ? 50 : 100,
@@ -181,6 +169,9 @@ export class GuidedLesson extends Lesson {
   #makeWordGenerator(filter: Filter, rng: RNGStream) {
     const pseudoWords = phoneticWords(this.model, filter, rng);
     if (this.settings.get(lessonProps.guided.naturalWords)) {
+      if (this.model.language.id === "ja" && this.katakanaDictionary != null) {
+        return this.#makeJapaneseNaturalWordGenerator(filter, rng, pseudoWords);
+      }
       const words = this.dictionary.find(filter).slice(0, 1000);
       while (words.length < 15) {
         const word = pseudoWords();
@@ -196,6 +187,55 @@ export class GuidedLesson extends Lesson {
       return randomWords(words, rng);
     }
     return pseudoWords;
+  }
+
+  #makeJapaneseNaturalWordGenerator(
+    filter: Filter,
+    rng: RNGStream,
+    pseudoWords: () => string | "" | null,
+  ) {
+    const hiraganaWords = this.dictionary.find(filter).slice(0, 1000);
+    const katakanaWords = this.katakanaDictionary?.find(filter).slice(0, 1000);
+    const katakanaRatio = this.settings.get(lessonProps.japanese.katakanaRatio);
+    const hiraganaGenerator = randomWords(hiraganaWords, rng);
+    const katakanaGenerator = randomWords(katakanaWords ?? [], rng);
+
+    return () => {
+      const preferKatakana =
+        katakanaWords != null &&
+        katakanaWords.length > 0 &&
+        katakanaRatio > 0 &&
+        rng() < katakanaRatio;
+      let word = preferKatakana ? katakanaGenerator() : hiraganaGenerator();
+      if (word == null || word === "") {
+        word = preferKatakana ? hiraganaGenerator() : katakanaGenerator();
+      }
+      if (word == null || word === "") {
+        word = pseudoWords();
+      }
+      return word;
+    };
+  }
+
+  #createDictionary(
+    wordList: WordList,
+    normalizeCodePoint?: (codePoint: number) => number,
+  ) {
+    const dictCodePoints =
+      this.model.language.id === "ja"
+        ? japaneseDictionaryCodePoints(this.model.letters)
+        : this.codePoints;
+    let dictionaryWords = filterWordList(
+      wordList,
+      dictCodePoints,
+      normalizeCodePoint,
+    ).filter((word) => word.length > 2);
+    if (this.model.language.id === "ja") {
+      dictionaryWords = dictionaryWords.filter(
+        (word) => !endsWithSmallTsu(word),
+      );
+    }
+    return new Dictionary(dictionaryWords, normalizeCodePoint);
   }
 
   #makeBalancedWordGenerator(lessonKeys: LessonKeys, rng: RNGStream) {
@@ -229,4 +269,30 @@ export class GuidedLesson extends Lesson {
       return gen();
     };
   }
+}
+
+function japaneseDictionaryCodePoints(letters: readonly Letter[]) {
+  const codePoints = new Set<number>();
+  for (const { codePoint } of letters) {
+    codePoints.add(codePoint);
+    const katakana = toKatakanaCodePoint(codePoint);
+    if (katakana != null) {
+      codePoints.add(katakana);
+    }
+  }
+  return codePoints;
+}
+
+function normalizeJapaneseCodePoint(codePoint: number): number {
+  if (codePoint >= 0x30a1 && codePoint <= 0x30f6) {
+    return codePoint - 0x60;
+  }
+  return codePoint;
+}
+
+function toKatakanaCodePoint(codePoint: number): number | null {
+  if (codePoint >= 0x3041 && codePoint <= 0x3096) {
+    return codePoint + 0x60;
+  }
+  return null;
 }
