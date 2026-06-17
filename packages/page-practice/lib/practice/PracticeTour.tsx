@@ -4,6 +4,9 @@ import { memo } from "react";
 import { FormattedMessage } from "react-intl";
 import { KeyDetailsChartDemo } from "./KeyDetailsChartDemo.tsx";
 
+const KEYBR_STATIC =
+  process.env.KEYBR_STATIC === "1" || process.env.KEYBR_STATIC === "true";
+
 export const PracticeTour = memo(function PracticeTour({
   onClose,
 }: {
@@ -88,10 +91,15 @@ export const PracticeTour = memo(function PracticeTour({
           id="m_tour09"
           defaultMessage={
             "<p>This is the typing score indicator in abstract points and the difference from the average value.</p>" +
-            "<p>The score is calculated from your typing speed, error count, and the current size of the kana set. The formula rewards speed and penalizes mistakes, so typing fast with many errors will not produce a strong score.</p>" +
-            "<p>In server mode, signed-in users can optionally appear on the high score table.</p>"
+            "<p>The score is calculated from your typing speed, error count, and the current size of the kana set. The formula rewards speed and penalizes mistakes, so typing fast with many errors will not produce a strong score.</p>"
           }
         />
+        {!KEYBR_STATIC && (
+          <FormattedMessage
+            id="m_tour09Server"
+            defaultMessage="<p>In server mode, signed-in users can optionally appear on the high score table.</p>"
+          />
+        )}
       </Slide>
       <Slide size="small" anchor={`#${names.keySet}`} position="block-end">
         <FormattedMessage
