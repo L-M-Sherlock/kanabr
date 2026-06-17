@@ -1,4 +1,5 @@
 import { memo, type ReactNode } from "react";
+import { adsEnabled } from "./config.ts";
 import * as styles from "./styles.ts";
 
 export const slot1 = "keybr_728x90_970x90_ATF";
@@ -20,7 +21,7 @@ export function SetupAds({
 }: {
   readonly children: ReactNode;
 }): ReactNode {
-  if (process.env.NODE_ENV === "development") {
+  if (!adsEnabled || process.env.NODE_ENV === "development") {
     return null;
   }
   const html =
@@ -43,6 +44,9 @@ export const AdBanner = memo(function AdBanner({
   readonly name: "BANNER_160X600_1" | "BANNER_970X90_1";
 }): ReactNode {
   const { id, width, height } = inventory[name];
+  if (!adsEnabled) {
+    return null;
+  }
   if (process.env.NODE_ENV === "development") {
     return (
       <div

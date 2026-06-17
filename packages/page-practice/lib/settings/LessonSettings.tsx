@@ -51,59 +51,65 @@ export function LessonSettings(): ReactNode {
     }
   }, [lessonTypeDisabled, settings, updateSettings]);
 
+  const guidedLessonsLabel = formatMessage({
+    id: "t_Guided_lessons",
+    defaultMessage: "Guided lessons",
+  });
+
   return (
     <>
-      <TabList
-        selectedIndex={LessonType.ALL.indexOf(lessonType)}
-        onSelect={(index) => {
-          const next = LessonType.ALL.at(index);
-          if (!isLessonTypeDisabled(next)) {
-            updateSettings(settings.set(lessonProps.type, next));
-          }
-        }}
-      >
-        <Tab
-          label={formatMessage({
-            id: "t_Guided_lessons",
-            defaultMessage: "Guided lessons",
-          })}
-        />
-        <Tab
-          label={formatMessage({
-            id: "t_Common_words",
-            defaultMessage: "Common words",
-          })}
-          disabled={isLessonTypeDisabled(LessonType.WORDLIST)}
-        />
-        <Tab
-          label={formatMessage({
-            id: "t_Books",
-            defaultMessage: "Books",
-          })}
-          disabled={isLessonTypeDisabled(LessonType.BOOKS)}
-        />
-        <Tab
-          label={formatMessage({
-            id: "t_Custom_text",
-            defaultMessage: "Custom text",
-          })}
-          disabled={isLessonTypeDisabled(LessonType.CUSTOM)}
-        />
-        <Tab
-          label={formatMessage({
-            id: "t_Source_code",
-            defaultMessage: "Source code",
-          })}
-          disabled={isLessonTypeDisabled(LessonType.CODE)}
-        />
-        <Tab
-          label={formatMessage({
-            id: "t_Numbers",
-            defaultMessage: "Numbers",
-          })}
-          disabled={isLessonTypeDisabled(LessonType.NUMBERS)}
-        />
-      </TabList>
+      {isJaRomaji ? (
+        <TabList selectedIndex={0} onSelect={() => {}}>
+          {[<Tab key="guided" label={guidedLessonsLabel} />]}
+        </TabList>
+      ) : (
+        <TabList
+          selectedIndex={Math.max(0, LessonType.ALL.indexOf(lessonType))}
+          onSelect={(index) => {
+            const next = LessonType.ALL.at(index);
+            if (!isLessonTypeDisabled(next)) {
+              updateSettings(settings.set(lessonProps.type, next));
+            }
+          }}
+        >
+          <Tab label={guidedLessonsLabel} />
+          <Tab
+            label={formatMessage({
+              id: "t_Common_words",
+              defaultMessage: "Common words",
+            })}
+            disabled={isLessonTypeDisabled(LessonType.WORDLIST)}
+          />
+          <Tab
+            label={formatMessage({
+              id: "t_Books",
+              defaultMessage: "Books",
+            })}
+            disabled={isLessonTypeDisabled(LessonType.BOOKS)}
+          />
+          <Tab
+            label={formatMessage({
+              id: "t_Custom_text",
+              defaultMessage: "Custom text",
+            })}
+            disabled={isLessonTypeDisabled(LessonType.CUSTOM)}
+          />
+          <Tab
+            label={formatMessage({
+              id: "t_Source_code",
+              defaultMessage: "Source code",
+            })}
+            disabled={isLessonTypeDisabled(LessonType.CODE)}
+          />
+          <Tab
+            label={formatMessage({
+              id: "t_Numbers",
+              defaultMessage: "Numbers",
+            })}
+            disabled={isLessonTypeDisabled(LessonType.NUMBERS)}
+          />
+        </TabList>
+      )}
       <LessonLoader>
         {(lesson) => (
           <>

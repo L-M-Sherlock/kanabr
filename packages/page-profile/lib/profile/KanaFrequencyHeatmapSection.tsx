@@ -2,16 +2,14 @@ import { KanaFrequencyHeatmap, Marker } from "@keybr/chart";
 import { type KeyStatsMap } from "@keybr/result";
 import { Explainer, Figure } from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
+import { hasKanaStats } from "./labels.ts";
 
 export function KanaFrequencyHeatmapSection({
   keyStatsMap,
 }: {
   keyStatsMap: KeyStatsMap;
 }) {
-  const hasHiragana = keyStatsMap.letters.some(({ codePoint }) =>
-    isHiraganaCodePoint(codePoint),
-  );
-  if (!hasHiragana) {
+  if (!hasKanaStats(keyStatsMap)) {
     return null;
   }
   return (
@@ -46,8 +44,4 @@ export function KanaFrequencyHeatmapSection({
       </Figure.Legend>
     </Figure>
   );
-}
-
-function isHiraganaCodePoint(codePoint: number): boolean {
-  return codePoint >= 0x3041 && codePoint <= 0x3096;
 }

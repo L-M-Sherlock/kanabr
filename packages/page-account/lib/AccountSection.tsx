@@ -4,6 +4,7 @@ import {
   type UserDetails,
   UserName,
 } from "@keybr/pages-shared";
+import { paddlePriceId, paddleToken } from "@keybr/thirdparties";
 import { Article, Button, CheckBox, FieldSet, Icon, Para } from "@keybr/widget";
 import { mdiCreditCard, mdiDeleteForever, mdiExitToApp } from "@mdi/js";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,6 +22,7 @@ export function AccountSection({
   actions: AccountActions;
 }) {
   const { formatMessage } = useIntl();
+  const premiumEnabled = paddleToken !== "0" && paddlePriceId !== "0";
 
   return (
     <Article>
@@ -44,7 +46,7 @@ export function AccountSection({
         <Para>
           <FormattedMessage
             id="account.avatar.description"
-            defaultMessage="Your user image and name as they are visible to the public in your profile, the high scores table, and the multiplayer game."
+            defaultMessage="Your user image and name as they are visible to server-backed features such as public profiles, high scores, and multiplayer."
           />
         </Para>
 
@@ -82,49 +84,46 @@ export function AccountSection({
         </Para>
       </FieldSet>
 
-      <FieldSet
-        legend={formatMessage({
-          id: "t_Premium_account",
-          defaultMessage: "Premium account",
-        })}
-      >
-        {isPremiumUser(publicUser) ? (
-          <FormattedMessage
-            id="account.premiumAccount.description"
-            defaultMessage="<p>Thank you for purchasing a premium account! Now you can enjoy additional features and an ad-free experience.</p>"
-          />
-        ) : (
-          <>
+      {premiumEnabled && (
+        <FieldSet
+          legend={formatMessage({
+            id: "t_Premium_account",
+            defaultMessage: "Premium account",
+          })}
+        >
+          {isPremiumUser(publicUser) ? (
             <FormattedMessage
-              id="account.freeAccount.description"
-              defaultMessage={
-                "<p>Buy a <strong>premium account</strong> to unlock additional features and enjoy an ad-free experience. Here is the list of premium account benefits:</p>" +
-                "<ul>" +
-                "<li><strong>No ads.</strong> Ads may be distracting and impede your learning progress. This is a good way to get rid of them.</li>" +
-                "<li><strong>No trackers.</strong> Trackers inevitably come with ads. Remove all trackers for complete online privacy.</li>" +
-                "<li><strong>Ultra-fast responsiveness.</strong> Ads take quite some time to load. Getting rid of them means faster loading times for all pages.</li>" +
-                "</ul>" +
-                "<p>It is a single time payment that provides lifetime access. It is NOT a recurring subscription.</p>"
-              }
+              id="account.premiumAccount.description"
+              defaultMessage="<p>Thank you for purchasing a premium account! Premium status is active for server-backed features on this installation.</p>"
             />
-
-            <AccountPricePreview />
-
-            <Para>
-              <Button
-                onClick={() => {
-                  actions.checkout();
-                }}
-                icon={<Icon shape={mdiCreditCard} />}
-                label={formatMessage({
-                  id: "t_Buy_a_premium_",
-                  defaultMessage: "Buy a premium account",
-                })}
+          ) : (
+            <>
+              <FormattedMessage
+                id="account.freeAccount.description"
+                defaultMessage={
+                  "<p>Buy a <strong>premium account</strong> for this server-backed installation to unlock the features configured by the site operator. If ads are enabled on this installation, premium status also removes them.</p>" +
+                  "<p>It is a single time payment that provides lifetime access on this installation. It is NOT a recurring subscription.</p>"
+                }
               />
-            </Para>
-          </>
-        )}
-      </FieldSet>
+
+              <AccountPricePreview />
+
+              <Para>
+                <Button
+                  onClick={() => {
+                    actions.checkout();
+                  }}
+                  icon={<Icon shape={mdiCreditCard} />}
+                  label={formatMessage({
+                    id: "t_Buy_a_premium_",
+                    defaultMessage: "Buy a premium account",
+                  })}
+                />
+              </Para>
+            </>
+          )}
+        </FieldSet>
+      )}
 
       <FieldSet
         legend={formatMessage({

@@ -24,7 +24,8 @@ export function KeyboardOrderProp({
           <CheckBox
             label={formatMessage({
               id: "setting.keyboardOrder.label",
-              defaultMessage: "Sort letters in the order of keyboard keys",
+              defaultMessage:
+                "Sort characters in the order of physical keyboard keys",
             })}
             disabled={disabled}
             checked={settings.get(lessonProps.guided.keyboardOrder)}
@@ -40,7 +41,7 @@ export function KeyboardOrderProp({
         <Description>
           <FormattedMessage
             id="setting.keyboardOrder.description"
-            defaultMessage="Sort letters in such a way that the letters from the home row come first, then the letters from the top row, and finally all the remaining letters. Home row is the row with the CapsLock key. Top row is the row with the Tab key. It is easier and faster to type when your fingers do not need to move away from the home row. This feature works best with optimized layouts, like Dvorak or Colemak. In the Qwerty layout, the only vowel on the home row is A, so it severely limits the choice of words, and the algorithm will use more pseudo-words than usual."
+            defaultMessage="Sort characters so the ones typed from the home row come first, then the top row, and finally the remaining physical keys. The home row is the row with the CapsLock key. The top row is the row with the Tab key. This feature works best with optimized layouts, like Dvorak or Colemak. It is not used for Japanese Romaji mode, where kana are practice units and physical keys are only the romaji input method."
           />
         </Description>
       </Explainer>

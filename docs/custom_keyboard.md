@@ -19,7 +19,7 @@ The generator will write files to <nobr>`packages/keybr-keyboard/lib/layout`</no
 
 ## Adding a custom keyboard layout
 
-Custom keyboard layout definition files are located in <nobr>`packages/keybr-keyboard-generator/layout`</nobr>.
+Custom keyboard layout definition files are located in <nobr>`packages/keybr-generators/layouts`</nobr>.
 
 You can add your own keyboard layout by copying and modifying an existing one. The configuration format is straightforward, each physical key location (like `"KeyA"`, `"KeyB"`, etc.) is mapped to a list of up to four code points.
 The four code points are given for the following key modifiers:

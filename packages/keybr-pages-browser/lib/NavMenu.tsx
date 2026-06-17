@@ -48,7 +48,7 @@ export function NavMenu({ currentPath }: { readonly currentPath: string }) {
       )}
 
       <MenuItem>
-        <SubMenu currentPath={currentPath} />
+        <SubMenu />
       </MenuItem>
     </div>
   );

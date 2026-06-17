@@ -25,6 +25,13 @@ export async function loadMessages(locale: LocaleId): Promise<Messages> {
           { with: { type: "json" } }
         )
       ).default;
+    case "bn":
+      return (
+        await import(
+          /* webpackChunkName: "messages-bn" */ "./messages/bn.json",
+          { with: { type: "json" } }
+        )
+      ).default;
     case "ca":
       return (
         await import(
@@ -102,6 +109,13 @@ export async function loadMessages(locale: LocaleId): Promise<Messages> {
           { with: { type: "json" } }
         )
       ).default;
+    case "fo":
+      return (
+        await import(
+          /* webpackChunkName: "messages-fo" */ "./messages/fo.json",
+          { with: { type: "json" } }
+        )
+      ).default;
     case "fr":
       return (
         await import(
@@ -144,6 +158,13 @@ export async function loadMessages(locale: LocaleId): Promise<Messages> {
           { with: { type: "json" } }
         )
       ).default;
+    case "is":
+      return (
+        await import(
+          /* webpackChunkName: "messages-is" */ "./messages/is.json",
+          { with: { type: "json" } }
+        )
+      ).default;
     case "it":
       return (
         await import(
@@ -162,6 +183,27 @@ export async function loadMessages(locale: LocaleId): Promise<Messages> {
       return (
         await import(
           /* webpackChunkName: "messages-ko" */ "./messages/ko.json",
+          { with: { type: "json" } }
+        )
+      ).default;
+    case "lt":
+      return (
+        await import(
+          /* webpackChunkName: "messages-lt" */ "./messages/lt.json",
+          { with: { type: "json" } }
+        )
+      ).default;
+    case "mn":
+      return (
+        await import(
+          /* webpackChunkName: "messages-mn" */ "./messages/mn.json",
+          { with: { type: "json" } }
+        )
+      ).default;
+    case "nb":
+      return (
+        await import(
+          /* webpackChunkName: "messages-nb" */ "./messages/nb.json",
           { with: { type: "json" } }
         )
       ).default;
@@ -218,6 +260,20 @@ export async function loadMessages(locale: LocaleId): Promise<Messages> {
       return (
         await import(
           /* webpackChunkName: "messages-sk" */ "./messages/sk.json",
+          { with: { type: "json" } }
+        )
+      ).default;
+    case "sl":
+      return (
+        await import(
+          /* webpackChunkName: "messages-sl" */ "./messages/sl.json",
+          { with: { type: "json" } }
+        )
+      ).default;
+    case "sq":
+      return (
+        await import(
+          /* webpackChunkName: "messages-sq" */ "./messages/sq.json",
           { with: { type: "json" } }
         )
       ).default;

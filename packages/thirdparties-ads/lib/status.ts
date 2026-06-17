@@ -11,8 +11,8 @@ export function showAdBlockerStatus(enabled: boolean): void {
     for (const elem of placeholders) {
       elem.hidden = false;
       elem.innerHTML =
-        "Please disable your ad-blocker or purchase " +
-        "a <a href='/account'>premium account</a> to remove ads!";
+        "This server-backed installation includes ads. " +
+        "Please disable your ad blocker or use a configured premium account if one is available.";
     }
   }
 }

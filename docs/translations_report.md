@@ -1,268 +1,139 @@
 # English
 
-Translated: 363 messages, 4921 words
+Translated: 367 messages, 4362 words
 
 Untranslated: 0 messages, 0 words
 
 # Afrikaans
 
-Translated: 339 messages, 4744 words
+Translated: 362 messages, 4345 words
 
-Untranslated: 23 messages, 164 words
+Untranslated: 5 messages, 17 words
 
-* *Letters*
 * *Volume:*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Arabic
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Bulgarian
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Bangla
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Catalan
 
-Translated: 310 messages, 3556 words
+Translated: 347 messages, 4014 words
 
-Untranslated: 50 messages, 1330 words
+Untranslated: 18 messages, 326 words
 
-* *Errors*
 * *Zones:*
-* *Local data*
 * *Export data*
 * *Import data*
 * *Sound theme:*
 * *Explain charts*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
 * *Relative Accuracy*
-* *Repeat each word:*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *The previous keys are also above the target speed*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* ...
+* *The previous items are also above the target speed*
+* *For other languages and keyboard layouts, use keybr.com.*
+* *Generate lessons that resemble the specified programming lan...*
+* *Practice punctuation characters that are specific to a progr...*
+* *This is a histogram of the accuracies of all users, and your...*
+* *Show color coding of the keyboard zones. Use this option to ...*
+* *Generate typing lessons from the text of a book. All keys ar...*
+* *Highlight a key that must to be pressed next. Use this optio...*
+* *See how accurate you type relative to other users. The highe...*
+* *<p>This is the accuracy indicator and the difference from th...*
+* *<h1>Keyboard Layouts</h1><p>These charts visualize the effic...*
 
 # Czech
 
-Translated: 336 messages, 4740 words
+Translated: 358 messages, 4340 words
 
-Untranslated: 26 messages, 168 words
+Untranslated: 9 messages, 22 words
 
 * *Font:*
 * *Reset*
 * *Zones:*
 * *Syntax:*
-* *Local data*
 * *Export data*
 * *Import data*
 * *Sound theme:*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Danish
 
-Translated: 331 messages, 4689 words
+Translated: 356 messages, 4318 words
 
-Untranslated: 29 messages, 197 words
+Untranslated: 9 messages, 22 words
 
 * *Score*
 * *Layout*
 * *Layout:*
 * *Layouts*
-* *Position*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Multiplayer*
 * *Download data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # German
 
-Translated: 339 messages, 4744 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 23 messages, 164 words
+Untranslated: 4 messages, 16 words
 
-* *Position*
-* *Alphabet:*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Greek
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Esperanto
 
-Translated: 77 messages, 1126 words
+Translated: 199 messages, 3212 words
 
-Untranslated: 278 messages, 3724 words
+Untranslated: 162 messages, 1095 words
 
-* *GO!*
 * *Copy*
 * *Done*
 * *Help*
@@ -272,9 +143,7 @@ Untranslated: 278 messages, 3724 words
 * *Close*
 * *Font:*
 * *Reset*
-* *Speed*
 * *Visit*
-* *Errors*
 * *Typing*
 * *Zones:*
 * *Layouts*
@@ -282,127 +151,87 @@ Untranslated: 278 messages, 3724 words
 * *Lessons*
 * *Not set*
 * *Numbers*
+* *Options*
+* *Preview*
+* *Profile*
 * ...
 
 # Spanish
 
-Translated: 341 messages, 4746 words
+Translated: 367 messages, 4362 words
 
-Untranslated: 21 messages, 162 words
-
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+Untranslated: 0 messages, 0 words
 
 # Estonian
 
-Translated: 338 messages, 4743 words
+Translated: 366 messages, 4361 words
 
-Untranslated: 24 messages, 165 words
+Untranslated: 1 messages, 1 words
 
-* *GO!*
 * *Font:*
-* *Progress*
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* ...
 
 # Persian
 
-Translated: 287 messages, 2823 words
+Translated: 337 messages, 3835 words
 
-Untranslated: 73 messages, 2063 words
+Untranslated: 28 messages, 505 words
 
 * *Books*
 * *Zones:*
 * *Syntax:*
-* *Local data*
-* *Export data*
-* *Import data*
 * *Sound theme:*
 * *Top accuracy*
 * *Explain charts*
-* *Katakana ratio:*
-* *Key sounds only*
 * *Accuracy Streaks*
 * *Average accuracy*
-* *Reset local data*
 * *Relative Accuracy*
-* *Repeat each word:*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
+* *Keyboard hardware emulates layout*
+* *Switch the current interface layout.*
+* *Circle color: {label1} – hit count, {label2} – miss count.*
+* *Generate lessons that resemble the specified programming lan...*
+* *Practice punctuation characters that are specific to a progr...*
+* *This is a histogram of the accuracies of all users, and your...*
+* *Show color coding of the keyboard zones. Use this option to ...*
+* *Bar color: {label1} – hit count, {label2} – miss count, {lab...*
+* *Generate typing lessons from the text of a book. All keys ar...*
+* *<a>Benford’s law</a> is an observation that in many real-lif...*
+* *You don’t have any accuracy streaks. Consider completing a l...*
 * ...
 
 # Finnish
 
-Translated: 208 messages, 2284 words
+Translated: 281 messages, 3404 words
 
-Untranslated: 148 messages, 2568 words
+Untranslated: 81 messages, 905 words
 
-* *GO!*
 * *Time*
 * *Layouts*
 * *Metrics*
 * *Not set*
 * *Syntax:*
-* *Position*
 * *Practice*
 * *Settings*
 * *Top speed*
 * *Uncertain*
 * *Characters*
-* *Local data*
 * *Top speed!*
-* *Export data*
-* *High Scores*
-* *Import data*
-* *Multiplayer*
 * *Smoothness:*
 * *Play sounds:*
+* *Average speed*
+* *Benford’s law*
+* *Download data*
+* *No whitespace*
+* *Bar whitespace*
+* *Emulate layout*
+* *Not enough data*
 * ...
 
 # Faroese
 
-Translated: 44 messages, 583 words
+Translated: 175 messages, 2986 words
 
-Untranslated: 310 messages, 4256 words
+Untranslated: 186 messages, 1321 words
 
-* *GO!*
 * *Copy*
 * *Done*
 * *Help*
@@ -413,192 +242,78 @@ Untranslated: 310 messages, 4256 words
 * *Font:*
 * *Reset*
 * *Speed*
-* *Speed*
 * *Visit*
-* *Errors*
 * *Layout*
 * *Typing*
 * *Zones:*
 * *Account*
 * *Layout:*
 * *Layouts*
+* *Lessons*
+* *Lessons*
+* *Metrics*
 * ...
 
 # French
 
-Translated: 333 messages, 4544 words
+Translated: 363 messages, 4329 words
 
-Untranslated: 29 messages, 364 words
+Untranslated: 4 messages, 33 words
 
 * *Zones:*
 * *Options*
 * *Volume:*
-* *Position*
-* *Alphabet:*
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* ...
+* *Above are listed the longest continuous sequences of lessons...*
 
 # Irish
 
-Translated: 337 messages, 4735 words
+Translated: 363 messages, 4351 words
 
-Untranslated: 25 messages, 173 words
+Untranslated: 4 messages, 11 words
 
 * *Zones:*
-* *Local data*
-* *Export data*
-* *Import data*
 * *Smoothness:*
 * *Sound theme:*
 * *M|T|W|T|F|S|S*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* ...
 
 # Hebrew
 
-Translated: 341 messages, 4746 words
+Translated: 367 messages, 4362 words
 
-Untranslated: 21 messages, 162 words
-
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
-* *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+Untranslated: 0 messages, 0 words
 
 # Croatian
 
-Translated: 337 messages, 4740 words
+Translated: 365 messages, 4358 words
 
-Untranslated: 25 messages, 168 words
+Untranslated: 2 messages, 4 words
 
 * *Font:*
-* *Reset*
-* *Local data*
-* *Export data*
-* *Import data*
-* *Multiplayer*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Premium account price:*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* ...
 
 # Hungarian
 
-Translated: 341 messages, 4746 words
+Translated: 366 messages, 4359 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 1 messages, 3 words
 
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
 
 # Indonesian
 
-Translated: 339 messages, 4744 words
+Translated: 365 messages, 4358 words
 
-Untranslated: 23 messages, 164 words
+Untranslated: 2 messages, 4 words
 
-* *GO!*
 * *Volume:*
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* ...
 
 # Icelandic
 
-Translated: 95 messages, 1742 words
+Translated: 202 messages, 3213 words
 
-Untranslated: 260 messages, 3108 words
+Untranslated: 159 messages, 1094 words
 
-* *GO!*
 * *Copy*
 * *Done*
 * *Help*
@@ -609,22 +324,23 @@ Untranslated: 260 messages, 3108 words
 * *Font:*
 * *Reset*
 * *Retry*
-* *Speed*
 * *Visit*
-* *Errors*
 * *Typing*
 * *Zones:*
 * *Account*
 * *Layouts*
 * *Lessons*
 * *Metrics*
+* *Not set*
+* *Options*
+* *Preview*
 * ...
 
 # Italian
 
-Translated: 334 messages, 4738 words
+Translated: 359 messages, 4351 words
 
-Untranslated: 27 messages, 168 words
+Untranslated: 7 messages, 9 words
 
 * *Font:*
 * *Layout*
@@ -632,55 +348,24 @@ Untranslated: 27 messages, 168 words
 * *Layout:*
 * *Layouts*
 * *Volume:*
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* ...
 
 # Japanese
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Korean
 
-Translated: 145 messages, 1297 words
+Translated: 236 messages, 3342 words
 
-Untranslated: 215 messages, 3589 words
+Untranslated: 129 messages, 998 words
 
 * *Copy*
 * *Done*
@@ -698,47 +383,42 @@ Untranslated: 215 messages, 3589 words
 * *Preview*
 * *Syntax:*
 * *Volume:*
-* *All keys*
 * *Chapters*
 * *Keyboard*
 * *Previous*
+* *Examples:*
 * ...
 
 # Lithuanian
 
-Translated: 298 messages, 3096 words
+Translated: 347 messages, 4045 words
 
-Untranslated: 61 messages, 1781 words
+Untranslated: 17 messages, 286 words
 
-* *Local data*
-* *Export data*
-* *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Accuracy Streaks*
-* *Reset local data*
 * *Relative Accuracy*
-* *Show romaji helper*
 * *No accuracy streaks.*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
 * *Practice numbers only.*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
 * *The difference from the average value.*
-* *Sort letters in the order of keyboard keys*
 * *Download all your typing data in JSON format.*
-* *Help us translate keybr.com into your language.*
-* *The detailed statistics regarding your learning progress.*
-* ...
+* *Permanently delete all of your typing data and reset statist...*
+* *This is a histogram of the accuracies of all users, and your...*
+* *Show color coding of the keyboard zones. Use this option to ...*
+* *Are you sure you want to delete all data and reset your prof...*
+* *You don’t have any accuracy streaks. Consider completing a l...*
+* *Highlight a key that must to be pressed next. Use this optio...*
+* *See how accurate you type relative to other users. The highe...*
+* *Above are listed the longest continuous sequences of lessons...*
+* *If enabled, the text cursor stops advancing until the right ...*
+* *<p>This is the accuracy indicator and the difference from th...*
 
 # Mongolian
 
-Translated: 16 messages, 378 words
+Translated: 153 messages, 2901 words
 
-Untranslated: 336 messages, 4432 words
+Untranslated: 206 messages, 1377 words
 
-* *GO!*
 * *Copy*
 * *Done*
 * *Help*
@@ -752,19 +432,20 @@ Untranslated: 336 messages, 4432 words
 * *Retry*
 * *Score*
 * *Speed*
-* *Speed*
 * *Visit*
 * *Digits*
-* *Errors*
 * *Layout*
 * *Resend*
+* *Typing*
+* *Zones:*
+* *Account*
 * ...
 
 # Norwegian Bokmål
 
-Translated: 158 messages, 2338 words
+Translated: 233 messages, 3412 words
 
-Untranslated: 198 messages, 2515 words
+Untranslated: 128 messages, 895 words
 
 * *Done*
 * *Help*
@@ -772,7 +453,6 @@ Untranslated: 198 messages, 2515 words
 * *Books*
 * *Font:*
 * *Reset*
-* *Speed*
 * *Visit*
 * *Zones:*
 * *Account*
@@ -786,125 +466,66 @@ Untranslated: 198 messages, 2515 words
 * *Sign-In*
 * *Syntax:*
 * *Volume:*
+* *Accuracy*
 * ...
 
 # Nepali
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Dutch
 
-Translated: 333 messages, 4736 words
+Translated: 357 messages, 4338 words
 
-Untranslated: 28 messages, 170 words
+Untranslated: 9 messages, 22 words
 
 * *Score*
 * *Zones:*
 * *Account*
-* *Letters*
 * *Volume:*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Multiplayer*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Premium account*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Polish
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Brazilian Portuguese
 
-Translated: 338 messages, 4743 words
+Translated: 360 messages, 4343 words
 
-Untranslated: 24 messages, 165 words
+Untranslated: 7 messages, 19 words
 
 * *Layout*
 * *Layout:*
 * *Layouts*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # European Portuguese
 
-Translated: 318 messages, 4597 words
+Translated: 343 messages, 4230 words
 
-Untranslated: 42 messages, 289 words
+Untranslated: 22 messages, 110 words
 
 * *Books*
 * *Layout*
@@ -912,7 +533,6 @@ Untranslated: 42 messages, 289 words
 * *Layout:*
 * *Layouts*
 * *Volume:*
-* *Local data*
 * *Top score!*
 * *Top speed!*
 * *Export data*
@@ -920,19 +540,20 @@ Untranslated: 42 messages, 289 words
 * *Sound theme:*
 * *Top accuracy*
 * *Explain charts*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Average accuracy*
-* *Reset local data*
 * *Relative Accuracy*
-* *Repeat each word:*
+* *Daily goal reached!*
+* *Premium account price:*
+* *For other languages and keyboard layouts, use keybr.com.*
+* *This is a histogram of the accuracies of all users, and your...*
 * ...
 
 # Romanian
 
-Translated: 298 messages, 3587 words
+Translated: 343 messages, 4246 words
 
-Untranslated: 57 messages, 1277 words
+Untranslated: 19 messages, 86 words
 
 * *Font:*
 * *Layout*
@@ -940,83 +561,48 @@ Untranslated: 57 messages, 1277 words
 * *Account*
 * *Layout:*
 * *Layouts*
-* *Translate*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Multiplayer*
 * *Sound theme:*
 * *Top accuracy*
 * *Forgive errors*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Average accuracy*
-* *Reset local data*
 * *Relative Accuracy*
-* *Repeat each word:*
-* ...
+* *Premium account price:*
+* *Enter full-screen mode.*
+* *For other languages and keyboard layouts, use keybr.com.*
+* *This is a histogram of the accuracies of all users, and your...*
+* *See how accurate you type relative to other users. The highe...*
 
 # Russian
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Slovak
 
-Translated: 340 messages, 4745 words
+Translated: 362 messages, 4345 words
 
-Untranslated: 22 messages, 163 words
+Untranslated: 5 messages, 17 words
 
 * *Syntax:*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Slovenian
 
-Translated: 192 messages, 3519 words
+Translated: 248 messages, 3997 words
 
-Untranslated: 169 messages, 1387 words
+Untranslated: 118 messages, 363 words
 
 * *Copy*
 * *Done*
@@ -1027,7 +613,6 @@ Untranslated: 169 messages, 1387 words
 * *Close*
 * *Font:*
 * *Reset*
-* *Speed*
 * *Visit*
 * *Typing*
 * *Zones:*
@@ -1038,15 +623,15 @@ Untranslated: 169 messages, 1387 words
 * *Metrics*
 * *Not set*
 * *Numbers*
+* *Options*
 * ...
 
 # Albanian
 
-Translated: 43 messages, 684 words
+Translated: 170 messages, 3068 words
 
-Untranslated: 311 messages, 4155 words
+Untranslated: 191 messages, 1239 words
 
-* *GO!*
 * *Copy*
 * *Done*
 * *Help*
@@ -1059,76 +644,54 @@ Untranslated: 311 messages, 4155 words
 * *Reset*
 * *Score*
 * *Speed*
-* *Speed*
 * *Visit*
-* *Errors*
 * *Layout*
 * *Typing*
 * *Zones:*
 * *Account*
+* *Layout:*
+* *Layouts*
+* *Lessons*
 * ...
 
 # Swedish
 
-Translated: 338 messages, 4743 words
+Translated: 360 messages, 4343 words
 
-Untranslated: 24 messages, 165 words
+Untranslated: 7 messages, 19 words
 
 * *Layout*
 * *Layout:*
 * *Syntax:*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Thai
 
-Translated: 329 messages, 4635 words
+Translated: 353 messages, 4265 words
 
-Untranslated: 31 messages, 251 words
+Untranslated: 12 messages, 75 words
 
 * *Zones:*
-* *Local data*
 * *Export data*
 * *Import data*
 * *Sound theme:*
 * *Top accuracy*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Average accuracy*
-* *Reset local data*
 * *Relative Accuracy*
-* *Repeat each word:*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
 * *Premium account price:*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
+* *This is a histogram of the accuracies of all users, and your...*
+* *See how accurate you type relative to other users. The highe...*
 
 # Turkish
 
-Translated: 227 messages, 2126 words
+Translated: 294 messages, 3453 words
 
-Untranslated: 130 messages, 2727 words
+Untranslated: 69 messages, 865 words
 
 * *Books*
 * *Font:*
@@ -1137,9 +700,7 @@ Untranslated: 130 messages, 2727 words
 * *Preview*
 * *Sign-In*
 * *Syntax:*
-* *Alphabet:*
 * *Box cursor*
-* *Local data*
 * *Export data*
 * *Import data*
 * *Line cursor*
@@ -1150,122 +711,75 @@ Untranslated: 130 messages, 2727 words
 * *No whitespace*
 * *Smooth cursor*
 * *Bar whitespace*
+* *Emulate layout*
+* *Explain charts*
 * ...
 
 # Ukrainian
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Vietnamese
 
-Translated: 275 messages, 2745 words
+Translated: 320 messages, 3683 words
 
-Untranslated: 84 messages, 2132 words
+Untranslated: 44 messages, 648 words
 
 * *Visit*
 * *Typing*
 * *Zones:*
 * *Box cursor*
-* *Local data*
 * *Export data*
 * *Import data*
 * *Line cursor*
 * *Block cursor*
 * *Sound theme:*
 * *Top accuracy*
-* *Unique words*
 * *M|T|W|T|F|S|S*
 * *Smooth cursor*
 * *Jumping cursor*
-* *Katakana ratio:*
 * *Key sounds only*
 * *Average accuracy*
-* *Reset local data*
 * *Underline cursor*
+* *Premium account price:*
+* *Key Frequency Histogram*
+* *Key Typing Speed Histogram*
+* *Keyboard hardware emulates layout*
 * ...
 
 # Simplified Chinese
 
-Translated: 363 messages, 4921 words
+Translated: 366 messages, 4353 words
 
-Untranslated: 0 messages, 0 words
+Untranslated: 1 messages, 9 words
+
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Traditional Chinese
 
-Translated: 341 messages, 4746 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 21 messages, 162 words
+Untranslated: 4 messages, 16 words
 
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* *Make unlocked kana appear regularly even when the current fo...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*
 
 # Chinese (Taiwan)
 
-Translated: 340 messages, 4745 words
+Translated: 363 messages, 4346 words
 
-Untranslated: 22 messages, 163 words
+Untranslated: 4 messages, 16 words
 
-* *GO!*
-* *Local data*
 * *Export data*
 * *Import data*
-* *Katakana ratio:*
 * *Key sounds only*
-* *Reset local data*
-* *Show romaji helper*
-* *Balance kana frequency*
-* *Kana Frequency Heatmap*
-* *Unavailable in static mode*
-* *Import completed. Reloading…*
-* *Circle color: {label1} – hit count, {label2} – miss count.*
-* *Importing will overwrite your current local data. Continue?*
-* *This chart shows relative kana frequencies in gojuon order.*
-* *Import local data from a JSON file (overwrites your current ...*
-* *Export your local data (typing history, settings, and theme)...*
-* *Delete your local data (typing history, settings, and theme)...*
-* *Mix katakana into guided lessons for Japanese. A higher valu...*
-* *Show a helper bar with your current romaji composition and s...*
-* ...
+* *For other languages and keyboard layouts, use keybr.com.*

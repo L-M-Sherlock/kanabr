@@ -1,4 +1,4 @@
-import { LoadingProgress } from "@keybr/pages-shared";
+import { LoadingProgress, Pages } from "@keybr/pages-shared";
 import { lazy, Suspense } from "react";
 import { KEYBR_STATIC } from "../static.ts";
 import { StaticNotice } from "../StaticNotice.tsx";
@@ -9,7 +9,7 @@ const AccountPage = lazy(() =>
 
 export default function Page() {
   if (KEYBR_STATIC) {
-    return <StaticNotice feature="Account" />;
+    return <StaticNotice feature={Pages.account.title} />;
   }
   return (
     <Suspense fallback={<LoadingProgress />}>

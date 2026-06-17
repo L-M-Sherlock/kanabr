@@ -131,7 +131,7 @@ test("redirect to provider", async () => {
   equal(url.searchParams.get("response_type")!, "code");
   equal(
     url.searchParams.get("redirect_uri")!,
-    "https://www.keybr.com/auth/oauth-callback/fake",
+    "http://localhost:3000/auth/oauth-callback/fake",
   );
 });
 

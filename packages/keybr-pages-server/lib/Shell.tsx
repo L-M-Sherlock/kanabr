@@ -12,6 +12,7 @@ import {
 } from "@keybr/pages-shared";
 import { ThemePrefs, useTheme } from "@keybr/themes";
 import {
+  adsEnabled,
   CloudflareAnalytics,
   GoogleTagManager,
   SetupAds,
@@ -36,9 +37,11 @@ export function Shell({
           <>
             <CloudflareAnalytics />
             <GoogleTagManager />
-            <SetupAds>
-              <ScriptAssets entrypoint="ads" />
-            </SetupAds>
+            {adsEnabled && (
+              <SetupAds>
+                <ScriptAssets entrypoint="ads" />
+              </SetupAds>
+            )}
           </>
         )}
       </Head>

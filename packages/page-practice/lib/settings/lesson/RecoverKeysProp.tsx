@@ -19,7 +19,7 @@ export function RecoverKeysProp(): ReactNode {
         <Field>
           <FormattedMessage
             id="t_Unlock_a_next_key_:"
-            defaultMessage="Unlock a next key only when:"
+            defaultMessage="Unlock the next item only when:"
           />
         </Field>
         <Field>
@@ -27,7 +27,7 @@ export function RecoverKeysProp(): ReactNode {
             label={formatMessage({
               id: "t_The_previous_keys_are_",
               defaultMessage:
-                "The previous keys are also above the target speed",
+                "The previous items are also above the target speed",
             })}
             checked={settings.get(lessonProps.guided.recoverKeys)}
             onChange={(value) => {
@@ -42,7 +42,7 @@ export function RecoverKeysProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.recoverKeys.description"
-            defaultMessage="When you focus on a new key, it is very likely that the speed of previous keys will decrease. If this option is disabled, you unlock a new key by raising only the focused key above the target speed. If this option is enabled, you will have to raise the focused key and all the previous keys above the target speed. This will make unlocking new keys harder. However, this will also make forgetting old keys harder."
+            defaultMessage="When you focus on a new kana or character, the speed of previous items may decrease. If this option is disabled, you unlock a new item by raising only the focused item above the target speed. If it is enabled, you must raise the focused item and all previous items above the target speed. This makes unlocking harder, but also makes forgetting old items harder."
           />
         </Description>
       </Explainer>

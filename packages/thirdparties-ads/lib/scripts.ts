@@ -1,6 +1,13 @@
-import { cookiebotClientId } from "@keybr/thirdparties";
+import {
+  adPublisherId,
+  adsEnabled,
+  cookiebotClientId,
+} from "@keybr/thirdparties";
 
 export function loadScripts(): Promise<boolean> {
+  if (!adsEnabled) {
+    return Promise.resolve(false);
+  }
   return Promise.resolve()
     .then(() =>
       loadScript("https://consent.cookiebot.com/uc.js", (script) => {
@@ -10,7 +17,9 @@ export function loadScripts(): Promise<boolean> {
         script.dataset.framework = "TCFv2.2";
       }),
     )
-    .then(() => loadScript("https://a.pub.network/keybr-com/pubfig.min.js"))
+    .then(() =>
+      loadScript(`https://a.pub.network/${adPublisherId}/pubfig.min.js`),
+    )
     .then(
       () => true,
       () => false,

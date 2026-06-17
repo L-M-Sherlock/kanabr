@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 
 function getDataDir() {
-  return resolve(tmpdir(), `keybr-tests-${randomBytes(6).toString("hex")}`);
+  return resolve(tmpdir(), `kanabr-tests-${randomBytes(6).toString("hex")}`);
 }
 
 function getPublicDir() {
@@ -12,14 +12,15 @@ function getPublicDir() {
 
 process.env.DATA_DIR ??= getDataDir();
 process.env.PUBLIC_DIR ??= getPublicDir();
+process.env.APP_URL ??= "http://localhost:3000/";
 
 // Default to SQLite for hermetic tests. Override with DATABASE_CLIENT=mysql to
 // run MySQL-backed integration tests.
 process.env.DATABASE_CLIENT ??= "sqlite";
 process.env.DATABASE_HOST ??= "127.0.0.1";
 process.env.DATABASE_PORT ??= "3306";
-process.env.DATABASE_DATABASE ??= "keybr_tests";
-process.env.DATABASE_USERNAME ??= "keybr";
+process.env.DATABASE_DATABASE ??= "kanabr_tests";
+process.env.DATABASE_USERNAME ??= "kanabr";
 process.env.DATABASE_PASSWORD ??= "";
 process.env.DATABASE_FILENAME ??= ":memory:";
 

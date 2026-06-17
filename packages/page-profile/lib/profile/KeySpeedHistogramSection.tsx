@@ -3,6 +3,7 @@ import { type KeyStatsMap } from "@keybr/result";
 import { Explainer, Figure } from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
 import { ChartWrapper } from "./ChartWrapper.tsx";
+import { hasKanaStats } from "./labels.ts";
 
 export function KeySpeedHistogramSection({
   keyStatsMap,
@@ -15,21 +16,36 @@ export function KeySpeedHistogramSection({
     minWidthRem,
     keyStatsMap.letters.length * perKeyRem,
   );
+  const kana = hasKanaStats(keyStatsMap);
   return (
     <Figure>
       <Figure.Caption>
-        <FormattedMessage
-          id="profile.chart.keySpeedHistogram.caption"
-          defaultMessage="Key Typing Speed Histogram"
-        />
+        {kana ? (
+          <FormattedMessage
+            id="profile.chart.kanaSpeedHistogram.caption"
+            defaultMessage="Kana Typing Speed Histogram"
+          />
+        ) : (
+          <FormattedMessage
+            id="profile.chart.keySpeedHistogram.caption"
+            defaultMessage="Key Typing Speed Histogram"
+          />
+        )}
       </Figure.Caption>
 
       <Explainer>
         <Figure.Description>
-          <FormattedMessage
-            id="profile.chart.keySpeedHistogram.description"
-            defaultMessage="This chart shows the average typing speed for each individual key."
-          />
+          {kana ? (
+            <FormattedMessage
+              id="profile.chart.kanaSpeedHistogram.description"
+              defaultMessage="This chart shows the average typing speed for each individual kana."
+            />
+          ) : (
+            <FormattedMessage
+              id="profile.chart.keySpeedHistogram.description"
+              defaultMessage="This chart shows the average typing speed for each individual physical key."
+            />
+          )}
         </Figure.Description>
       </Explainer>
 

@@ -27,8 +27,22 @@ const baseUrl = ensureTrailingSlash(
 const locale = process.env.KEYBR_LOCALE ?? "en";
 const color = process.env.KEYBR_COLOR ?? "system";
 const font = process.env.KEYBR_FONT ?? "open-sans";
+const siteTitle = "kanabr - Japanese kana practice";
+const siteDescription =
+  "Practice Japanese hiragana and katakana with adaptive lessons and romaji input. Static mode stores progress locally in your browser.";
+const siteName = "kanabr";
 
 const rtlLocales = new Set(["ar", "fa", "he"]);
+const sitemapPaths = [
+  "/",
+  "/help",
+  "/profile",
+  "/account",
+  "/high-scores",
+  "/multiplayer",
+  "/privacy-policy",
+  "/terms-of-service",
+] as const;
 
 const favIcons = [
   {
@@ -56,7 +70,7 @@ await mkdir(distDir, { recursive: true });
 
 await cp(srcAssetsDir, distAssetsDir, { recursive: true });
 
-for (const file of ["502.html", "cover.png", "favicon.ico", "robots.txt"]) {
+for (const file of ["502.html", "cover.png", "favicon.ico"]) {
   await copyOptional(join(publicDir, file), join(distDir, file));
 }
 
@@ -66,6 +80,13 @@ const manifest: ManifestJson = JSON.parse(
 
 const html = renderIndexHtml({ manifest, baseUrl, locale });
 await writeFile(join(distDir, "index.html"), html, "utf-8");
+await writeFile(join(distDir, "404.html"), html, "utf-8");
+await writeFile(join(distDir, "robots.txt"), renderRobotsTxt(baseUrl), "utf-8");
+await writeFile(
+  join(distDir, "sitemap.xml"),
+  renderSitemapXml(baseUrl),
+  "utf-8",
+);
 
 function renderIndexHtml({
   manifest,
@@ -98,11 +119,24 @@ function renderIndexHtml({
     .replaceAll("&", "\\u0026");
 
   const dir = rtlLocales.has(locale.toLowerCase()) ? "rtl" : "ltr";
+  const canonical = baseUrl;
+  const coverUrl = new URL("cover.png", baseUrl).href;
 
   const head = [
     `<meta charset="UTF-8">`,
     `<meta name="viewport" content="width=device-width, initial-scale=1">`,
-    `<title>Practice</title>`,
+    `<title>${escapeHtmlText(siteTitle)}</title>`,
+    `<meta name="description" content="${escapeHtmlAttr(siteDescription)}">`,
+    `<link rel="canonical" href="${escapeHtmlAttr(canonical)}">`,
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:site_name" content="${escapeHtmlAttr(siteName)}">`,
+    `<meta property="og:title" content="${escapeHtmlAttr(siteTitle)}">`,
+    `<meta property="og:description" content="${escapeHtmlAttr(
+      siteDescription,
+    )}">`,
+    `<meta property="og:url" content="${escapeHtmlAttr(canonical)}">`,
+    `<meta property="og:image" content="${escapeHtmlAttr(coverUrl)}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
     ...favIcons.map((icon) => {
       const href = assetPath(manifest, icon.href);
       const attrs = [
@@ -129,6 +163,36 @@ function renderIndexHtml({
   )}"><head>${head}</head><body>${body}</body></html>`;
 }
 
+function renderRobotsTxt(baseUrl: string): string {
+  return [
+    "User-agent: *",
+    "Allow: /",
+    "Disallow: /auth/",
+    "Disallow: /login/",
+    "Disallow: /_/",
+    `Sitemap: ${new URL("sitemap.xml", baseUrl).href}`,
+    "",
+  ].join("\n");
+}
+
+function renderSitemapXml(baseUrl: string): string {
+  const urls = sitemapPaths
+    .map((path) => {
+      const loc = path === "/" ? baseUrl : new URL(path.slice(1), baseUrl).href;
+      return ["  <url>", `    <loc>${escapeXml(loc)}</loc>`, "  </url>"].join(
+        "\n",
+      );
+    })
+    .join("\n");
+  return [
+    `<?xml version="1.0" encoding="UTF-8"?>`,
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+    urls,
+    `</urlset>`,
+    "",
+  ].join("\n");
+}
+
 async function copyOptional(src: string, dest: string): Promise<void> {
   try {
     await cp(src, dest, { recursive: false });
@@ -149,4 +213,17 @@ function assetPath(manifest: ManifestJson, name: string): string {
 
 function escapeHtmlAttr(value: string): string {
   return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;");
+}
+
+function escapeHtmlText(value: string): string {
+  return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+}
+
+function escapeXml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
 }

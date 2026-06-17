@@ -1,4 +1,5 @@
 import { ProfilePage, PublicProfilePage } from "@keybr/page-profile";
+import { Pages } from "@keybr/pages-shared";
 import { PublicResultLoader, ResultLoader } from "@keybr/result-loader";
 import { useParams } from "react-router";
 import { ProfileLoader } from "../loader/ProfileLoader.tsx";
@@ -11,7 +12,7 @@ export default function Page() {
     return <Profile />;
   } else {
     if (KEYBR_STATIC) {
-      return <StaticNotice feature="Public profiles" />;
+      return <StaticNotice feature={Pages.profile.title} />;
     }
     return <PublicProfile userId={userId} />;
   }

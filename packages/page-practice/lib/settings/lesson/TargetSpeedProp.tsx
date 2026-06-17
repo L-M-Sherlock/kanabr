@@ -77,7 +77,7 @@ export function TargetSpeedProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.targetSpeed.description"
-            defaultMessage="The target speed is used to measure the confidence level and the color of a letter. The closer to the target speed, the greener. In the guided mode a letter is only unlocked when you pass a target speed threshold. When you unlock all letters, you can increase the target speed to go back to the learning mode and unlock the letters again, this time with a higher speed threshold. We recommend to increase the target speed in modest steps only when you have all letters above the target speed."
+            defaultMessage="The target speed is used to measure confidence level and indicator color for each kana or character. The closer to the target speed, the greener. In guided mode a new item is unlocked only after you pass the target threshold. When you unlock the full set, you can increase the target speed and repeat the guided cycle with a higher threshold. We recommend increasing it in modest steps."
           />
         </Description>
       </Explainer>

@@ -11,7 +11,7 @@ export function EventAlert({ event }: { readonly event: LessonEvent }) {
         <Award icon={<Key lessonKey={event.lessonKey} size="announcement" />}>
           <FormattedMessage
             id="t_ev_New_letter_unlocked"
-            defaultMessage="New letter unlocked!"
+            defaultMessage="New kana/character unlocked!"
           />
         </Award>
       );

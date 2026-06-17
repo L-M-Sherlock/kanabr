@@ -11,7 +11,7 @@ export function HighScoresPage({ entries }: EntriesProps): ReactNode {
         id="page.highScores.content"
         defaultMessage={
           "<h1>High Scores</h1>" +
-          "<p>The table of the fastest typists for the last few days, arranged by their scores from best to worst. Typing score is measured from typing speed, text length, the number of different characters in the text, and the number of errors. The formula is designed in such a way to reward for a faster speed, longer text and a larger alphabet, but to punish for the number of errors.</p>"
+          "<p>This server-backed leaderboard lists signed-in kanabr users from the last few days, arranged by score from best to worst. Score is measured from kana typing speed, lesson length, the size of the active kana or character set, and the number of errors.</p>"
         }
       />
 

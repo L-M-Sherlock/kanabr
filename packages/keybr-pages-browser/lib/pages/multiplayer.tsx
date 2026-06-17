@@ -1,4 +1,4 @@
-import { LoadingProgress } from "@keybr/pages-shared";
+import { LoadingProgress, Pages } from "@keybr/pages-shared";
 import { ResultLoader } from "@keybr/result-loader";
 import { lazy, Suspense } from "react";
 import { KEYBR_STATIC } from "../static.ts";
@@ -12,7 +12,7 @@ const MultiplayerPage = lazy(() =>
 
 export default function Page() {
   if (KEYBR_STATIC) {
-    return <StaticNotice feature="Multiplayer" />;
+    return <StaticNotice feature={Pages.multiplayer.title} />;
   }
   return (
     <Suspense fallback={<LoadingProgress />}>

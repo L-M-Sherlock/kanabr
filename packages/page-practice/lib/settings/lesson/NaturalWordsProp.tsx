@@ -20,7 +20,7 @@ export function NaturalWordsProp(): ReactNode {
           <CheckBox
             label={formatMessage({
               id: "t_Prefer_natural_words",
-              defaultMessage: "Prefer natural words",
+              defaultMessage: "Prefer natural practice items",
             })}
             checked={settings.get(lessonProps.guided.naturalWords)}
             onChange={(value) => {
@@ -35,7 +35,7 @@ export function NaturalWordsProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.naturalWords.description"
-            defaultMessage="Use the dictionary words as much as possible, and if not many such words are available, then use computer-generated pseudo-words. Natural words might be easier to type. Pseudo-words offer a much greater variety of letter combinations. If this option is enabled, you will see more pseudo-words in the beginning, when the letter list is short. However, as you unlock few more letters, there is a good chance that only the dictionary words will be used."
+            defaultMessage="Use dictionary-backed practice items as much as possible. If not many are available, use generated pseudo-items instead. Natural items might be easier to type, while generated items offer more variety for the current kana or character set."
           />
         </Description>
       </Explainer>

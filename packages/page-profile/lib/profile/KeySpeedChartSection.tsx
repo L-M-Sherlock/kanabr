@@ -8,6 +8,7 @@ import { Explainer, Figure, Para } from "@keybr/widget";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ChartWrapper } from "./ChartWrapper.tsx";
+import { hasKanaStats } from "./labels.ts";
 import { SmoothnessRange } from "./SmoothnessRange.tsx";
 
 export function KeySpeedChartSection({
@@ -20,6 +21,7 @@ export function KeySpeedChartSection({
   const [current, setCurrent] = useState(() => letters[0]);
   const [smoothness, setSmoothness] = useState(0.5);
   const target = new Target(settings);
+  const kana = hasKanaStats(keyStatsMap);
 
   useEffect(() => {
     if (letters.length > 0 && !letters.includes(current)) {
@@ -38,18 +40,32 @@ export function KeySpeedChartSection({
   return (
     <Figure>
       <Figure.Caption>
-        <FormattedMessage
-          id="profile.chart.keySpeed.caption"
-          defaultMessage="Key Typing Speed"
-        />
+        {kana ? (
+          <FormattedMessage
+            id="profile.chart.kanaSpeed.caption"
+            defaultMessage="Kana Typing Speed"
+          />
+        ) : (
+          <FormattedMessage
+            id="profile.chart.keySpeed.caption"
+            defaultMessage="Key Typing Speed"
+          />
+        )}
       </Figure.Caption>
 
       <Explainer>
         <Figure.Description>
-          <FormattedMessage
-            id="profile.chart.keySpeed.description"
-            defaultMessage="This chart shows the typing speed change for each individual key."
-          />
+          {kana ? (
+            <FormattedMessage
+              id="profile.chart.kanaSpeed.description"
+              defaultMessage="This chart shows the typing speed change for each individual kana."
+            />
+          ) : (
+            <FormattedMessage
+              id="profile.chart.keySpeed.description"
+              defaultMessage="This chart shows the typing speed change for each individual physical key."
+            />
+          )}
         </Figure.Description>
       </Explainer>
 
@@ -83,14 +99,25 @@ export function KeySpeedChartSection({
       />
 
       <Figure.Legend>
-        <FormattedMessage
-          id="profile.chart.keySpeed.legend"
-          defaultMessage="Horizontal axis: lesson number. Vertical axis: {label1} – typing speed for the currently selected key, {label2} – target typing speed."
-          values={{
-            label1: <Marker type="speed" />,
-            label2: <Marker type="threshold" />,
-          }}
-        />
+        {kana ? (
+          <FormattedMessage
+            id="profile.chart.kanaSpeed.legend"
+            defaultMessage="Horizontal axis: lesson number. Vertical axis: {label1} – typing speed for the currently selected kana, {label2} – target typing speed."
+            values={{
+              label1: <Marker type="speed" />,
+              label2: <Marker type="threshold" />,
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            id="profile.chart.keySpeed.legend"
+            defaultMessage="Horizontal axis: lesson number. Vertical axis: {label1} – typing speed for the currently selected physical key, {label2} – target typing speed."
+            values={{
+              label1: <Marker type="speed" />,
+              label2: <Marker type="threshold" />,
+            }}
+          />
+        )}
       </Figure.Legend>
     </Figure>
   );

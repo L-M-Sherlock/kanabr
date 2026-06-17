@@ -3,6 +3,7 @@ import { type IncomingHeaders } from "@fastr/headers";
 import { Manifest, ManifestContext } from "@keybr/assets";
 import { FakeIntlProvider } from "@keybr/intl";
 import { PageDataContext, Pages } from "@keybr/pages-shared";
+import { CloudflareAnalytics, GoogleTagManager } from "@keybr/thirdparties";
 import { load } from "cheerio";
 import { renderToStaticMarkup } from "react-dom/server";
 import { equal, isFalse, isTrue, like } from "rich-assert";
@@ -40,9 +41,24 @@ test("render", () => {
     "data-color": "system",
     "data-font": "open-sans",
   });
-  isTrue(html.includes("google"));
-  isTrue(html.includes("cloudflare"));
+  isFalse(html.includes("google"));
+  isFalse(html.includes("cloudflare"));
+  isFalse(html.includes("freestar"));
   equal($("nav").length, 0);
+});
+
+test("render analytics when configured", () => {
+  const html = renderToStaticMarkup(
+    <>
+      <CloudflareAnalytics id="cf-token" />
+      <GoogleTagManager id="gtm-token" />
+    </>,
+  );
+
+  isTrue(html.includes("cloudflareinsights"));
+  isTrue(html.includes("cf-token"));
+  isTrue(html.includes("googletagmanager"));
+  isTrue(html.includes("gtm-token"));
 });
 
 test("render alt", () => {

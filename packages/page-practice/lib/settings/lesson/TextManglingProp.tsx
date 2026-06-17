@@ -53,7 +53,7 @@ export function TextManglingProp(): ReactNode {
             <Description>
               <FormattedMessage
                 id="settings.capitalLetters.description"
-                defaultMessage="Adjust the amount of capital letters added to the lesson text. Use this option to practice typing the capital letters. We recommend to increase this value only if you have all letters above the target speed."
+                defaultMessage="Adjust the amount of capital letters added to the lesson text. Use this option to practice uppercase input. We recommend increasing this value only if the current character set is above the target speed."
               />
             </Description>
           </Explainer>
@@ -90,7 +90,7 @@ export function TextManglingProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.punctuation.description"
-            defaultMessage="Adjust the amount of basic punctuation characters added to the lesson text. Use this option to practice typing the punctuation characters. We recommend to increase this value only if you have all letters above the target speed."
+            defaultMessage="Adjust the amount of basic punctuation characters added to the lesson text. Use this option to practice punctuation input. We recommend increasing this value only if the current kana or character set is above the target speed."
           />
         </Description>
       </Explainer>

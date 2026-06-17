@@ -22,6 +22,9 @@ import { ShareProfileLink } from "./profile/ShareProfileLink.tsx";
 import { SpeedChartSection } from "./profile/SpeedChartSection.tsx";
 import { AllTimeSummary, TodaySummary } from "./profile/Summary.tsx";
 
+const KEYBR_STATIC =
+  process.env.KEYBR_STATIC === "1" || process.env.KEYBR_STATIC === "true";
+
 export function ProfilePage() {
   return (
     <Screen>
@@ -51,7 +54,7 @@ function Content({ keyStatsMap }: { keyStatsMap: KeyStatsMap }) {
 
       <AccuracyStreaksSection results={results} />
 
-      <HistogramsSection stats={stats} />
+      {!KEYBR_STATIC && <HistogramsSection stats={stats} />}
 
       <ProgressOverviewSection keyStatsMap={keyStatsMap} />
 

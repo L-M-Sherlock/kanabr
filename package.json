@@ -1,18 +1,18 @@
 {
   "private": true,
-  "name": "keybr.com",
+  "name": "kanabr",
   "description": "Adaptive Japanese kana typing practice (hiragana + katakana) with romaji input.",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://www.keybr.com",
+  "homepage": "https://github.com/L-M-Sherlock/kanabr",
   "engines": {
     "node": ">=22"
   },
-  "license": "GPL-3",
-  "author": "Aliaksandr Radzivanovich <aradzivanovich@gmail.com>",
+  "license": "AGPL-3.0-only",
+  "author": "kanabr contributors",
   "repository": {
     "type": "git",
-    "url": "git@github.com:aradzie/keybr.com.git"
+    "url": "git@github.com:L-M-Sherlock/kanabr.git"
   },
   "workspaces": [
     "packages/*",

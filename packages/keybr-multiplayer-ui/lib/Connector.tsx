@@ -42,7 +42,7 @@ function Banner() {
     <Para align="center">
       <FormattedMessage
         id="multiplayer.intro.description"
-        defaultMessage="Compete against other players in this online multiplayer game. The faster you type, the faster your car goes. Type as fast as you can to win the race!"
+        defaultMessage="Compete against other players in this server-backed kana typing race. The faster you enter the romaji for each kana, the faster your car goes."
       />
     </Para>
   );

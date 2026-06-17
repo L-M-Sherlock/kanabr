@@ -60,7 +60,7 @@ export const KeySetRow = memo(function KeySetRow({
         className={styles.name}
         name={formatMessage({
           id: "t_All_keys",
-          defaultMessage: "All keys",
+          defaultMessage: "Practice set",
         })}
       />
       <div className={styles.value}>
@@ -91,7 +91,7 @@ export const CurrentKeyRow = memo(function CurrentKeyRow({
         className={styles.name}
         name={formatMessage({
           id: "t_Current_key",
-          defaultMessage: "Current key",
+          defaultMessage: "Current focus",
         })}
       />
       <CurrentKey

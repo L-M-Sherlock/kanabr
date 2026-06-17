@@ -48,6 +48,16 @@ export function ResultGrouper({
     () => defaultLayout,
   );
   const [characterClass, setCharacterClass] = useState("letters");
+  const lettersLabel =
+    selectedLayout.id === "ja-romaji"
+      ? formatMessage({
+          id: "t_cc_Kana",
+          defaultMessage: "Kana",
+        })
+      : formatMessage({
+          id: "t_cc_Letters",
+          defaultMessage: "Letters",
+        });
 
   useEffect(() => {
     if (!resultsLayouts.has(selectedLayout)) {
@@ -81,10 +91,7 @@ export function ResultGrouper({
           <OptionList
             options={[
               {
-                name: formatMessage({
-                  id: "t_cc_Letters",
-                  defaultMessage: "Letters",
-                }),
+                name: lettersLabel,
                 value: "letters",
               },
               {

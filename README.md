@@ -5,8 +5,8 @@
 </p>
 
 kanabr is a typing tutor focused on **Japanese kana** (hiragana + katakana),
-powered by an adaptive lesson engine: it tracks per-key statistics, generates
-practice text that targets your weakest keys, and visualizes long‑term
+powered by an adaptive lesson engine: it tracks per-kana statistics, generates
+practice text that targets your weakest kana, and visualizes long-term
 progress.
 
 <p align="center">
@@ -17,7 +17,8 @@ progress.
 
 This repo is designed to run as a **static SPA**: **no server required, no
 cloud database required**. You can deploy it to Vercel / GitHub Pages / any
-static hosting.
+static hosting, as long as the host can serve `index.html` (or the generated
+`404.html`) as the fallback for client-side routes.
 
 In static mode, user progress is stored locally in the browser
 (IndexedDB / localStorage). That means:
@@ -47,6 +48,10 @@ python3 -m http.server 3000 -d vercel-dist
 ```
 
 Then open the URL shown in your terminal.
+
+`npm run build-vercel` writes both `index.html` and `404.html`. On static hosts,
+configure direct routes such as `/help` or `/profile` to fall back to one of
+those files.
 
 ## Deploy to Vercel (static mode)
 
@@ -102,10 +107,14 @@ The easiest setup uses sqlite (no MySQL required):
 
 ```bash
 cp .env.example .env
+./packages/devenv/lib/initdb.ts
 npm start
 ```
 
 > `.env.example` defaults to `DATABASE_CLIENT=sqlite` and uses `DATABASE_FILENAME`.
+
+Server-only integrations such as OAuth, email, ads, Paddle checkout, and custom
+analytics must be enabled explicitly through environment variables.
 
 ## Tests
 

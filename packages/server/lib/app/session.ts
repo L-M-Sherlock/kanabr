@@ -8,6 +8,8 @@ export class SessionModule implements Module {
 
   @provides({ id: "sessionOptions", singleton: true })
   provideSessionOptions(dataDir: DataDir): SessionOptions {
+    const domain = Env.getString("COOKIE_DOMAIN", "");
+
     return {
       store: new FileStore({
         directory: dataDir.dataPath("sessions"),
@@ -15,7 +17,7 @@ export class SessionModule implements Module {
       rolling: true,
       key: Env.getString("COOKIE_NAME", "session"),
       maxAge: Env.getNumber("COOKIE_MAX_AGE", 1209600), // 14 days in seconds
-      domain: Env.getString("COOKIE_DOMAIN", ".www.keybr.com"),
+      domain: domain || undefined,
       path: Env.getString("COOKIE_PATH", "/"),
       httpOnly: Env.getBoolean("COOKIE_HTTP_ONLY", true),
       secure: Env.getBoolean("COOKIE_SECURE", true),

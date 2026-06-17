@@ -3,6 +3,7 @@ import { type KeyStatsMap } from "@keybr/result";
 import { Explainer, Figure } from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
 import { ChartWrapper } from "./ChartWrapper.tsx";
+import { hasKanaStats } from "./labels.ts";
 
 export function ProgressOverviewSection({
   keyStatsMap,
@@ -15,6 +16,7 @@ export function ProgressOverviewSection({
     minHeightRem,
     keyStatsMap.letters.length * minRowHeightRem,
   );
+  const kana = hasKanaStats(keyStatsMap);
   return (
     <Figure>
       <Figure.Caption>
@@ -26,10 +28,17 @@ export function ProgressOverviewSection({
 
       <Explainer>
         <Figure.Description>
-          <FormattedMessage
-            id="profile.chart.progressOverview.description"
-            defaultMessage="This chart shows the learning progress overview for all keys."
-          />
+          {kana ? (
+            <FormattedMessage
+              id="profile.chart.kanaProgressOverview.description"
+              defaultMessage="This chart shows the learning progress overview for all kana."
+            />
+          ) : (
+            <FormattedMessage
+              id="profile.chart.progressOverview.description"
+              defaultMessage="This chart shows the learning progress overview for all physical keys."
+            />
+          )}
         </Figure.Description>
       </Explainer>
 
@@ -42,14 +51,25 @@ export function ProgressOverviewSection({
       </ChartWrapper>
 
       <Figure.Legend>
-        <FormattedMessage
-          id="profile.chart.progressOverview.legend"
-          defaultMessage="Horizontal axis: lesson number. Vertical axis: typing speed for each individual key, {label1} – slow, {label2} – fast."
-          values={{
-            label1: <Marker type="slow" />,
-            label2: <Marker type="fast" />,
-          }}
-        />
+        {kana ? (
+          <FormattedMessage
+            id="profile.chart.kanaProgressOverview.legend"
+            defaultMessage="Horizontal axis: lesson number. Vertical axis: typing speed for each individual kana, {label1} – slow, {label2} – fast."
+            values={{
+              label1: <Marker type="slow" />,
+              label2: <Marker type="fast" />,
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            id="profile.chart.progressOverview.legend"
+            defaultMessage="Horizontal axis: lesson number. Vertical axis: typing speed for each individual physical key, {label1} – slow, {label2} – fast."
+            values={{
+              label1: <Marker type="slow" />,
+              label2: <Marker type="fast" />,
+            }}
+          />
+        )}
       </Figure.Legend>
     </Figure>
   );

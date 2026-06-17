@@ -12,7 +12,7 @@ export function AlphabetSizeProp(): ReactNode {
         <Field>
           <FormattedMessage
             id="t_Unlock_more_letters:"
-            defaultMessage="Unlock more letters:"
+            defaultMessage="Unlock more kana/characters:"
           />
         </Field>
         <Field>
@@ -36,7 +36,7 @@ export function AlphabetSizeProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.alphabetSize.description"
-            defaultMessage="Manually unlock the remaining letters. Use this option if want a greater variety of words. We recommend using this option sparingly and stick to the algorithm to unlock letters for you."
+            defaultMessage="Manually unlock more of the remaining kana or characters. Use this option if you want a greater variety of practice items. We recommend using it sparingly and letting the algorithm unlock new items for you."
           />
         </Description>
       </Explainer>

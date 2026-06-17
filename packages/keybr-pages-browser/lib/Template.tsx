@@ -1,5 +1,5 @@
 import { isPremiumUser, usePageData } from "@keybr/pages-shared";
-import { AdBanner } from "@keybr/thirdparties";
+import { AdBanner, adsEnabled } from "@keybr/thirdparties";
 import { PortalContainer, Toaster } from "@keybr/widget";
 import { type ReactNode } from "react";
 import { NavMenu } from "./NavMenu.tsx";
@@ -13,7 +13,7 @@ export function Template({
   readonly children: ReactNode;
 }) {
   const { publicUser } = usePageData();
-  return isPremiumUser(publicUser) ? (
+  return isPremiumUser(publicUser) || !adsEnabled ? (
     <div className={styles.bodyAlt}>
       <main className={styles.mainAlt}>
         {children}

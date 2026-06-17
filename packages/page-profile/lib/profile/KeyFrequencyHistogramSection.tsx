@@ -3,6 +3,7 @@ import { type KeyStatsMap } from "@keybr/result";
 import { Explainer, Figure } from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
 import { ChartWrapper } from "./ChartWrapper.tsx";
+import { hasKanaStats } from "./labels.ts";
 
 export function KeyFrequencyHistogramSection({
   keyStatsMap,
@@ -15,21 +16,36 @@ export function KeyFrequencyHistogramSection({
     minWidthRem,
     keyStatsMap.letters.length * perKeyRem,
   );
+  const kana = hasKanaStats(keyStatsMap);
   return (
     <Figure>
       <Figure.Caption>
-        <FormattedMessage
-          id="profile.chart.keyFrequencyHistogram.caption"
-          defaultMessage="Key Frequency Histogram"
-        />
+        {kana ? (
+          <FormattedMessage
+            id="profile.chart.kanaFrequencyHistogram.caption"
+            defaultMessage="Kana Frequency Histogram"
+          />
+        ) : (
+          <FormattedMessage
+            id="profile.chart.keyFrequencyHistogram.caption"
+            defaultMessage="Key Frequency Histogram"
+          />
+        )}
       </Figure.Caption>
 
       <Explainer>
         <Figure.Description>
-          <FormattedMessage
-            id="profile.chart.keyFrequencyHistogram.description"
-            defaultMessage="This chart shows relative key frequencies."
-          />
+          {kana ? (
+            <FormattedMessage
+              id="profile.chart.kanaFrequencyHistogram.description"
+              defaultMessage="This chart shows relative kana frequencies."
+            />
+          ) : (
+            <FormattedMessage
+              id="profile.chart.keyFrequencyHistogram.description"
+              defaultMessage="This chart shows relative physical key frequencies."
+            />
+          )}
         </Figure.Description>
       </Explainer>
 

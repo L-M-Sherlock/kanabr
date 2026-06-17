@@ -58,7 +58,7 @@ function SpeedUnitProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.typingSpeedUnit.description"
-            defaultMessage="For the purpose of typing measurement, each word is standardized to be five characters or keystrokes in English, including spaces and punctuation."
+            defaultMessage="For typing measurement, WPM is standardized as five kana or characters. CPM counts the actual characters in the displayed practice text."
           />
         </Description>
       </Explainer>

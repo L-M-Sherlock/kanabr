@@ -29,7 +29,7 @@ test("render no key", () => {
     </FakeIntlProvider>,
   );
 
-  isNotNull(r.queryByText("All keys are unlocked."));
+  isNotNull(r.queryByText("All kana/characters are unlocked."));
   isNull(r.queryByText("Learning rate:"));
 
   r.unmount();
@@ -55,7 +55,7 @@ test("render key", () => {
     </FakeIntlProvider>,
   );
 
-  isNull(r.queryByText("All keys are unlocked."));
+  isNull(r.queryByText("All kana/characters are unlocked."));
   isNotNull(r.queryByText("Learning rate:"));
 
   r.unmount();

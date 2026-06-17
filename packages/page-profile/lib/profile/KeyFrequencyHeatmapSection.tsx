@@ -3,6 +3,7 @@ import { useKeyboard } from "@keybr/keyboard";
 import { type KeyStatsMap } from "@keybr/result";
 import { Explainer, Figure } from "@keybr/widget";
 import { FormattedMessage } from "react-intl";
+import { hasKanaStats } from "./labels.ts";
 
 export function KeyFrequencyHeatmapSection({
   keyStatsMap,
@@ -10,6 +11,9 @@ export function KeyFrequencyHeatmapSection({
   keyStatsMap: KeyStatsMap;
 }) {
   const keyboard = useKeyboard();
+  if (hasKanaStats(keyStatsMap)) {
+    return null;
+  }
   return (
     <Figure>
       <Figure.Caption>

@@ -24,7 +24,7 @@ export const CurrentKey = ({
         <span className={styleTextTruncate}>
           <FormattedMessage
             id="t_All_keys_are_unlocked"
-            defaultMessage="All keys are unlocked."
+            defaultMessage="All kana/characters are unlocked."
           />
         </span>
       )}

@@ -70,7 +70,7 @@ export namespace Pages {
       title: defineMessage({
         id: "page.practice.description",
         defaultMessage:
-          "Typing practice lessons to improve your speed and accuracy.",
+          "Practice Japanese kana with romaji input. Lessons adapt to your local typing history.",
       }),
       icon: mdiKeyboard,
     },
@@ -81,7 +81,7 @@ export namespace Pages {
         content: defineMessage({
           id: "page.practice.description",
           defaultMessage:
-            "Typing practice lessons to improve your speed and accuracy.",
+            "Practice Japanese kana with romaji input. Lessons adapt to your local typing history.",
         }),
       },
     ],
@@ -101,7 +101,7 @@ export namespace Pages {
       title: defineMessage({
         id: "page.profile.description",
         defaultMessage:
-          "The detailed statistics regarding your learning progress.",
+          "Detailed kana practice statistics, including speed, accuracy, and per-kana progress.",
       }),
       icon: mdiChartAreaspline,
     },
@@ -121,7 +121,8 @@ export namespace Pages {
       }),
       title: defineMessage({
         id: "page.help.description",
-        defaultMessage: "The instructions for using this application.",
+        defaultMessage:
+          "How kanabr teaches Japanese kana practice with romaji input.",
       }),
       icon: mdiHelpCircleOutline,
     },
@@ -131,7 +132,8 @@ export namespace Pages {
         name: "description",
         content: defineMessage({
           id: "page.help.description",
-          defaultMessage: "The instructions for using this application.",
+          defaultMessage:
+            "How kanabr teaches Japanese kana practice with romaji input.",
         }),
       },
     ],
@@ -150,7 +152,8 @@ export namespace Pages {
       }),
       title: defineMessage({
         id: "page.highScores.description",
-        defaultMessage: "The high score table for the fastest users.",
+        defaultMessage:
+          "Server-backed kana leaderboard for signed-in kanabr users.",
       }),
       icon: mdiTrophyOutline,
     },
@@ -160,7 +163,8 @@ export namespace Pages {
         name: "description",
         content: defineMessage({
           id: "page.highScores.description",
-          defaultMessage: "The high score table for the fastest users.",
+          defaultMessage:
+            "Server-backed kana leaderboard for signed-in kanabr users.",
         }),
       },
     ],
@@ -179,7 +183,8 @@ export namespace Pages {
       }),
       title: defineMessage({
         id: "page.multiplayer.description",
-        defaultMessage: "Online multiplayer type racing game.",
+        defaultMessage:
+          "Server-backed multiplayer kana typing race with romaji input.",
       }),
       icon: mdiCarSide,
     },
@@ -189,7 +194,8 @@ export namespace Pages {
         name: "description",
         content: defineMessage({
           id: "page.multiplayer.description",
-          defaultMessage: "Online multiplayer type racing game.",
+          defaultMessage:
+            "Server-backed multiplayer kana typing race with romaji input.",
         }),
       },
     ],
@@ -208,7 +214,7 @@ export namespace Pages {
       }),
       title: defineMessage({
         id: "page.typingTest.description",
-        defaultMessage: "Typing speed and accuracy test.",
+        defaultMessage: "Typing speed and accuracy test for legacy lessons.",
       }),
       icon: mdiSpeedometer,
     },
@@ -218,7 +224,7 @@ export namespace Pages {
         name: "description",
         content: defineMessage({
           id: "page.typingTest.description",
-          defaultMessage: "Typing speed and accuracy test.",
+          defaultMessage: "Typing speed and accuracy test for legacy lessons.",
         }),
       },
     ],

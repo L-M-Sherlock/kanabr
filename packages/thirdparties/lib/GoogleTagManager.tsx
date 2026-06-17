@@ -5,7 +5,7 @@ export const GoogleTagManager = ({
 }: {
   id?: string;
 }) => {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "development" || id === "0") {
     return null;
   }
   const html =

@@ -14,7 +14,6 @@ for (const path of [
   "/account",
   "/help",
   "/high-scores",
-  "/layouts",
   "/multiplayer",
   "/profile",
   "/profile/example1",
@@ -22,7 +21,6 @@ for (const path of [
   "/profile/example3",
   "/profile/example4",
   "/profile/example5",
-  "/typing-test",
   "/terms-of-service",
   "/privacy-policy",
 ]) {
@@ -35,8 +33,8 @@ for (const path of [
 
     const response = await request
       .GET(path)
-      .header("X-Forwarded-Host", "www.keybr.com")
-      .header("X-Forwarded-Proto", "https")
+      .header("X-Forwarded-Host", "localhost:3000")
+      .header("X-Forwarded-Proto", "http")
       .send();
 
     // Assert.
@@ -59,8 +57,8 @@ test(`load custom theme from cookie`, async () => {
 
   const response = await request
     .GET("/")
-    .header("X-Forwarded-Host", "www.keybr.com")
-    .header("X-Forwarded-Proto", "https")
+    .header("X-Forwarded-Host", "localhost:3000")
+    .header("X-Forwarded-Proto", "http")
     .header(
       "Cookie",
       new Cookie([["prefs", '{"color":"dark","font":"spectral"}']]),
@@ -87,8 +85,8 @@ test(`ignore invalid theme cookie`, async () => {
 
   const response = await request
     .GET("/")
-    .header("X-Forwarded-Host", "www.keybr.com")
-    .header("X-Forwarded-Proto", "https")
+    .header("X-Forwarded-Host", "localhost:3000")
+    .header("X-Forwarded-Proto", "http")
     .header("Cookie", new Cookie([["prefs", "%%%garbage%%%"]]))
     .send();
 

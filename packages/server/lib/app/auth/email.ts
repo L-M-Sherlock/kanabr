@@ -7,14 +7,14 @@ export function messageWithLink({
   readonly email: string;
   readonly link: string;
 }): Mailer.Message {
-  const subject = `Login link for keybr.com`;
-  const text = `Hello, keybr.com user!
+  const subject = `Login link for kanabr`;
+  const text = `Hello, kanabr user!
 
-Here is the link to log you in into the web-site: ${link}
+Here is the link to sign in to kanabr: ${link}
 
 Please keep this link secret and don't share it with anybody!
 
-We wish you happy typing!
+We wish you productive kana practice!
 `;
   return {
     to: email,

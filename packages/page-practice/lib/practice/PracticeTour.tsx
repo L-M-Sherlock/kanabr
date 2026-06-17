@@ -15,9 +15,9 @@ export const PracticeTour = memo(function PracticeTour({
         <FormattedMessage
           id="m_tour01"
           defaultMessage={
-            "<h1>Learn to Type Faster</h1>" +
-            "<p>This web application will help you to learn <em>touch typing</em> which means typing through muscle memory without using your eyesight to find the keys. It can improve your typing speed and accuracy dramatically. The opposite is <em>hunt and peck typing</em>, a method of typing in which you look at the keyboard instead of the screen, and use only the index fingers.</p>" +
-            "<p>This is a short tutorial that will explain how this application works.</p>" +
+            "<h1>Practice Kana with Romaji Input</h1>" +
+            "<p>kanabr helps you practice Japanese kana by typing romaji. It tracks speed and accuracy for each kana practice unit, then builds lessons around the kana that need the most attention.</p>" +
+            "<p>This short tutorial explains how the practice screen works.</p>" +
             "<p>You can use the left and right arrow keys to navigate through these slides.</p>"
           }
         />
@@ -27,8 +27,8 @@ export const PracticeTour = memo(function PracticeTour({
           id="m_tour02"
           defaultMessage={
             "<p>Our teaching method is based on these principles:</p>" +
-            "<p>No boring repetitive exercises. Unlike most other typing tutors, this application does not force you to repeat the same lessons like ‘<em>jjf jjk jjf jjk</em>’ over and over again. This is very annoying and contributes very little to your overall learning.</p>" +
-            "<p>This application uses a sophisticated computer algorithm to generate typing lessons that match your skill level. These lessons consist of random words generated using a subset of the full alphabet of letters. The size of the subset and individual letter frequency is controlled by the algorithm, which provides you with the best learning experience.</p>"
+            "<p>No fixed drill sequence. The lesson text changes as your local statistics change, so practice stays focused on your current weak spots.</p>" +
+            "<p>The algorithm generates kana practice items from the currently unlocked kana set. The size of that set and the frequency of individual kana are adjusted from your typing history.</p>"
           }
         />
       </Slide>
@@ -36,9 +36,9 @@ export const PracticeTour = memo(function PracticeTour({
         <FormattedMessage
           id="m_tour03"
           defaultMessage={
-            "<p>Initially it starts generating words from a small subset of the most frequent letters in the alphabet.</p>" +
-            "<p>When you are typing these words, the application measures the time-to-type metric for every letter in that subset. This time is used to measure your learning progress. The more familiar you become with a letter, the less time it takes for you to type it.</p>" +
-            "<p>Once you familiarize yourself with the entire current subset of letters, the algorithm expands it by adding more and more letters to the subset.</p>"
+            "<p>At first kanabr generates lessons from a small subset of kana.</p>" +
+            "<p>As you type romaji for each kana, the application measures timing and accuracy for every kana in that subset. The more familiar you become with a kana, the less time it takes to enter it.</p>" +
+            "<p>Once you become confident with the current subset, the algorithm expands it by adding more kana.</p>"
           }
         />
       </Slide>
@@ -46,22 +46,22 @@ export const PracticeTour = memo(function PracticeTour({
         <FormattedMessage
           id="m_tour04"
           defaultMessage={
-            "<p>When the algorithm includes a new letter to the current subset, the frequency of this letter is artificially increased so that it will be included in every generated word of a lesson.</p>" +
-            "<p>The algorithm can also artificially rearrange letter frequencies, placing an emphasis on the letters with the worst time-to-type metric.</p>" +
-            "<p>This means you will always be typing the letters that you are least familiar with.</p>"
+            "<p>When the algorithm adds a new kana to the current subset, that kana appears more often in the lesson.</p>" +
+            "<p>The algorithm can also rearrange kana frequencies to emphasize the practice units with the weakest time-to-type metric.</p>" +
+            "<p>This means you spend more time on the kana that are least familiar.</p>"
           }
         />
       </Slide>
       <Slide size="small" anchor={`#${names.textInput}`} position="block-end">
         <FormattedMessage
           id="m_tour05"
-          defaultMessage="<p>This is the text board. It displays the text to type out. The text changes for each new lesson. The text is generated automatically from the current subset of letters. Most of the words are not real, but are generated using the phonetic rules of your language so they sound natural and should be easy to pronounce. Besides being funny, this gives us the flexibility to use more words than actually exist.</p>"
+          defaultMessage="<p>This is the text board. It displays the kana practice text. In Japanese Romaji mode you read the kana and type the romaji spelling. The text changes for each new lesson and is generated from the current kana subset.</p>"
         />
       </Slide>
       <Slide size="small" anchor={`#${names.keyboard}`} position="block-start">
         <FormattedMessage
           id="m_tour06"
-          defaultMessage="<p>This is the virtual keyboard. It helps you memorize key positions. Use it to find the keys and try not to look at your physical keyboard. There are small bumps on the <em>F</em> and <em>J</em> keys of your keyboard. Use these to correctly position your index fingers without having to look at the keys. Once your index fingers are in the right position you will be able to locate the remainder of the keys.</p>"
+          defaultMessage="<p>This is the virtual keyboard. It shows your selected physical layout while you type romaji. Use it as a reference when you need to find a key, then return your attention to the kana text.</p>"
         />
       </Slide>
       <Slide size="small" anchor={`#${names.speed}`} position="block-end">
@@ -69,7 +69,7 @@ export const PracticeTour = memo(function PracticeTour({
           id="m_tour07"
           defaultMessage={
             "<p>This is the typing speed indicator and the difference from the average value. Your goal is to increase this metric, meaning higher values are better.</p>" +
-            "<p>Typing speed is measured in either <em>Words per Minute (WPM)</em> or <em>Characters per Minute (CPM)</em>. The definition of a word is standardized to be five characters, so <em>10WPM</em> is equal to <em>50CPM</em>.</p>" +
+            "<p>Typing speed is measured in either <em>Words per Minute (WPM)</em> or <em>Characters per Minute (CPM)</em>. WPM is standardized as five kana or characters, so <em>10WPM</em> is equal to <em>50CPM</em>.</p>" +
             "<p>You can switch between the <em>WPM</em> and the <em>CPM</em> display modes on the Settings page.</p>"
           }
         />
@@ -88,22 +88,22 @@ export const PracticeTour = memo(function PracticeTour({
           id="m_tour09"
           defaultMessage={
             "<p>This is the typing score indicator in abstract points and the difference from the average value.</p>" +
-            "<p>The score is calculated from your typing speed, error count, and the current size of the letter set. The formula is designed to reward for typing speed, and punish for error count. You cannot obtain a high score by typing fast while also making many errors.</p>" +
-            "<p>Users who score the highest points are recorded in the high score table.</p>"
+            "<p>The score is calculated from your typing speed, error count, and the current size of the kana set. The formula rewards speed and penalizes mistakes, so typing fast with many errors will not produce a strong score.</p>" +
+            "<p>In server mode, signed-in users can optionally appear on the high score table.</p>"
           }
         />
       </Slide>
       <Slide size="small" anchor={`#${names.keySet}`} position="block-end">
         <FormattedMessage
           id="m_tour10"
-          defaultMessage="<p>This indicator shows the current subset of letters used to generate the lessons, and your confidence level for every letter in the subset:</p>"
+          defaultMessage="<p>This indicator shows the current subset of kana used to generate the lessons, and your confidence level for every kana in the subset:</p>"
         />
         <KeyLegendList />
       </Slide>
       <Slide size="small" anchor={`#${names.keySet}`} position="block-end">
         <FormattedMessage
           id="m_tour11"
-          defaultMessage="<p>This indicator can also be used to predict the remaining number of lessons that are needed to fully unlock a letter, like in the example chart below. Visit it regularly to get more insight on how your learning is going, to see if you are making a progress.</p>"
+          defaultMessage="<p>This indicator can also predict the remaining number of lessons needed to unlock a kana, like in the example chart below. Visit it regularly to see how your learning is changing.</p>"
         />
         <KeyDetailsChartDemo />
       </Slide>
@@ -111,12 +111,12 @@ export const PracticeTour = memo(function PracticeTour({
         <FormattedMessage
           id="m_tour12"
           defaultMessage={
-            "<p>This indicator shows details about the letter with increased frequency, which is currently included in every generated word:</p>" +
+            "<p>This indicator shows details about the focused kana, which appears more often in the current lesson:</p>" +
             "<dl>" +
             "<dt>Best typing speed</dt>" +
-            "<dd>Your best typing speed for this individual letter.</dd>" +
+            "<dd>Your best typing speed for this individual kana.</dd>" +
             "<dt>Confidence level</dt>" +
-            "<dd>A number in range from zero to one which is computed using your typing speed, and indicates your familiarity with this letter. A letter is considered fully learned when it’s confidence level reaches one.</dd>" +
+            "<dd>A number from zero to one computed from your typing speed. It indicates your familiarity with this kana. A kana is considered fully learned when its confidence level reaches one.</dd>" +
             "<dt>Learning rate</dt>" +
             "<dd>How your typing speed is changing with each lesson.</dd>" +
             "</dl>"

@@ -25,7 +25,7 @@ export function GuidedLessonSettings({
         <Description>
           <FormattedMessage
             id="lessonType.guided.description"
-            defaultMessage="Generate typing lessons with random words using the phonetic rules of your language. The key set is expanded dynamically based on your performance. This mode is for the beginners."
+            defaultMessage="Generate adaptive lessons from practice items selected for your language. The kana or character set expands dynamically based on your performance. This mode is for beginners."
           />
         </Description>
       </Explainer>

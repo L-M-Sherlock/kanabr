@@ -1,31 +1,26 @@
 # Getting Started
 
-This is a [NodeJS](https://nodejs.org/) application, so proficiency with the node ecosystem is required.
+kanabr is a Node.js monorepo. The recommended way to run it is the static SPA
+build, which does not require a server database.
 
-### Prerequisites
+## Prerequisites
 
-**NodeJS v24 must be installed.**\
-You can get NodeJS v24 without impacting other Node installations using [Node Version Manager](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) (`nvm`)
-<details>
-  <summary>
-  Get NodeJS v24 with nvm
-  </summary>
+Node.js 24 or newer is recommended.
 
-  ```shell
-  nvm install 24 && nvm use 24
-  ```
-</details>
+With nvm:
 
-Or you can create a complete custom development environment using [Toolbx](https://containertoolbx.org/)
-with your own version on NodeJS.
+```shell
+nvm install 24
+nvm use 24
+```
 
-### Install and setup
+## Static Mode
 
 Clone this repository:
 
 ```shell
-git clone https://github.com/aradzie/keybr.com.git
-cd keybr.com
+git clone https://github.com/L-M-Sherlock/kanabr.git
+cd kanabr
 ```
 
 Install dependencies:
@@ -34,45 +29,57 @@ Install dependencies:
 npm install
 ```
 
-Create your own config file by copying `.env.example` to either `.env` or to a global location `/etc/keybr/env`. The latter is better because it allows you to run scripts from any location, not only from the root directory of the repository.
+Build the static output:
 
 ```shell
-sudo mkdir -p /etc/keybr
-sudo cp .env.example /etc/keybr/env
+npm run build-vercel
 ```
 
-Run basic sanity checks, compile, bundle and test the application:
+Preview it locally:
+
+```shell
+npx serve -s vercel-dist
+```
+
+The generated `vercel-dist/` directory includes `index.html`, `404.html`,
+`sitemap.xml`, `robots.txt`, and hashed assets. Configure static hosts so direct
+client-side routes fall back to `index.html` or `404.html`.
+
+## Development
+
+Compile, build, and test:
 
 ```shell
 npm run compile
 npm run build-dev
-env DATABASE_CLIENT=sqlite npm test
+npm run test
 ```
 
-When running the application for the first time, make sure that database tables are created and example users exist:
-
-```shell
-  ./packages/devenv/lib/initdb.ts
-```
-
-Finally, start the web server:
+For active development, run the server and watcher in separate shells:
 
 ```shell
 npm start
-```
-
-With the default config the application should be accessible at [http://localhost:3000/](http://localhost:3000/)
-
-While actively developing, you may want your changes to be automatically built and
-visible on page refresh.\
-Run the following command at the same time as `npm start` in another shell:
-
-```shell
 npm run watch
 ```
 
+## Server Mode
 
-### Docker
-There is also an ability to deploy app with Docker or Docker Compose, `Dockerfile` and `docker-compose.yaml` are provided.
+Use server mode only when you need accounts, public profiles, high scores,
+multiplayer, sync, email login, OAuth, ads, or checkout.
 
-There are some limitations: exposed port should always be 3000
+The easiest local server setup uses sqlite:
+
+```shell
+cp .env.example .env
+./packages/devenv/lib/initdb.ts
+npm start
+```
+
+With the default config the server is available at
+[http://localhost:3000/](http://localhost:3000/).
+
+## Docker
+
+`Dockerfile` and `docker-compose.yaml` are provided for server mode. The
+container exposes port 3000 internally. Mount a persistent data directory and an
+environment file when you enable server-backed features.
