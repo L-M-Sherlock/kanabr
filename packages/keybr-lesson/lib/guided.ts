@@ -188,7 +188,7 @@ export class GuidedLesson extends Lesson {
   #makeWordGenerator(filter: Filter, rng: RNGStream) {
     const pseudoWords = phoneticWords(this.model, filter, rng);
     if (this.settings.get(lessonProps.guided.naturalWords)) {
-      const words = this.dictionary.find(filter).slice(0, 1000);
+      const words = [...this.dictionary.find(filter)];
       while (words.length < minNaturalWordCount) {
         const word = pseudoWords();
         if (word != null) {
@@ -291,7 +291,7 @@ export class GuidedLesson extends Lesson {
     if (this.settings.get(lessonProps.guided.naturalWords)) {
       const dictionary =
         script === "katakana" ? this.katakanaDictionary : this.dictionary;
-      const words = dictionary?.find(filter).slice(0, 1000) ?? [];
+      const words = [...(dictionary?.find(filter) ?? [])];
       while (words.length < minNaturalWordCount) {
         const word = pseudoWords();
         if (word != null) {

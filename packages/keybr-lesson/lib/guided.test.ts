@@ -699,6 +699,30 @@ test("generate text with natural words", () => {
   );
 });
 
+test("generate natural words from all filtered candidates", () => {
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
+  const keyboard = loadKeyboard(Layout.EN_US);
+  const model = new FakePhoneticModel(["uno"]);
+  const letters = ["a", "b", "c", "d", "e", "f"];
+  const wordList = Array.from({ length: 1001 }, (_, i) => {
+    let n = i;
+    let word = "a";
+    for (let j = 0; j < 4; j++) {
+      word += letters[n % letters.length];
+      n = (n / letters.length) | 0;
+    }
+    return word;
+  });
+  const lastWord = wordList.at(-1)!;
+  const lesson = new GuidedLesson(settings, keyboard, model, wordList);
+  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+
+  equal(
+    lesson.generate(lessonKeys, fixedRng(1000 / 1001)).includes(lastWord),
+    true,
+  );
+});
+
 test("generate pseudo words only when fewer than ten natural words", () => {
   const settings = new Settings().set(lessonProps.guided.naturalWords, true);
   const keyboard = loadKeyboard(Layout.EN_US);
