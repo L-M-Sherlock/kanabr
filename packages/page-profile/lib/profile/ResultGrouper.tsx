@@ -2,11 +2,11 @@ import { useCollator } from "@keybr/intl";
 import {
   KeyboardContext,
   keyboardProps,
-  type Language,
   Layout,
   loadKeyboard,
   useFormattedNames,
 } from "@keybr/keyboard";
+import { makeJapanesePracticeLetters } from "@keybr/lesson";
 import { Letter } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
 import {
@@ -133,10 +133,7 @@ export function ResultGrouper({
                 return children(
                   makeKeyStatsMap(
                     selectedLayout.id === "ja-romaji"
-                      ? orderLettersByLanguageAlphabet(
-                          letters,
-                          selectedLayout.language,
-                        )
+                      ? makeJapanesePracticeLetters(letters)
                       : Letter.restrict(letters, keyboard.getCodePoints()),
                     group,
                   ),
@@ -166,20 +163,4 @@ function useLayoutOptions(layouts: Iterable<Layout>) {
       name: formatFullLayoutName(item),
     }))
     .sort((a, b) => compare(a.name, b.name));
-}
-
-function orderLettersByLanguageAlphabet(
-  letters: readonly Letter[],
-  language: Language,
-): Letter[] {
-  const order = new Map<number, number>();
-  for (let i = 0; i < language.alphabet.length; i++) {
-    order.set(language.alphabet[i], i);
-  }
-  const unknown = Number.MAX_SAFE_INTEGER;
-  return [...letters].sort(
-    (a, b) =>
-      (order.get(a.codePoint) ?? unknown) -
-        (order.get(b.codePoint) ?? unknown) || a.codePoint - b.codePoint,
-  );
 }

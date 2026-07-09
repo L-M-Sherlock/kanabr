@@ -112,7 +112,7 @@ test("order kana by japanese alphabet", async () => {
       constructor() {
         super(
           Language.JA,
-          ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ"].map(
+          ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ", "ゔ"].map(
             (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
           ),
         );
@@ -145,7 +145,10 @@ test("order kana by japanese alphabet", async () => {
     </FakeIntlProvider>,
   );
 
-  equal((await r.findByTitle("alphabet")).textContent, "わんっーがぎぐ");
+  equal(
+    (await r.findByTitle("alphabet")).textContent,
+    "わんっがぎぐワンッーヴガギグ",
+  );
 
   r.unmount();
 });

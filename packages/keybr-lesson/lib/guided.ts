@@ -4,7 +4,17 @@ import { Filter, Letter, type PhoneticModel } from "@keybr/phonetic-model";
 import { type RNGStream } from "@keybr/rand";
 import { type KeyStatsMap } from "@keybr/result";
 import { type Settings } from "@keybr/settings";
+import { type CodePoint } from "@keybr/unicode";
 import { Dictionary, filterWordList } from "./dictionary.ts";
+import {
+  japanesePracticeCodePoints,
+  type JapanesePracticeScript,
+  japanesePracticeScriptOf,
+  makeJapanesePracticeLetters,
+  orderJapanesePracticeLetters,
+  toHiraganaCodePoint,
+  toKatakanaText,
+} from "./japanese.ts";
 import { LessonKey, LessonKeys } from "./key.ts";
 import { Lesson } from "./lesson.ts";
 import { lessonProps } from "./settings.ts";
@@ -16,9 +26,11 @@ import {
   phoneticWords,
   randomWords,
   uniqueWords,
+  type WordGenerator,
 } from "./text/words.ts";
 
 export class GuidedLesson extends Lesson {
+  readonly #letters: readonly Letter[];
   readonly dictionary: Dictionary;
   readonly katakanaDictionary: Dictionary | null;
 
@@ -34,15 +46,18 @@ export class GuidedLesson extends Lesson {
     } = {},
   ) {
     super(settings, keyboard, model);
-    this.dictionary = this.#createDictionary(wordList);
+    this.#letters = this.#isJapaneseRomaji()
+      ? makeJapanesePracticeLetters(this.model.letters)
+      : this.model.letters;
+    this.dictionary = this.#createDictionary(wordList, "hiragana");
     this.katakanaDictionary =
-      model.language.id === "ja" && katakanaWordList != null
-        ? this.#createDictionary(katakanaWordList, normalizeJapaneseCodePoint)
+      this.#isJapaneseRomaji() && katakanaWordList != null
+        ? this.#createDictionary(katakanaWordList, "katakana")
         : null;
   }
 
   override get letters() {
-    return this.model.letters;
+    return this.#letters;
   }
 
   override update(keyStatsMap: KeyStatsMap) {
@@ -115,16 +130,21 @@ export class GuidedLesson extends Lesson {
   }
 
   override generate(lessonKeys: LessonKeys, rng: RNGStream) {
-    const filter = new Filter(
-      lessonKeys.findIncludedKeys(),
-      lessonKeys.findFocusedKey(),
-    );
-    const wordGenerator =
-      this.model.language.id === "ja" &&
-      this.keyboard.layout.id === "ja-romaji" &&
-      this.settings.get(lessonProps.japanese.balanceKana)
-        ? this.#makeBalancedWordGenerator(lessonKeys, rng)
-        : this.#makeWordGenerator(filter, rng);
+    const wordGenerator = this.#isJapaneseRomaji()
+      ? this.settings.get(lessonProps.japanese.balanceKana)
+        ? this.#makeBalancedJapaneseWordGenerator(lessonKeys, rng)
+        : this.#makeJapaneseWordGenerator(
+            lessonKeys.findIncludedKeys(),
+            lessonKeys.findFocusedKey(),
+            rng,
+          )
+      : this.#makeWordGenerator(
+          new Filter(
+            lessonKeys.findIncludedKeys(),
+            lessonKeys.findFocusedKey(),
+          ),
+          rng,
+        );
     let words = mangledWords(
       uniqueWords(wordGenerator),
       this.model.language,
@@ -142,18 +162,9 @@ export class GuidedLesson extends Lesson {
   }
 
   #getLetters() {
-    const { letters } = this.model;
-    if (this.model.language.id === "ja") {
-      const order = new Map<number, number>();
-      for (let i = 0; i < this.model.language.alphabet.length; i++) {
-        order.set(this.model.language.alphabet[i], i);
-      }
-      const unknown = Number.MAX_SAFE_INTEGER;
-      return [...letters].sort(
-        (a, b) =>
-          (order.get(a.codePoint) ?? unknown) -
-            (order.get(b.codePoint) ?? unknown) || a.codePoint - b.codePoint,
-      );
+    const { letters } = this;
+    if (this.#isJapaneseRomaji()) {
+      return orderJapanesePracticeLetters(letters);
     }
 
     const { codePoints } = this;
@@ -169,9 +180,6 @@ export class GuidedLesson extends Lesson {
   #makeWordGenerator(filter: Filter, rng: RNGStream) {
     const pseudoWords = phoneticWords(this.model, filter, rng);
     if (this.settings.get(lessonProps.guided.naturalWords)) {
-      if (this.model.language.id === "ja" && this.katakanaDictionary != null) {
-        return this.#makeJapaneseNaturalWordGenerator(filter, rng, pseudoWords);
-      }
       const words = this.dictionary.find(filter).slice(0, 1000);
       while (words.length < 15) {
         const word = pseudoWords();
@@ -189,77 +197,149 @@ export class GuidedLesson extends Lesson {
     return pseudoWords;
   }
 
-  #makeJapaneseNaturalWordGenerator(
-    filter: Filter,
+  #makeJapaneseWordGenerator(
+    includedKeys: readonly LessonKey[],
+    focusedKey: LessonKey | null,
     rng: RNGStream,
-    pseudoWords: () => string | "" | null,
-  ) {
-    const hiraganaWords = this.dictionary.find(filter).slice(0, 1000);
-    const katakanaWords = this.katakanaDictionary?.find(filter).slice(0, 1000);
-    const katakanaRatio = this.settings.get(lessonProps.japanese.katakanaRatio);
-    const hiraganaGenerator = randomWords(hiraganaWords, rng);
-    const katakanaGenerator = randomWords(katakanaWords ?? [], rng);
+  ): WordGenerator {
+    const focusedScript =
+      focusedKey != null
+        ? japanesePracticeScriptOf(focusedKey.letter.codePoint)
+        : null;
+    if (focusedScript != null) {
+      return this.#makeJapaneseScriptWordGenerator(
+        focusedScript,
+        includedKeys,
+        focusedKey,
+        rng,
+      );
+    }
 
-    return () => {
-      const preferKatakana =
-        katakanaWords != null &&
-        katakanaWords.length > 0 &&
-        katakanaRatio > 0 &&
-        rng() < katakanaRatio;
-      let word = preferKatakana ? katakanaGenerator() : hiraganaGenerator();
-      if (word == null || word === "") {
-        word = preferKatakana ? hiraganaGenerator() : katakanaGenerator();
+    const scripts: JapanesePracticeScript[] = [];
+    for (const script of ["hiragana", "katakana"] as const) {
+      if (
+        includedKeys.some(
+          ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
+        )
+      ) {
+        scripts.push(script);
       }
-      if (word == null || word === "") {
-        word = pseudoWords();
-      }
-      return word;
-    };
+    }
+    const generators = scripts.map((script) =>
+      this.#makeJapaneseScriptWordGenerator(script, includedKeys, null, rng),
+    );
+    if (generators.length === 0) {
+      return () => "?";
+    }
+    if (generators.length === 1) {
+      return generators[0];
+    }
+    return () => generators[Math.floor(rng() * generators.length)]();
   }
 
-  #createDictionary(
-    wordList: WordList,
-    normalizeCodePoint?: (codePoint: number) => number,
-  ) {
-    const dictCodePoints =
-      this.model.language.id === "ja"
-        ? japaneseDictionaryCodePoints(this.model.letters)
-        : this.codePoints;
-    let dictionaryWords = filterWordList(
-      wordList,
-      dictCodePoints,
-      normalizeCodePoint,
-    ).filter((word) => word.length >= 2);
+  #makeJapaneseScriptWordGenerator(
+    script: JapanesePracticeScript,
+    includedKeys: readonly LessonKey[],
+    focusedKey: LessonKey | null,
+    rng: RNGStream,
+  ): WordGenerator {
+    const scriptKeys = includedKeys.filter(
+      ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
+    );
+    if (scriptKeys.length === 0) {
+      return () => null;
+    }
+    const filter = new Filter(
+      scriptKeys,
+      focusedKey != null &&
+        japanesePracticeScriptOf(focusedKey.letter.codePoint) === script
+        ? focusedKey
+        : null,
+    );
+    const pseudoWords = this.#makeJapanesePseudoWordGenerator(
+      script,
+      filter,
+      rng,
+    );
+    if (this.settings.get(lessonProps.guided.naturalWords)) {
+      const dictionary =
+        script === "katakana" ? this.katakanaDictionary : this.dictionary;
+      const words = dictionary?.find(filter).slice(0, 1000) ?? [];
+      while (words.length < 15) {
+        const word = pseudoWords();
+        if (word != null) {
+          words.push(word);
+        } else {
+          break;
+        }
+      }
+      if (words.length === 0) {
+        words.push("?");
+      }
+      return randomWords(words, rng);
+    }
+    return pseudoWords;
+  }
+
+  #makeJapanesePseudoWordGenerator(
+    script: JapanesePracticeScript,
+    filter: Filter,
+    rng: RNGStream,
+  ): WordGenerator {
+    const pseudoWords = phoneticWords(
+      this.model,
+      script === "katakana" ? toHiraganaFilter(filter) : filter,
+      rng,
+    );
+    if (script === "katakana") {
+      return () => {
+        const word = pseudoWords();
+        return word != null ? toKatakanaText(word) : word;
+      };
+    }
+    return pseudoWords;
+  }
+
+  #createDictionary(wordList: WordList, script?: JapanesePracticeScript) {
+    const dictCodePoints = this.#isJapaneseRomaji()
+      ? japanesePracticeCodePoints(script ?? "hiragana")
+      : this.codePoints;
+    let dictionaryWords = filterWordList(wordList, dictCodePoints).filter(
+      (word) => word.length >= 2,
+    );
     if (this.model.language.id === "ja") {
       dictionaryWords = dictionaryWords.filter(
         (word) => !endsWithSmallTsu(word),
       );
     }
-    return new Dictionary(dictionaryWords, normalizeCodePoint);
+    return new Dictionary(dictionaryWords);
   }
 
-  #makeBalancedWordGenerator(lessonKeys: LessonKeys, rng: RNGStream) {
+  #makeBalancedJapaneseWordGenerator(lessonKeys: LessonKeys, rng: RNGStream) {
     const includedKeys = lessonKeys.findIncludedKeys();
     const focusedKey = lessonKeys.findFocusedKey();
-    const baseFilter = new Filter(includedKeys, focusedKey);
-    const baseGenerator = this.#makeWordGenerator(baseFilter, rng);
+    const baseGenerator = this.#makeJapaneseWordGenerator(
+      includedKeys,
+      focusedKey,
+      rng,
+    );
     if (focusedKey == null) {
       return baseGenerator;
     }
+    const focusedScript = japanesePracticeScriptOf(focusedKey.letter.codePoint);
     const otherKeys = includedKeys.filter(
-      (k) => k.letter.codePoint !== focusedKey.letter.codePoint,
+      (key) =>
+        key.letter.codePoint !== focusedKey.letter.codePoint &&
+        japanesePracticeScriptOf(key.letter.codePoint) === focusedScript,
     );
     if (otherKeys.length === 0) {
       return baseGenerator;
     }
     const otherGenerators = otherKeys.map((key) =>
-      this.#makeWordGenerator(new Filter(includedKeys, key), rng),
+      this.#makeJapaneseWordGenerator(includedKeys, key, rng),
     );
     let otherIndex = 0;
     let count = 0;
-    // Keep the original keybr behavior (focused key in most words), but ensure
-    // every unlocked kana appears regularly even if the phonetic model's
-    // transitions make it rare with the current focus.
     return () => {
       count++;
       if (count % 4 !== 0) {
@@ -269,30 +349,35 @@ export class GuidedLesson extends Lesson {
       return gen();
     };
   }
+
+  #isJapaneseRomaji() {
+    return (
+      this.model.language.id === "ja" && this.keyboard.layout.id === "ja-romaji"
+    );
+  }
 }
 
-function japaneseDictionaryCodePoints(letters: readonly Letter[]) {
-  const codePoints = new Set<number>();
-  for (const { codePoint } of letters) {
-    codePoints.add(codePoint);
-    const katakana = toKatakanaCodePoint(codePoint);
-    if (katakana != null) {
-      codePoints.add(katakana);
+function toHiraganaFilter({ codePoints, focusedCodePoint }: Filter): Filter {
+  const letters = new Map<CodePoint, Letter>();
+  if (codePoints != null) {
+    for (const codePoint of codePoints as unknown as Iterable<CodePoint>) {
+      const hiragana = toHiraganaCodePoint(codePoint);
+      if (!letters.has(hiragana)) {
+        letters.set(hiragana, new Letter(hiragana, 1));
+      }
     }
   }
-  return codePoints;
-}
-
-function normalizeJapaneseCodePoint(codePoint: number): number {
-  if (codePoint >= 0x30a1 && codePoint <= 0x30f6) {
-    return codePoint - 0x60;
+  const list = codePoints != null ? [...letters.values()] : null;
+  const focusedCodePointH =
+    focusedCodePoint != null
+      ? toHiraganaCodePoint(focusedCodePoint as CodePoint)
+      : null;
+  const focused =
+    focusedCodePointH != null
+      ? (letters.get(focusedCodePointH) ?? new Letter(focusedCodePointH, 1))
+      : null;
+  if (list != null && list.length === 0) {
+    return Filter.empty;
   }
-  return codePoint;
-}
-
-function toKatakanaCodePoint(codePoint: number): number | null {
-  if (codePoint >= 0x3041 && codePoint <= 0x3096) {
-    return codePoint + 0x60;
-  }
-  return null;
+  return new Filter(list, focused);
 }

@@ -45,7 +45,7 @@ export function HelpPage() {
         id="help.section3"
         defaultMessage={
           "<h2>The kana lesson generator</h2>" +
-          "<p>Guided lessons start with a small kana set and expand it gradually. In Japanese Romaji mode the displayed text is kana, while your input is romaji. Hiragana, katakana, dakuten, handakuten, small kana, and yoon combinations are treated as practice units rather than as physical keyboard keys.</p>" +
+          "<p>Guided lessons start with a small hiragana set and expand it gradually. Once the hiragana block is learned, katakana is unlocked as its own practice block with separate timing statistics. In Japanese Romaji mode the displayed text is kana, while your input is romaji.</p>" +
           "<p>The kana set is selected using the following rules.</p>"
         }
       />
@@ -180,7 +180,7 @@ export function HelpPage() {
 
         <FormattedMessage
           id="help.rule5.body"
-          defaultMessage="<p>With enough practice the whole kana set becomes available. You can then keep practicing, add katakana, or raise the target speed to repeat the guided cycle with a stricter threshold.</p>"
+          defaultMessage="<p>With enough practice the whole hiragana and katakana set becomes available. You can then keep practicing or raise the target speed to repeat the guided cycle with a stricter threshold.</p>"
         />
       </section>
 

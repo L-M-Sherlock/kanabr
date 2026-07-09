@@ -1,5 +1,6 @@
 import { Enum, type EnumItem } from "@keybr/lang";
 import { type CodePoint, toCodePoints } from "@keybr/unicode";
+import { JAPANESE_PRACTICE_ALPHABET } from "./japanese.ts";
 
 export class Language implements EnumItem {
   static readonly AR = new Language(
@@ -102,7 +103,7 @@ export class Language implements EnumItem {
     /* id= */ "ja",
     /* script= */ "hiragana",
     /* direction= */ "ltr",
-    /* alphabet= */ "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんっーがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽゃゅょぁぃぇぉ",
+    /* alphabet= */ JAPANESE_PRACTICE_ALPHABET,
   );
   static readonly LT = new Language(
     /* id= */ "lt",

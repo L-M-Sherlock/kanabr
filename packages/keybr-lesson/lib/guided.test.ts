@@ -160,7 +160,7 @@ test("provide key set", () => {
 
 test("order japanese letters by gojuon", () => {
   const settings = new Settings().set(lessonProps.guided.keyboardOrder, true);
-  const keyboard = loadKeyboard(Layout.EN_US);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
 
   const a = new Letter(/* "あ" */ 0x3042, 0.01);
   const i = new Letter(/* "い" */ 0x3044, 0.02);
@@ -202,21 +202,21 @@ test("order japanese letters by gojuon", () => {
   const lessonKeys = lesson.update(
     fakeKeyStatsMap(
       settings,
-      model.letters.map((letter) => [letter, null, null]),
+      lesson.letters.map((letter) => [letter, null, null]),
     ),
   );
 
   equal(
     [...lessonKeys].map((k) => String(k.letter)).join(""),
-    "あいうえおかき",
+    "あいうえおかきアイウエオカキヴゥ",
   );
 });
 
-test("order japanese small tsu and long vowel before dakuten", () => {
+test("order japanese small tsu, long vowel, and vu before dakuten", () => {
   const settings = new Settings().set(lessonProps.guided.keyboardOrder, true);
-  const keyboard = loadKeyboard(Layout.EN_US);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
 
-  const letters = ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ"].map(
+  const letters = ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ", "ゔ"].map(
     (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
   );
 
@@ -251,20 +251,68 @@ test("order japanese small tsu and long vowel before dakuten", () => {
   const lessonKeys = lesson.update(
     fakeKeyStatsMap(
       settings,
-      model.letters.map((letter) => [letter, null, null]),
+      lesson.letters.map((letter) => [letter, null, null]),
     ),
   );
 
   equal(
     [...lessonKeys].map((k) => String(k.letter)).join(""),
-    "わんっーがぎぐ",
+    "わんっがぎぐワンッーヴガギグ",
+  );
+});
+
+test("order japanese small vowels only in katakana block", () => {
+  const settings = new Settings().set(lessonProps.guided.keyboardOrder, true);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+
+  const letters = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      throw new Error("not used");
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [letter, null, null]),
+    ),
+  );
+
+  equal(
+    [...lessonKeys].map((k) => String(k.letter)).join(""),
+    "ゃゅょャュョァィゥェォ",
   );
 });
 
 test("balance japanese kana in guided text", () => {
   const settings = new Settings()
     .set(lessonProps.guided.naturalWords, false)
-    .set(lessonProps.japanese.katakanaRatio, 0)
     .set(lessonProps.japanese.balanceKana, true);
   const keyboard = loadKeyboard(Layout.JA_ROMAJI);
 
@@ -411,9 +459,7 @@ test("generate text with natural words", () => {
 });
 
 test("generate japanese natural words from katakana list without script conversion", () => {
-  const settings = new Settings()
-    .set(lessonProps.guided.naturalWords, true)
-    .set(lessonProps.japanese.katakanaRatio, 1);
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
   const keyboard = loadKeyboard(Layout.JA_ROMAJI);
   const letters = ["か", "な", "た"].map(
     (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
@@ -453,7 +499,16 @@ test("generate japanese natural words from katakana list without script conversi
     ["かなた", "かなた"],
     { katakanaWordList: ["カナタ", "カタナ"] },
   );
-  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [
+        letter,
+        letter.codePoint < 0x30a0 ? 1 : null,
+        letter.codePoint < 0x30a0 ? 1 : null,
+      ]),
+    ),
+  );
   const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
 
   equal(text.includes("カナタ") || text.includes("カタナ"), true);
@@ -462,9 +517,7 @@ test("generate japanese natural words from katakana list without script conversi
 });
 
 test("generate japanese natural words from two-kana katakana list", () => {
-  const settings = new Settings()
-    .set(lessonProps.guided.naturalWords, true)
-    .set(lessonProps.japanese.katakanaRatio, 1);
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
   const keyboard = loadKeyboard(Layout.JA_ROMAJI);
   const letters = ["か", "な"].map(
     (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
@@ -500,7 +553,16 @@ test("generate japanese natural words from two-kana katakana list", () => {
   const lesson = new GuidedLesson(settings, keyboard, model, ["かな"], {
     katakanaWordList: ["カナ"],
   });
-  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [
+        letter,
+        letter.codePoint < 0x30a0 ? 1 : null,
+        letter.codePoint < 0x30a0 ? 1 : null,
+      ]),
+    ),
+  );
   const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
 
   equal(text.includes("カナ"), true);

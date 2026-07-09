@@ -1,5 +1,9 @@
 import { test } from "node:test";
 import { equal, isFalse, isTrue } from "rich-assert";
+import {
+  JAPANESE_HIRAGANA_ALPHABET,
+  JAPANESE_KATAKANA_ALPHABET,
+} from "./japanese.ts";
 import { Language } from "./language.ts";
 
 test("string manipulation", () => {
@@ -30,5 +34,17 @@ test("letter name", () => {
 test("order japanese small kana", () => {
   const alphabet = String.fromCodePoint(...Language.JA.alphabet);
 
-  equal(alphabet.slice(-7), "ゃゅょぁぃぇぉ");
+  equal(alphabet, JAPANESE_HIRAGANA_ALPHABET + JAPANESE_KATAKANA_ALPHABET);
+  equal(JAPANESE_HIRAGANA_ALPHABET.endsWith("ゃゅょ"), true);
+  equal(JAPANESE_HIRAGANA_ALPHABET.includes("ぁ"), false);
+  equal(JAPANESE_HIRAGANA_ALPHABET.includes("ぃ"), false);
+  equal(JAPANESE_HIRAGANA_ALPHABET.includes("ぇ"), false);
+  equal(JAPANESE_HIRAGANA_ALPHABET.includes("ぉ"), false);
+  equal(JAPANESE_HIRAGANA_ALPHABET.includes("ー"), false);
+  equal(JAPANESE_KATAKANA_ALPHABET.includes("ヂ"), false);
+  equal(JAPANESE_KATAKANA_ALPHABET.includes("ヶ"), false);
+  equal(JAPANESE_KATAKANA_ALPHABET.includes("ゥ"), true);
+  equal(JAPANESE_KATAKANA_ALPHABET.includes("ヴ"), true);
+  equal(JAPANESE_KATAKANA_ALPHABET.slice(-8), "ャュョァィゥェォ");
+  equal(JAPANESE_KATAKANA_ALPHABET.includes("ー"), true);
 });

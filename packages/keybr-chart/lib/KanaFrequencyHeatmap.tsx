@@ -1,8 +1,12 @@
+import {
+  JAPANESE_HIRAGANA_ALPHABET,
+  JAPANESE_KATAKANA_ALPHABET,
+} from "@keybr/keyboard";
 import { type KeyStatsMap } from "@keybr/result";
 import { type ReactNode, useMemo } from "react";
 import * as styles from "./KanaFrequencyHeatmap.module.less";
 
-const KANA_GRID: readonly (readonly (string | null)[])[] = [
+const HIRAGANA_GRID: readonly (readonly (string | null)[])[] = [
   ["あ", "い", "う", "え", "お"],
   ["か", "き", "く", "け", "こ"],
   ["さ", "し", "す", "せ", "そ"],
@@ -13,11 +17,43 @@ const KANA_GRID: readonly (readonly (string | null)[])[] = [
   ["や", null, "ゆ", null, "よ"],
   ["ら", "り", "る", "れ", "ろ"],
   ["わ", null, "を", null, "ん"],
+  ["っ", null, null, null, null],
+  ["が", "ぎ", "ぐ", "げ", "ご"],
+  ["ざ", "じ", "ず", "ぜ", "ぞ"],
+  ["だ", "ぢ", "づ", "で", "ど"],
+  ["ば", "び", "ぶ", "べ", "ぼ"],
+  ["ぱ", "ぴ", "ぷ", "ぺ", "ぽ"],
+  ["ゃ", null, "ゅ", null, "ょ"],
+  [null, null, null, null, null],
 ];
 
-const KANA_LIST = KANA_GRID.flat().filter(
-  (kana): kana is string => kana != null,
-);
+const KATAKANA_GRID: readonly (readonly (string | null)[])[] = [
+  ["ア", "イ", "ウ", "エ", "オ"],
+  ["カ", "キ", "ク", "ケ", "コ"],
+  ["サ", "シ", "ス", "セ", "ソ"],
+  ["タ", "チ", "ツ", "テ", "ト"],
+  ["ナ", "ニ", "ヌ", "ネ", "ノ"],
+  ["ハ", "ヒ", "フ", "ヘ", "ホ"],
+  ["マ", "ミ", "ム", "メ", "モ"],
+  ["ヤ", null, "ユ", null, "ヨ"],
+  ["ラ", "リ", "ル", "レ", "ロ"],
+  ["ワ", null, "ヲ", null, "ン"],
+  ["ッ", "ー", "ヴ", null, null],
+  ["ガ", "ギ", "グ", "ゲ", "ゴ"],
+  ["ザ", "ジ", "ズ", "ゼ", "ゾ"],
+  ["ダ", null, "ヅ", "デ", "ド"],
+  ["バ", "ビ", "ブ", "ベ", "ボ"],
+  ["パ", "ピ", "プ", "ペ", "ポ"],
+  ["ャ", null, "ュ", null, "ョ"],
+  ["ァ", "ィ", "ゥ", "ェ", "ォ"],
+];
+
+const KANA_GRID = [HIRAGANA_GRID, KATAKANA_GRID];
+
+const KANA_LIST = [
+  ...JAPANESE_HIRAGANA_ALPHABET,
+  ...JAPANESE_KATAKANA_ALPHABET,
+];
 const KANA_SET = new Set(KANA_LIST);
 
 export function KanaFrequencyHeatmap({
@@ -52,12 +88,18 @@ export function KanaFrequencyHeatmap({
   const hitStats = useMemo(() => normalizeStats(hitMap), [hitMap]);
   const missStats = useMemo(() => normalizeStats(missMap), [missMap]);
 
-  const cols = 5;
-  const rows = KANA_GRID.length;
+  const blockCols = 5;
+  const blockGap = 24;
+  const cols = blockCols * KANA_GRID.length;
+  const rows = Math.max(...KANA_GRID.map((grid) => grid.length));
   const cell = 26;
   const gap = 6;
   const pad = 6;
-  const width = pad * 2 + cols * cell + (cols - 1) * gap;
+  const width =
+    pad * 2 +
+    cols * cell +
+    (cols - 1) * gap +
+    (KANA_GRID.length - 1) * blockGap;
   const height = pad * 2 + rows * cell + (rows - 1) * gap;
   const rMax = cell * 0.34;
   const rMin = cell * 0.14;
@@ -68,38 +110,43 @@ export function KanaFrequencyHeatmap({
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMinYMin meet"
     >
-      {KANA_GRID.map((row, rowIndex) =>
-        row.map((kana, colIndex) => {
-          const cx = pad + colIndex * (cell + gap) + cell / 2;
-          const cy = pad + rowIndex * (cell + gap) + cell / 2;
-          if (kana == null) {
-            return null;
-          }
-          const hit = hitMap.get(kana) ?? 0;
-          const miss = missMap.get(kana) ?? 0;
-          const hitR = hit > 0 ? rMin + hitStats.scale(hit) * (rMax - rMin) : 0;
-          const missR =
-            miss > 0 ? rMin + missStats.scale(miss) * (rMax - rMin) : 0;
-          return (
-            <g key={`${kana}-${rowIndex}-${colIndex}`}>
-              {missR > 0 && (
-                <path
-                  className={`${styles.spot} ${styles.spotMiss}`}
-                  d={arcPath(cx, cy, missR, 0)}
-                />
-              )}
-              {hitR > 0 && (
-                <path
-                  className={`${styles.spot} ${styles.spotHit}`}
-                  d={arcPath(cx, cy, hitR, 1)}
-                />
-              )}
-              <text className={styles.label} x={cx} y={cy}>
-                {kana}
-              </text>
-            </g>
-          );
-        }),
+      {KANA_GRID.map((grid, blockIndex) =>
+        grid.map((row, rowIndex) =>
+          row.map((kana, colIndex) => {
+            const blockOffset =
+              blockIndex * (blockCols * (cell + gap) + blockGap);
+            const cx = pad + blockOffset + colIndex * (cell + gap) + cell / 2;
+            const cy = pad + rowIndex * (cell + gap) + cell / 2;
+            if (kana == null) {
+              return null;
+            }
+            const hit = hitMap.get(kana) ?? 0;
+            const miss = missMap.get(kana) ?? 0;
+            const hitR =
+              hit > 0 ? rMin + hitStats.scale(hit) * (rMax - rMin) : 0;
+            const missR =
+              miss > 0 ? rMin + missStats.scale(miss) * (rMax - rMin) : 0;
+            return (
+              <g key={`${kana}-${rowIndex}-${colIndex}`}>
+                {missR > 0 && (
+                  <path
+                    className={`${styles.spot} ${styles.spotMiss}`}
+                    d={arcPath(cx, cy, missR, 0)}
+                  />
+                )}
+                {hitR > 0 && (
+                  <path
+                    className={`${styles.spot} ${styles.spotHit}`}
+                    d={arcPath(cx, cy, hitR, 1)}
+                  />
+                )}
+                <text className={styles.label} x={cx} y={cy}>
+                  {kana}
+                </text>
+              </g>
+            );
+          }),
+        ),
       )}
     </svg>
   );

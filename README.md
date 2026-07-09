@@ -80,7 +80,7 @@ In static mode, go to **Profile**:
    - `Layout` → **Japanese Romaji** (layout id: `ja-romaji`)
 3. Go to **Lessons** (Guided lesson):
    - Optional: enable **Balance kana frequency**
-   - Optional: adjust **Katakana ratio** (set to `0` for hiragana-only)
+   - Hiragana is unlocked first; katakana is unlocked later as a separate practice block.
 4. (Optional) In **Keyboard**, toggle **Show romaji helper** if you want to see
    suggested romaji spellings for the next kana.
 
