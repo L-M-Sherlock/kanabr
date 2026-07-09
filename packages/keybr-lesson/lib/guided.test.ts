@@ -412,6 +412,52 @@ test("generate japanese natural words from katakana list without script conversi
   equal(text.includes("かたな"), false);
 });
 
+test("generate japanese natural words from two-kana katakana list", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, true)
+    .set(lessonProps.japanese.katakanaRatio, 1);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["か", "な"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      return "かな";
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(settings, keyboard, model, ["かな"], {
+    katakanaWordList: ["カナ"],
+  });
+  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+  equal(text.includes("カナ"), true);
+  equal(text.includes("かな"), false);
+});
+
 describe("unlock keys", () => {
   const letter1 = FakePhoneticModel.letter1;
   const letter2 = FakePhoneticModel.letter2;

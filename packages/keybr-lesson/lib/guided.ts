@@ -229,7 +229,7 @@ export class GuidedLesson extends Lesson {
       wordList,
       dictCodePoints,
       normalizeCodePoint,
-    ).filter((word) => word.length > 2);
+    ).filter((word) => word.length >= 2);
     if (this.model.language.id === "ja") {
       dictionaryWords = dictionaryWords.filter(
         (word) => !endsWithSmallTsu(word),
