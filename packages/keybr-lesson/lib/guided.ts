@@ -4,15 +4,17 @@ import { Filter, Letter, type PhoneticModel } from "@keybr/phonetic-model";
 import { type RNGStream } from "@keybr/rand";
 import { type KeyStatsMap } from "@keybr/result";
 import { type Settings } from "@keybr/settings";
-import { type CodePoint } from "@keybr/unicode";
+import { type CodePoint, toCodePoints } from "@keybr/unicode";
 import { Dictionary, filterWordList } from "./dictionary.ts";
 import {
   japanesePracticeCodePoints,
   type JapanesePracticeScript,
   japanesePracticeScriptOf,
+  japanesePracticeSourceCodePoints,
   makeJapanesePracticeLetters,
   orderJapanesePracticeLetters,
   toHiraganaCodePoint,
+  toKatakanaCodePoint,
   toKatakanaText,
 } from "./japanese.ts";
 import { LessonKey, LessonKeys } from "./key.ts";
@@ -313,15 +315,32 @@ export class GuidedLesson extends Lesson {
     filter: Filter,
     rng: RNGStream,
   ): WordGenerator {
-    const pseudoWords = phoneticWords(
-      this.model,
-      script === "katakana" ? toHiraganaFilter(filter) : filter,
-      rng,
-    );
+    const pseudoFilter =
+      script === "katakana"
+        ? toHiraganaFilter(filter, this.model.letters)
+        : filter;
+    const pseudoWords = phoneticWords(this.model, pseudoFilter, rng);
     if (script === "katakana") {
+      const focusedCodePoint = filter.focusedCodePoint;
+      const focusedCodePointH = pseudoFilter.focusedCodePoint;
       return () => {
         const word = pseudoWords();
-        return word != null ? toKatakanaText(word) : word;
+        if (word == null) {
+          return word;
+        }
+        let katakana = toKatakanaText(word);
+        if (
+          focusedCodePoint != null &&
+          focusedCodePointH != null &&
+          ![...toCodePoints(katakana)].includes(focusedCodePoint)
+        ) {
+          katakana = replaceFirstCodePoint(
+            katakana,
+            toKatakanaCodePoint(focusedCodePointH),
+            focusedCodePoint,
+          );
+        }
+        return katakana;
       };
     }
     return pseudoWords;
@@ -412,11 +431,20 @@ export class GuidedLesson extends Lesson {
   }
 }
 
-function toHiraganaFilter({ codePoints, focusedCodePoint }: Filter): Filter {
+function toHiraganaFilter(
+  { codePoints, focusedCodePoint }: Filter,
+  modelLetters: readonly Letter[] = [],
+): Filter {
+  const modelCodePoints = new Set(
+    modelLetters.map(({ codePoint }) => codePoint),
+  );
   const letters = new Map<CodePoint, Letter>();
   if (codePoints != null) {
     for (const codePoint of codePoints as unknown as Iterable<CodePoint>) {
-      const hiragana = toHiraganaCodePoint(codePoint);
+      const hiragana = toModelCodePoint(
+        toHiraganaCodePoint(codePoint),
+        modelCodePoints,
+      );
       if (!letters.has(hiragana)) {
         letters.set(hiragana, new Letter(hiragana, 1));
       }
@@ -425,7 +453,10 @@ function toHiraganaFilter({ codePoints, focusedCodePoint }: Filter): Filter {
   const list = codePoints != null ? [...letters.values()] : null;
   const focusedCodePointH =
     focusedCodePoint != null
-      ? toHiraganaCodePoint(focusedCodePoint as CodePoint)
+      ? toModelCodePoint(
+          toHiraganaCodePoint(focusedCodePoint as CodePoint),
+          modelCodePoints,
+        )
       : null;
   const focused =
     focusedCodePointH != null
@@ -435,4 +466,34 @@ function toHiraganaFilter({ codePoints, focusedCodePoint }: Filter): Filter {
     return Filter.empty;
   }
   return new Filter(list, focused);
+}
+
+function toModelCodePoint(
+  codePoint: CodePoint,
+  modelCodePoints: ReadonlySet<CodePoint>,
+): CodePoint {
+  if (modelCodePoints.size === 0 || modelCodePoints.has(codePoint)) {
+    return codePoint;
+  }
+  for (const sourceCodePoint of japanesePracticeSourceCodePoints(codePoint)) {
+    if (modelCodePoints.has(sourceCodePoint)) {
+      return sourceCodePoint;
+    }
+  }
+  return codePoint;
+}
+
+function replaceFirstCodePoint(
+  text: string,
+  search: CodePoint,
+  replacement: CodePoint,
+): string {
+  const codePoints = [...toCodePoints(text)];
+  const index = codePoints.indexOf(search);
+  if (index >= 0) {
+    codePoints[index] = replacement;
+  } else if (!codePoints.includes(replacement)) {
+    codePoints.push(replacement);
+  }
+  return String.fromCodePoint(...codePoints);
 }

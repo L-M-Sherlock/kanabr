@@ -82,8 +82,7 @@ export function makePhoneticModel(
     retry();
 
     while (true) {
-      const entries = table
-        .segment(word)
+      const entries = (table.segment(word) ?? [])
         .filter(({ codePoint }) => {
           if (codePoint === 0x0020) {
             if (word.length < minLength) {
@@ -200,9 +199,10 @@ class PrefixList {
   findPrefixes(filter: Filter): Prefix[] {
     const { focusedCodePoint } = filter;
     if (focusedCodePoint != null) {
-      const prefixes = this.map
-        .get(focusedCodePoint)!
-        .filter((prefix) => prefix.matches(filter));
+      const prefixes =
+        this.map
+          .get(focusedCodePoint)
+          ?.filter((prefix) => prefix.matches(filter)) ?? [];
       if (prefixes.length > 0) {
         return prefixes;
       } else {

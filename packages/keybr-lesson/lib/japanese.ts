@@ -50,7 +50,7 @@ function sourceLetter(
   source: ReadonlyMap<CodePoint, Letter>,
   codePoint: CodePoint,
 ): Letter | null {
-  for (const sourceCodePoint of sourceCodePoints(codePoint)) {
+  for (const sourceCodePoint of japanesePracticeSourceCodePoints(codePoint)) {
     const letter = source.get(sourceCodePoint);
     if (letter != null) {
       return letter;
@@ -59,7 +59,9 @@ function sourceLetter(
   return null;
 }
 
-function sourceCodePoints(codePoint: CodePoint): CodePoint[] {
+export function japanesePracticeSourceCodePoints(
+  codePoint: CodePoint,
+): CodePoint[] {
   const hiragana = toHiraganaCodePoint(codePoint);
   const fallback = FREQUENCY_FALLBACKS.get(hiragana);
   return [...new Set([codePoint, hiragana, fallback])].filter(

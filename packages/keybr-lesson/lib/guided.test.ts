@@ -9,7 +9,9 @@ import {
 import {
   FakePhoneticModel,
   Letter,
+  makePhoneticModel,
   PhoneticModel,
+  TransitionTableBuilder,
 } from "@keybr/phonetic-model";
 import { LCG, type RNGStream } from "@keybr/rand";
 import { makeKeyStatsMap } from "@keybr/result";
@@ -598,6 +600,31 @@ test("generate japanese words from both unlocked script word lists", () => {
   equal(printLessonKeys(lessonKeys), "あいうえお[ア]イウエオ");
   equal(text.includes("アイ"), true);
   equal(text.includes("あい"), true);
+});
+
+test("generate katakana pseudo words for fallback kana outside model alphabet", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, false)
+    .set(lessonProps.japanese.balanceKana, false);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const builder = new TransitionTableBuilder(4, [0x0020, /* "う" */ 0x3046]);
+  builder.append("ううううう");
+  const model = makePhoneticModel(Language.JA, builder.build());
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [
+        letter,
+        String(letter) === "ヴ" ? null : 1,
+        String(letter) === "ヴ" ? null : 1,
+      ]),
+    ),
+  );
+  const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+  equal(printLessonKeys(lessonKeys), "うウ[ヴ]ゥ");
+  equal(text.includes("ヴ"), true);
 });
 
 describe("generate text from a broken phonetic model", () => {

@@ -57,6 +57,19 @@ test("generate text from a partial transition table", () => {
   match(model.nextWord(new Filter([a, b, c, d], a)), /^[a]$/);
 });
 
+test("generate text with a focused letter outside the transition table", () => {
+  const alphabet = [0x0020, 0x0061];
+
+  const builder = new TransitionTableBuilder(4, alphabet);
+
+  builder.set([0x0020, 0x0020, 0x0020, 0x0061], 1);
+
+  const model = makePhoneticModel(Language.EN, builder.build());
+  const x = new Letter(0x0078, 1, "X");
+
+  equal(model.nextWord(new Filter([x], x)), "x");
+});
+
 test("generate text from a full transition table", () => {
   const alphabet = [0x0020, 0x0061, 0x0062, 0x0063, 0x0064];
 
