@@ -31,6 +31,7 @@ export type Step = {
   readonly codePoint: CodePoint;
   readonly timeToType: number;
   readonly typo: boolean;
+  readonly wordStart?: boolean;
 };
 
 export type StepListener = (step: Step) => void;
@@ -53,7 +54,7 @@ export class TextInput {
   #garbage: (Step & { readonly char: Char })[] = [];
   #typo!: boolean;
   #output!: { chars: Char[]; lines: LineList; remaining: Char[] };
-  #boundaryClearedAtPos: number | null = null;
+  #boundaryConfirmedAtPos: number | null = null;
 
   constructor(
     text: TextInputText,
@@ -78,7 +79,7 @@ export class TextInput {
     this.#steps = [];
     this.#garbage = [];
     this.#typo = false;
-    this.#boundaryClearedAtPos = null;
+    this.#boundaryConfirmedAtPos = null;
     this.#update();
   }
 
@@ -134,9 +135,7 @@ export class TextInput {
         return this.appendChar(timeStamp, codePoint, timeToType);
       case "appendLineBreak":
         if (this.#separator != null) {
-          if (this.#isBoundaryPending()) {
-            this.#boundaryClearedAtPos = this.pos;
-          }
+          this.#confirmBoundaryInput();
           return this.#return(Feedback.Succeeded);
         }
         return this.appendChar(timeStamp, 0x0020, timeToType);
@@ -149,6 +148,7 @@ export class TextInput {
 
   clearChar(): Feedback {
     this.#garbage.pop();
+    this.#boundaryConfirmedAtPos = null;
     this.#typo = true;
     return this.#return(Feedback.Succeeded);
   }
@@ -160,7 +160,7 @@ export class TextInput {
       while (this.pos > start) {
         this.#steps.pop();
       }
-      this.#boundaryClearedAtPos = null;
+      this.#boundaryConfirmedAtPos = null;
     } else {
       while (this.pos > 0 && this.at(this.pos - 1).codePoint !== 0x0020) {
         this.#steps.pop();
@@ -179,9 +179,10 @@ export class TextInput {
       throw new Error();
     }
 
-    if (this.#isBoundaryPending() && codePoint !== 0x0020) {
+    const wordStart = this.#isWordStart(codePoint);
+
+    if (wordStart) {
       // Auto-advance to the next word when the user starts typing.
-      this.#boundaryClearedAtPos = this.pos;
       this.#garbage = [];
       this.#typo = false;
     }
@@ -198,6 +199,7 @@ export class TextInput {
         return this.#return(Feedback.Recovered);
       }
       if (this.#garbage.length === 0 && !this.#typo) {
+        this.#confirmBoundaryInput();
         return this.#return(Feedback.Succeeded);
       }
     }
@@ -214,6 +216,7 @@ export class TextInput {
           codePoint,
           timeToType,
           typo,
+          ...(wordStart ? { wordStart } : {}),
         },
         this.at(this.pos),
       );
@@ -257,12 +260,19 @@ export class TextInput {
     return feedback;
   }
 
-  #isBoundaryPending(): boolean {
+  #isWordStart(codePoint: CodePoint): boolean {
     return (
       this.#separator != null &&
       this.#boundarySet.has(this.pos) &&
-      this.#boundaryClearedAtPos !== this.pos
+      this.#boundaryConfirmedAtPos !== this.pos &&
+      codePoint !== 0x0020
     );
+  }
+
+  #confirmBoundaryInput(): void {
+    if (this.#separator != null && this.#boundarySet.has(this.pos)) {
+      this.#boundaryConfirmedAtPos = this.pos;
+    }
   }
 
   #update(): void {
@@ -311,11 +321,7 @@ export class TextInput {
     const attrs = step.typo ? Attr.Miss : Attr.Hit;
     this.#steps.push({ ...step, char: { ...char, attrs } });
     this.onStep(step);
-    if (this.#separator != null && this.#boundarySet.has(this.pos)) {
-      this.#boundaryClearedAtPos = this.pos;
-    } else {
-      this.#boundaryClearedAtPos = null;
-    }
+    this.#boundaryConfirmedAtPos = null;
   }
 
   #skipWord(timeStamp: number): void {
@@ -410,7 +416,6 @@ export class TextInput {
 
     this.#garbage = [];
     this.#typo = false;
-    this.#boundaryClearedAtPos = null;
     return true;
   }
 
@@ -453,7 +458,6 @@ export class TextInput {
 
     this.#garbage = [];
     this.#typo = false;
-    this.#boundaryClearedAtPos = null;
     return true;
   }
 }

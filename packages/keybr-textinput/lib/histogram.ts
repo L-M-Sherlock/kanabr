@@ -50,6 +50,7 @@ export class Histogram implements Iterable<Sample> {
   }
 
   static from(steps: readonly Step[]): Histogram {
+    const offset = wordStartOffset(steps);
     const samples = new Map<
       CodePoint,
       {
@@ -59,7 +60,7 @@ export class Histogram implements Iterable<Sample> {
         count: number;
       }
     >();
-    for (const { codePoint, timeToType, typo } of steps) {
+    for (const { codePoint, timeToType, typo, wordStart } of steps) {
       let sample = samples.get(codePoint);
       if (sample == null) {
         samples.set(
@@ -76,7 +77,7 @@ export class Histogram implements Iterable<Sample> {
       if (typo) {
         sample.missCount += 1;
       } else if (timeToType > 0) {
-        sample.time += timeToType;
+        sample.time += adjustTimeToType(timeToType, wordStart === true, offset);
         sample.count += 1;
       }
     }
@@ -91,6 +92,44 @@ export class Histogram implements Iterable<Sample> {
         .filter(validateSample),
     );
   }
+}
+
+function adjustTimeToType(
+  timeToType: number,
+  wordStart: boolean,
+  offset: number,
+): number {
+  if (wordStart && offset > 0) {
+    return Math.max(40, timeToType - offset);
+  }
+  return timeToType;
+}
+
+function wordStartOffset(steps: readonly Step[]): number {
+  const wordStart: number[] = [];
+  const normal: number[] = [];
+  for (const { timeToType, typo, wordStart: isWordStart } of steps) {
+    if (!typo && timeToType > 0) {
+      if (isWordStart) {
+        wordStart.push(timeToType);
+      } else {
+        normal.push(timeToType);
+      }
+    }
+  }
+  if (wordStart.length < 5 || normal.length < 5) {
+    return 0;
+  }
+  return Math.max(0, median(wordStart) - median(normal));
+}
+
+function median(values: readonly number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 0) {
+    return (sorted[mid - 1] + sorted[mid]) / 2;
+  }
+  return sorted[mid];
 }
 
 export function validateSample({ timeToType }: Sample): boolean {

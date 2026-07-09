@@ -54,6 +54,79 @@ test("ignore typos", () => {
   );
 });
 
+test("adjust word start samples by a global offset", () => {
+  const histogram = Histogram.from([
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: A,
+      timeToType: 100,
+      typo: false,
+    }),
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: B,
+      timeToType: 300,
+      typo: false,
+      wordStart: true,
+    }),
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: B,
+      timeToType: 9000,
+      typo: true,
+      wordStart: true,
+    }),
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: C,
+      timeToType: 100,
+      typo: false,
+    }),
+  ]);
+
+  deepEqual(
+    [...histogram],
+    [
+      { codePoint: A, hitCount: 5, missCount: 0, timeToType: 100 },
+      { codePoint: B, hitCount: 10, missCount: 5, timeToType: 100 },
+      { codePoint: C, hitCount: 5, missCount: 0, timeToType: 100 },
+    ],
+  );
+});
+
+test("do not adjust word start samples with too few samples", () => {
+  const histogram = Histogram.from([
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: A,
+      timeToType: 100,
+      typo: false,
+    }),
+    ...repeat(4, {
+      timeStamp: 0,
+      codePoint: B,
+      timeToType: 300,
+      typo: false,
+      wordStart: true,
+    }),
+    ...repeat(5, {
+      timeStamp: 0,
+      codePoint: C,
+      timeToType: 100,
+      typo: false,
+    }),
+  ]);
+
+  deepEqual(
+    [...histogram],
+    [
+      { codePoint: A, hitCount: 5, missCount: 0, timeToType: 100 },
+      { codePoint: B, hitCount: 4, missCount: 0, timeToType: 300 },
+      { codePoint: C, hitCount: 5, missCount: 0, timeToType: 100 },
+    ],
+  );
+});
+
 test("validate histogram", () => {
   // Too few characters.
 
@@ -112,3 +185,7 @@ test("validate histogram", () => {
     ]).validate(),
   );
 });
+
+function repeat<T>(count: number, value: T): T[] {
+  return Array.from({ length: count }, () => value);
+}

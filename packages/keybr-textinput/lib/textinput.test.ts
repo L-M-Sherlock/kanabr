@@ -644,16 +644,56 @@ test("virtual word separators advance on enter or typing", () => {
   equal(showSteps(textInput), "a,100,101|b,200,102");
   equal(showChars(textInput), "a|b| |[c]|d");
 
-  // Typing the next character also auto-advances the boundary.
+  // Typing the next character after Enter does not auto-advance the boundary.
   equal(textInput.appendChar(400, C, 103), Feedback.Succeeded);
+  equal(showSteps(textInput), "a,100,101|b,200,102|c,400,103");
   equal(showChars(textInput), "a|b| |c|[d]");
+});
+
+test("virtual word separators mark auto-advanced word starts", () => {
+  const textInput = new TextInput(
+    { kind: "wordText", words: ["ab", "cd"], separator: " " },
+    {
+      stopOnError: true,
+      forgiveErrors: true,
+      spaceSkipsWords: false,
+    },
+  );
+
+  equal(textInput.appendChar(100, A, 101), Feedback.Succeeded);
+  equal(textInput.appendChar(200, B, 102), Feedback.Succeeded);
+  equal(textInput.appendChar(400, C, 103), Feedback.Succeeded);
+  equal(textInput.appendChar(500, D, 104), Feedback.Succeeded);
+
+  equal(showSteps(textInput), "a,100,101|b,200,102|^c,400,103|d,500,104");
+});
+
+test("virtual word separators do not mark word starts after space", () => {
+  const textInput = new TextInput(
+    { kind: "wordText", words: ["ab", "cd"], separator: " " },
+    {
+      stopOnError: true,
+      forgiveErrors: true,
+      spaceSkipsWords: false,
+    },
+  );
+
+  equal(textInput.appendChar(100, A, 101), Feedback.Succeeded);
+  equal(textInput.appendChar(200, B, 102), Feedback.Succeeded);
+  equal(textInput.appendChar(300, Space, 103), Feedback.Succeeded);
+  equal(textInput.appendChar(400, C, 104), Feedback.Succeeded);
+
+  equal(showSteps(textInput), "a,100,101|b,200,102|c,400,104");
 });
 
 function showSteps({ steps }: TextInput) {
   return steps
-    .map(({ codePoint, timeStamp, timeToType, typo }) => {
+    .map(({ codePoint, timeStamp, timeToType, typo, wordStart }) => {
       let s = String.fromCodePoint(codePoint);
       s = `${s},${timeStamp},${timeToType}`;
+      if (wordStart) {
+        s = `^${s}`;
+      }
       if (typo) {
         s = `!${s}`;
       }
