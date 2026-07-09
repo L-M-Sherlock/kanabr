@@ -11,7 +11,7 @@ import {
   Letter,
   PhoneticModel,
 } from "@keybr/phonetic-model";
-import { LCG } from "@keybr/rand";
+import { LCG, type RNGStream } from "@keybr/rand";
 import { makeKeyStatsMap } from "@keybr/result";
 import { Settings } from "@keybr/settings";
 import { flattenStyledText } from "@keybr/textinput";
@@ -20,6 +20,13 @@ import { fakeKeyStatsMap, printLessonKeys } from "./fakes.ts";
 import { GuidedLesson } from "./guided.ts";
 import { LessonKey } from "./key.ts";
 import { lessonProps } from "./settings.ts";
+
+function fixedRng(value: number): RNGStream<number> {
+  const rng = (() => value) as RNGStream<number>;
+  rng.mark = () => 0;
+  rng.reset = () => {};
+  return rng;
+}
 
 test("provide key set", () => {
   const settings = new Settings();
@@ -359,6 +366,100 @@ test("balance japanese kana in guided text", () => {
   equal(s.includes("い") || s.includes("う") || s.includes("え"), true);
 });
 
+test("start katakana practice with a minimum kana group", () => {
+  const settings = new Settings();
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["あ", "い", "う", "え", "お", "か"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      return "あ";
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [
+        letter,
+        letter.codePoint < 0x30a0 ? 1 : null,
+        letter.codePoint < 0x30a0 ? 1 : null,
+      ]),
+    ),
+  );
+
+  equal(printLessonKeys(lessonKeys), "あいうえおか[ア]イウエオ");
+});
+
+test("start new japanese practice with five hiragana", () => {
+  const settings = new Settings();
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["あ", "い", "う", "え", "お", "か"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      return "あ";
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      lesson.letters.map((letter) => [letter, null, null]),
+    ),
+  );
+
+  equal(printLessonKeys(lessonKeys), "[あ]いうえお");
+});
+
 describe("generate text from a broken phonetic model", () => {
   const settings = new Settings();
   const keyboard = loadKeyboard(Layout.EN_US);
@@ -453,8 +554,58 @@ test("generate text with natural words", () => {
 
   equal(
     lesson.generate(lessonKeys, model.rng),
-    "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa " +
-      "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe",
+    "abcaa abcad abcbb abcaa abcad abcbb abcaa abcad abcbb abcaa abcad abcbb " +
+      "abcaa abcad abcbb abcaa abcad abcbb abcaa abcad",
+  );
+});
+
+test("generate pseudo words only when fewer than ten natural words", () => {
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
+  const keyboard = loadKeyboard(Layout.EN_US);
+  const model = new FakePhoneticModel(["zzzz"]);
+  const wordList = [
+    "abca",
+    "abcaa",
+    "abcab",
+    "abcac",
+    "abcad",
+    "abcae",
+    "abcaf",
+    "abcba",
+    "abcbb",
+    "abcbc",
+  ];
+
+  const lessonWithNineWords = new GuidedLesson(
+    settings,
+    keyboard,
+    model,
+    wordList.slice(0, 9),
+  );
+  const lessonKeysWithNineWords = lessonWithNineWords.update(
+    makeKeyStatsMap(lessonWithNineWords.letters, []),
+  );
+  equal(
+    lessonWithNineWords
+      .generate(lessonKeysWithNineWords, fixedRng(0.95))
+      .includes("zzzz"),
+    true,
+  );
+
+  const lessonWithTenWords = new GuidedLesson(
+    settings,
+    keyboard,
+    model,
+    wordList,
+  );
+  const lessonKeysWithTenWords = lessonWithTenWords.update(
+    makeKeyStatsMap(lessonWithTenWords.letters, []),
+  );
+  equal(
+    lessonWithTenWords
+      .generate(lessonKeysWithTenWords, fixedRng(0.95))
+      .includes("zzzz"),
+    false,
   );
 });
 

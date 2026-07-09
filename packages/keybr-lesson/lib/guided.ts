@@ -29,6 +29,10 @@ import {
   type WordGenerator,
 } from "./text/words.ts";
 
+const minNaturalWordCount = 10;
+const minLessonKeyCount = 6;
+const japaneseMinLessonKeyCount = 5;
+
 export class GuidedLesson extends Lesson {
   readonly #letters: readonly Letter[];
   readonly dictionary: Dictionary;
@@ -66,7 +70,9 @@ export class GuidedLesson extends Lesson {
 
     const letters = this.#getLetters();
 
-    const minSize = 6;
+    const minSize = this.#isJapaneseRomaji()
+      ? japaneseMinLessonKeyCount
+      : minLessonKeyCount;
     const maxSize =
       minSize + Math.round((letters.length - minSize) * alphabetSize);
 
@@ -126,6 +132,8 @@ export class GuidedLesson extends Lesson {
       lessonKeys.focus(weakestKeys[0].letter);
     }
 
+    this.#includeJapaneseScriptMinSize(lessonKeys, minSize);
+
     return lessonKeys;
   }
 
@@ -181,7 +189,7 @@ export class GuidedLesson extends Lesson {
     const pseudoWords = phoneticWords(this.model, filter, rng);
     if (this.settings.get(lessonProps.guided.naturalWords)) {
       const words = this.dictionary.find(filter).slice(0, 1000);
-      while (words.length < 15) {
+      while (words.length < minNaturalWordCount) {
         const word = pseudoWords();
         if (word != null) {
           words.push(word);
@@ -265,7 +273,7 @@ export class GuidedLesson extends Lesson {
       const dictionary =
         script === "katakana" ? this.katakanaDictionary : this.dictionary;
       const words = dictionary?.find(filter).slice(0, 1000) ?? [];
-      while (words.length < 15) {
+      while (words.length < minNaturalWordCount) {
         const word = pseudoWords();
         if (word != null) {
           words.push(word);
@@ -354,6 +362,37 @@ export class GuidedLesson extends Lesson {
     return (
       this.model.language.id === "ja" && this.keyboard.layout.id === "ja-romaji"
     );
+  }
+
+  #includeJapaneseScriptMinSize(lessonKeys: LessonKeys, minSize: number): void {
+    if (!this.#isJapaneseRomaji()) {
+      return;
+    }
+    const focusedKey = lessonKeys.findFocusedKey();
+    if (focusedKey == null) {
+      return;
+    }
+    const script = japanesePracticeScriptOf(focusedKey.letter.codePoint);
+    if (script == null) {
+      return;
+    }
+    let includedScriptKeyCount = lessonKeys
+      .findIncludedKeys()
+      .filter(
+        ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
+      ).length;
+    for (const { letter, isIncluded } of lessonKeys) {
+      if (includedScriptKeyCount >= minSize) {
+        break;
+      }
+      if (
+        !isIncluded &&
+        japanesePracticeScriptOf(letter.codePoint) === script
+      ) {
+        lessonKeys.include(letter);
+        includedScriptKeyCount++;
+      }
+    }
   }
 }
 
