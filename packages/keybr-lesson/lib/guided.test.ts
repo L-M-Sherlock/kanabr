@@ -212,6 +212,55 @@ test("order japanese letters by gojuon", () => {
   );
 });
 
+test("order japanese small tsu and long vowel before dakuten", () => {
+  const settings = new Settings().set(lessonProps.guided.keyboardOrder, true);
+  const keyboard = loadKeyboard(Layout.EN_US);
+
+  const letters = ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      throw new Error("not used");
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = lesson.update(
+    fakeKeyStatsMap(
+      settings,
+      model.letters.map((letter) => [letter, null, null]),
+    ),
+  );
+
+  equal(
+    [...lessonKeys].map((k) => String(k.letter)).join(""),
+    "わんっーがぎぐ",
+  );
+});
+
 test("balance japanese kana in guided text", () => {
   const settings = new Settings()
     .set(lessonProps.guided.naturalWords, false)
