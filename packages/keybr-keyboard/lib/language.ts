@@ -102,7 +102,7 @@ export class Language implements EnumItem {
     /* id= */ "ja",
     /* script= */ "hiragana",
     /* direction= */ "ltr",
-    /* alphabet= */ "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんっーがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽぁぃぇぉゃゅょ",
+    /* alphabet= */ "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんっーがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽゃゅょぁぃぇぉ",
   );
   static readonly LT = new Language(
     /* id= */ "lt",

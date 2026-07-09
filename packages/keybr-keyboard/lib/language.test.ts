@@ -26,3 +26,9 @@ test("letter name", () => {
   equal(Language.AR.letterName(0x0627), "\u200c\u0627");
   equal(Language.FA.letterName(0x0627), "\u200c\u0627");
 });
+
+test("order japanese small kana", () => {
+  const alphabet = String.fromCodePoint(...Language.JA.alphabet);
+
+  equal(alphabet.slice(-7), "ゃゅょぁぃぇぉ");
+});
