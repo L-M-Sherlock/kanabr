@@ -94,6 +94,35 @@ test("advance to completion", () => {
   });
 });
 
+test("preserve stroke timing metadata", () => {
+  const textInput = new TextInput("a", {
+    stopOnError: true,
+    forgiveErrors: true,
+    spaceSkipsWords: true,
+  });
+
+  equal(
+    textInput.onInput({
+      timeStamp: 100,
+      inputType: "appendChar",
+      codePoint: A,
+      timeToType: 200,
+      timeToTypeSequenceId: 1,
+      timeToTypeStrokes: [
+        { timeToType: 300, wordStart: true },
+        { timeToType: 100 },
+      ],
+    }),
+    Feedback.Succeeded,
+  );
+
+  deepEqual(textInput.steps[0].timeToTypeStrokes, [
+    { timeToType: 300, wordStart: true },
+    { timeToType: 100 },
+  ]);
+  equal(textInput.steps[0].timeToTypeSequenceId, 1);
+});
+
 test("accumulate and delete garbage", () => {
   const textInput = new TextInput("abc", {
     stopOnError: false,

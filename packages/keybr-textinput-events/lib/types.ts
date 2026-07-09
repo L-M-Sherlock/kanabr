@@ -36,4 +36,11 @@ export type IInputEvent = {
     | "clearWord";
   readonly codePoint: CodePoint;
   readonly timeToType: number;
+  readonly timeToTypeStrokes?: readonly TimeToTypeStroke[];
+  readonly timeToTypeSequenceId?: number;
+};
+
+export type TimeToTypeStroke = {
+  readonly timeToType: number;
+  readonly wordStart?: boolean;
 };

@@ -50,7 +50,8 @@ export class Histogram implements Iterable<Sample> {
   }
 
   static from(steps: readonly Step[]): Histogram {
-    const offset = wordStartOffset(steps);
+    const strokeOffset = timeToTypeStrokeOffset(steps);
+    const fallbackOffset = wordStartOffset(steps);
     const samples = new Map<
       CodePoint,
       {
@@ -60,7 +61,13 @@ export class Histogram implements Iterable<Sample> {
         count: number;
       }
     >();
-    for (const { codePoint, timeToType, typo, wordStart } of steps) {
+    for (const {
+      codePoint,
+      timeToType,
+      typo,
+      wordStart,
+      timeToTypeStrokes,
+    } of steps) {
       let sample = samples.get(codePoint);
       if (sample == null) {
         samples.set(
@@ -77,7 +84,9 @@ export class Histogram implements Iterable<Sample> {
       if (typo) {
         sample.missCount += 1;
       } else if (timeToType > 0) {
-        sample.time += adjustTimeToType(timeToType, wordStart === true, offset);
+        sample.time += hasTimeToTypeStrokes(timeToTypeStrokes)
+          ? adjustStrokeTimeToType(timeToTypeStrokes, strokeOffset)
+          : adjustTimeToType(timeToType, wordStart === true, fallbackOffset);
         sample.count += 1;
       }
     }
@@ -94,6 +103,30 @@ export class Histogram implements Iterable<Sample> {
   }
 }
 
+function hasTimeToTypeStrokes(
+  strokes: Step["timeToTypeStrokes"],
+): strokes is NonNullable<Step["timeToTypeStrokes"]> {
+  return strokes != null && strokes.length > 0;
+}
+
+function adjustStrokeTimeToType(
+  strokes: readonly {
+    readonly timeToType: number;
+    readonly wordStart?: boolean;
+  }[],
+  offset: number,
+): number {
+  let time = 0;
+  let count = 0;
+  for (const { timeToType, wordStart } of strokes) {
+    if (timeToType > 0) {
+      time += adjustTimeToType(timeToType, wordStart === true, offset);
+      count++;
+    }
+  }
+  return count > 0 ? time / count : 0;
+}
+
 function adjustTimeToType(
   timeToType: number,
   wordStart: boolean,
@@ -105,11 +138,43 @@ function adjustTimeToType(
   return timeToType;
 }
 
+function timeToTypeStrokeOffset(steps: readonly Step[]): number {
+  const wordStart: number[] = [];
+  const normal: number[] = [];
+  const seen = new Set<number>();
+  for (const { timeToTypeStrokes, timeToTypeSequenceId, typo } of steps) {
+    if (typo || !hasTimeToTypeStrokes(timeToTypeStrokes)) {
+      continue;
+    }
+    if (timeToTypeSequenceId != null) {
+      if (seen.has(timeToTypeSequenceId)) {
+        continue;
+      }
+      seen.add(timeToTypeSequenceId);
+    }
+    for (const { timeToType, wordStart: isWordStart } of timeToTypeStrokes) {
+      if (timeToType > 0) {
+        if (isWordStart) {
+          wordStart.push(timeToType);
+        } else {
+          normal.push(timeToType);
+        }
+      }
+    }
+  }
+  return offsetFrom(wordStart, normal);
+}
+
 function wordStartOffset(steps: readonly Step[]): number {
   const wordStart: number[] = [];
   const normal: number[] = [];
-  for (const { timeToType, typo, wordStart: isWordStart } of steps) {
-    if (!typo && timeToType > 0) {
+  for (const {
+    timeToType,
+    typo,
+    wordStart: isWordStart,
+    timeToTypeStrokes,
+  } of steps) {
+    if (!hasTimeToTypeStrokes(timeToTypeStrokes) && !typo && timeToType > 0) {
       if (isWordStart) {
         wordStart.push(timeToType);
       } else {
@@ -117,6 +182,10 @@ function wordStartOffset(steps: readonly Step[]): number {
       }
     }
   }
+  return offsetFrom(wordStart, normal);
+}
+
+function offsetFrom(wordStart: readonly number[], normal: readonly number[]) {
   if (wordStart.length < 5 || normal.length < 5) {
     return 0;
   }

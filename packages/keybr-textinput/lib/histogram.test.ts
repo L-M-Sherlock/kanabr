@@ -127,6 +127,71 @@ test("do not adjust word start samples with too few samples", () => {
   );
 });
 
+test("adjust word start strokes before averaging", () => {
+  const histogram = Histogram.from([
+    ...timedStrokeSteps(X, 0, 5, [{ timeToType: 100 }]),
+    ...timedStrokeSteps(A, 100, 5, [{ timeToType: 300, wordStart: true }]),
+    ...timedStrokeSteps(B, 200, 5, [
+      { timeToType: 300, wordStart: true },
+      { timeToType: 100 },
+    ]),
+    ...timedStrokeSteps(C, 300, 5, [
+      { timeToType: 300, wordStart: true },
+      { timeToType: 100 },
+      { timeToType: 100 },
+    ]),
+  ]);
+
+  deepEqual(
+    [...histogram],
+    [
+      { codePoint: A, hitCount: 5, missCount: 0, timeToType: 100 },
+      { codePoint: B, hitCount: 5, missCount: 0, timeToType: 100 },
+      { codePoint: C, hitCount: 5, missCount: 0, timeToType: 100 },
+      { codePoint: X, hitCount: 5, missCount: 0, timeToType: 100 },
+    ],
+  );
+});
+
+test("count shared stroke sequences once for word start offset", () => {
+  const steps = [...timedStrokeSteps(X, 0, 5, [{ timeToType: 100 }])];
+  for (let i = 0; i < 4; i++) {
+    const timeToTypeStrokes = [
+      { timeToType: 300, wordStart: true },
+      { timeToType: 100 },
+    ];
+    steps.push(
+      {
+        timeStamp: 0,
+        codePoint: A,
+        timeToType: 200,
+        typo: false,
+        timeToTypeSequenceId: 100 + i,
+        timeToTypeStrokes,
+      },
+      {
+        timeStamp: 0,
+        codePoint: B,
+        timeToType: 200,
+        typo: false,
+        timeToTypeSequenceId: 100 + i,
+        timeToTypeStrokes,
+      },
+    );
+  }
+
+  const histogram = Histogram.from(steps);
+
+  deepEqual(
+    [...histogram],
+    [
+      { codePoint: A, hitCount: 4, missCount: 0, timeToType: 200 },
+      { codePoint: B, hitCount: 4, missCount: 0, timeToType: 200 },
+      { codePoint: X, hitCount: 5, missCount: 0, timeToType: 100 },
+    ],
+  );
+});
+
 test("validate histogram", () => {
   // Too few characters.
 
@@ -188,4 +253,26 @@ test("validate histogram", () => {
 
 function repeat<T>(count: number, value: T): T[] {
   return Array.from({ length: count }, () => value);
+}
+
+function timedStrokeSteps(
+  codePoint: number,
+  sequenceStart: number,
+  count: number,
+  timeToTypeStrokes: readonly {
+    readonly timeToType: number;
+    readonly wordStart?: boolean;
+  }[],
+) {
+  const timeToType =
+    timeToTypeStrokes.reduce((sum, { timeToType }) => sum + timeToType, 0) /
+    timeToTypeStrokes.length;
+  return Array.from({ length: count }, (_, i) => ({
+    timeStamp: 0,
+    codePoint,
+    timeToType,
+    typo: false,
+    timeToTypeSequenceId: sequenceStart + i,
+    timeToTypeStrokes,
+  }));
 }

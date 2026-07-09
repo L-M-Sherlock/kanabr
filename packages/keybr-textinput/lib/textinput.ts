@@ -32,6 +32,13 @@ export type Step = {
   readonly timeToType: number;
   readonly typo: boolean;
   readonly wordStart?: boolean;
+  readonly timeToTypeStrokes?: readonly TimeToTypeStroke[];
+  readonly timeToTypeSequenceId?: number;
+};
+
+export type TimeToTypeStroke = {
+  readonly timeToType: number;
+  readonly wordStart?: boolean;
 };
 
 export type StepListener = (step: Step) => void;
@@ -115,11 +122,21 @@ export class TextInput {
     return this.#output.remaining;
   }
 
+  isAtWordStart(): boolean {
+    return (
+      this.#separator != null &&
+      this.#boundarySet.has(this.pos) &&
+      this.#boundaryConfirmedAtPos !== this.pos
+    );
+  }
+
   onInput({
     timeStamp,
     inputType,
     codePoint,
     timeToType,
+    timeToTypeStrokes,
+    timeToTypeSequenceId,
   }: {
     readonly timeStamp: number;
     readonly inputType:
@@ -129,10 +146,15 @@ export class TextInput {
       | "clearWord";
     readonly codePoint: CodePoint;
     readonly timeToType: number;
+    readonly timeToTypeStrokes?: readonly TimeToTypeStroke[];
+    readonly timeToTypeSequenceId?: number;
   }): Feedback {
     switch (inputType) {
       case "appendChar":
-        return this.appendChar(timeStamp, codePoint, timeToType);
+        return this.appendChar(timeStamp, codePoint, timeToType, {
+          timeToTypeStrokes,
+          timeToTypeSequenceId,
+        });
       case "appendLineBreak":
         if (this.#separator != null) {
           this.#confirmBoundaryInput();
@@ -174,6 +196,13 @@ export class TextInput {
     timeStamp: number,
     codePoint: CodePoint,
     timeToType: number,
+    {
+      timeToTypeStrokes,
+      timeToTypeSequenceId,
+    }: {
+      readonly timeToTypeStrokes?: readonly TimeToTypeStroke[];
+      readonly timeToTypeSequenceId?: number;
+    } = {},
   ): Feedback {
     if (this.completed) {
       throw new Error();
@@ -217,6 +246,8 @@ export class TextInput {
           timeToType,
           typo,
           ...(wordStart ? { wordStart } : {}),
+          ...(timeToTypeStrokes != null ? { timeToTypeStrokes } : {}),
+          ...(timeToTypeSequenceId != null ? { timeToTypeSequenceId } : {}),
         },
         this.at(this.pos),
       );
@@ -241,6 +272,8 @@ export class TextInput {
           timeStamp,
           codePoint,
           timeToType,
+          ...(timeToTypeStrokes != null ? { timeToTypeStrokes } : {}),
+          ...(timeToTypeSequenceId != null ? { timeToTypeSequenceId } : {}),
           typo: false,
         });
       }
@@ -261,12 +294,7 @@ export class TextInput {
   }
 
   #isWordStart(codePoint: CodePoint): boolean {
-    return (
-      this.#separator != null &&
-      this.#boundarySet.has(this.pos) &&
-      this.#boundaryConfirmedAtPos !== this.pos &&
-      codePoint !== 0x0020
-    );
+    return this.isAtWordStart() && codePoint !== 0x0020;
   }
 
   #confirmBoundaryInput(): void {

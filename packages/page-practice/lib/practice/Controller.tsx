@@ -149,11 +149,19 @@ function useLessonState(
               }
               return;
             }
-            const res = ime.consume(event);
+            const wordStartStroke =
+              event.inputType === "appendChar" &&
+              event.codePoint !== 0x0020 &&
+              ime.preedit === "" &&
+              state.textInput.isAtWordStart();
+            const res = ime.consume(event, { wordStartStroke });
             state.imePreedit = res.preedit;
             state.imeValid = res.valid;
             for (const ev of res.events) {
               if (ev.inputType === "appendChar" && ev.codePoint === 0x0020) {
+                if (state.textInput.isAtWordStart()) {
+                  state.onInput(ev);
+                }
                 continue;
               }
               const mapped = mapKanaEventToExpected(ev, state.textInput);

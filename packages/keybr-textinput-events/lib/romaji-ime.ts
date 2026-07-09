@@ -1,10 +1,14 @@
 import { type CodePoint } from "@keybr/unicode";
-import { type IInputEvent } from "./types.ts";
+import { type IInputEvent, type TimeToTypeStroke } from "./types.ts";
 
 export type RomajiImeResult = {
   readonly events: readonly IInputEvent[];
   readonly preedit: string;
   readonly valid: boolean;
+};
+
+export type RomajiImeConsumeOptions = {
+  readonly wordStartStroke?: boolean;
 };
 
 type TrieNode = Readonly<{
@@ -20,12 +24,14 @@ type Output = Readonly<{
 
 export class RomajiIme {
   #buffer = "";
-  #times: number[] = [];
+  #strokes: TimeToTypeStroke[] = [];
+  #sequenceId = 0;
   #valid = true;
 
   reset(): void {
     this.#buffer = "";
-    this.#times = [];
+    this.#strokes = [];
+    this.#sequenceId = 0;
     this.#valid = true;
   }
 
@@ -37,7 +43,10 @@ export class RomajiIme {
     return this.#valid;
   }
 
-  consume(event: IInputEvent): RomajiImeResult {
+  consume(
+    event: IInputEvent,
+    { wordStartStroke = false }: RomajiImeConsumeOptions = {},
+  ): RomajiImeResult {
     switch (event.inputType) {
       case "appendLineBreak":
         return this.#flushThenForward(event, /* atBoundary= */ true);
@@ -47,17 +56,20 @@ export class RomajiIme {
       case "clearChar":
         if (this.#buffer.length > 0) {
           this.#buffer = this.#buffer.slice(0, -1);
-          this.#times.pop();
+          this.#strokes.pop();
           this.#valid = this.#isPrefix(this.#buffer);
           return { events: [], preedit: this.#buffer, valid: this.#valid };
         }
         return { events: [event], preedit: this.#buffer, valid: this.#valid };
       case "appendChar":
-        return this.#appendChar(event);
+        return this.#appendChar(event, { wordStartStroke });
     }
   }
 
-  #appendChar(event: IInputEvent): RomajiImeResult {
+  #appendChar(
+    event: IInputEvent,
+    { wordStartStroke }: RomajiImeConsumeOptions,
+  ): RomajiImeResult {
     const ch = String.fromCodePoint(event.codePoint);
     // Word boundary: flush pending romaji, then forward the boundary character.
     if (ch === " ") {
@@ -78,8 +90,12 @@ export class RomajiIme {
     }
 
     if (isAsciiLetter(ch) || ch === "'") {
+      const isWordStart = this.#buffer === "" && wordStartStroke;
       this.#buffer += ch.toLowerCase();
-      this.#times.push(event.timeToType);
+      this.#strokes.push({
+        timeToType: event.timeToType,
+        ...(isWordStart ? { wordStart: true } : {}),
+      });
       const events = this.#flush(/* atBoundary= */ false, event.timeStamp);
       this.#valid = this.#isPrefix(this.#buffer);
       return { events, preedit: this.#buffer, valid: this.#valid };
@@ -106,24 +122,18 @@ export class RomajiIme {
       // Handle "n" rules for ん.
       if (this.#buffer.startsWith("n'")) {
         const strokes = 2;
-        out.push(
-          ...this.#emitKana("ん", timeStamp, this.#consume(strokes), strokes),
-        );
+        out.push(...this.#emitKana("ん", timeStamp, this.#consume(strokes)));
         continue;
       }
       if (this.#buffer.startsWith("nn")) {
         const strokes = 2;
-        out.push(
-          ...this.#emitKana("ん", timeStamp, this.#consume(strokes), strokes),
-        );
+        out.push(...this.#emitKana("ん", timeStamp, this.#consume(strokes)));
         continue;
       }
       if (this.#buffer === "n") {
         if (atBoundary) {
           const strokes = 1;
-          out.push(
-            ...this.#emitKana("ん", timeStamp, this.#consume(strokes), strokes),
-          );
+          out.push(...this.#emitKana("ん", timeStamp, this.#consume(strokes)));
         }
         break; // Wait for more input or boundary.
       }
@@ -131,9 +141,7 @@ export class RomajiIme {
         const next = this.#buffer[1];
         if (next != null && !isVowel(next) && next !== "y" && next !== "'") {
           const strokes = 1;
-          out.push(
-            ...this.#emitKana("ん", timeStamp, this.#consume(strokes), strokes),
-          );
+          out.push(...this.#emitKana("ん", timeStamp, this.#consume(strokes)));
           continue;
         }
       }
@@ -143,15 +151,13 @@ export class RomajiIme {
         const a = this.#buffer[0];
         const b = this.#buffer[1];
         if (a === b && isConsonant(a) && a !== "n") {
-          if (this.#times.length >= 2) {
-            const tmp = this.#times[0];
-            this.#times[0] = this.#times[1];
-            this.#times[1] = tmp;
+          if (this.#strokes.length >= 2) {
+            const tmp = this.#strokes[0];
+            this.#strokes[0] = this.#strokes[1];
+            this.#strokes[1] = tmp;
           }
           const strokes = 1;
-          out.push(
-            ...this.#emitKana("っ", timeStamp, this.#consume(strokes), strokes),
-          );
+          out.push(...this.#emitKana("っ", timeStamp, this.#consume(strokes)));
           continue;
         }
       }
@@ -180,7 +186,6 @@ export class RomajiIme {
           match.output.kana,
           timeStamp,
           this.#consume(match.romaji.length),
-          match.romaji.length,
         ),
       );
     }
@@ -192,31 +197,34 @@ export class RomajiIme {
   #emitKana(
     kana: string,
     timeStamp: number,
-    timeToType: number,
-    strokes: number,
+    strokes: readonly TimeToTypeStroke[],
   ): IInputEvent[] {
     const cps = [...kana].map((c) => c.codePointAt(0)! as CodePoint);
     // Normalize time to type per physical keystroke.
     // Without this, kana that require more romaji keystrokes (e.g. か = "ka")
     // will look artificially "slow" and can block guided progression.
-    const per = strokes > 0 ? timeToType / strokes : timeToType;
+    const timeToType = strokes.reduce(
+      (sum, { timeToType }) => sum + timeToType,
+      0,
+    );
+    const per = strokes.length > 0 ? timeToType / strokes.length : timeToType;
+    const sequenceId = ++this.#sequenceId;
     return cps.map((codePoint) => ({
       type: "input",
       timeStamp,
       inputType: "appendChar",
       codePoint,
       timeToType: per,
+      timeToTypeStrokes: strokes,
+      timeToTypeSequenceId: sequenceId,
     }));
   }
 
-  #consume(n: number): number {
-    let sum = 0;
-    for (let i = 0; i < n; i++) {
-      sum += this.#times[i] ?? 0;
-    }
+  #consume(n: number): readonly TimeToTypeStroke[] {
+    const strokes = this.#strokes.slice(0, n);
     this.#buffer = this.#buffer.slice(n);
-    this.#times.splice(0, n);
-    return sum;
+    this.#strokes.splice(0, n);
+    return strokes;
   }
 
   #isPrefix(s: string): boolean {

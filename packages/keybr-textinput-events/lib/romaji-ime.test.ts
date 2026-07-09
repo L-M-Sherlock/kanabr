@@ -156,6 +156,57 @@ test("double consonant assigns time to small っ", () => {
   equal(events[1].timeToType, (500 + 50) / 2);
 });
 
+test("word start stroke metadata", () => {
+  const ime = new RomajiIme();
+  const r1 = ime.consume(ch("k", { timeStamp: 1, timeToType: 300 }), {
+    wordStartStroke: true,
+  });
+  const r2 = ime.consume(ch("a", { timeStamp: 2, timeToType: 100 }));
+  const events = [...r1.events, ...r2.events];
+
+  equal(events.length, 1);
+  equal(events[0].codePoint, "か".codePointAt(0)!);
+  equal(events[0].timeToType, 200);
+  equal(events[0].timeToTypeSequenceId, 1);
+  deepEqual(events[0].timeToTypeStrokes, [{ timeToType: 300, wordStart: true }, { timeToType: 100 }]);
+});
+
+test("multi-kana output shares word start stroke metadata", () => {
+  const ime = new RomajiIme();
+  const r1 = ime.consume(ch("k", { timeStamp: 1, timeToType: 300 }), {
+    wordStartStroke: true,
+  });
+  const r2 = ime.consume(ch("y", { timeStamp: 2, timeToType: 100 }));
+  const r3 = ime.consume(ch("a", { timeStamp: 3, timeToType: 100 }));
+  const events = [...r1.events, ...r2.events, ...r3.events];
+
+  equal(events.length, 2);
+  equal(events[0].timeToTypeSequenceId, 1);
+  equal(events[1].timeToTypeSequenceId, 1);
+  deepEqual(events[0].timeToTypeStrokes, [
+    { timeToType: 300, wordStart: true },
+    { timeToType: 100 },
+    { timeToType: 100 },
+  ]);
+  deepEqual(events[1].timeToTypeStrokes, events[0].timeToTypeStrokes);
+});
+
+test("double consonant keeps word start metadata on the base kana", () => {
+  const ime = new RomajiIme();
+  const r1 = ime.consume(ch("k", { timeStamp: 1, timeToType: 500 }), {
+    wordStartStroke: true,
+  });
+  const r2 = ime.consume(ch("k", { timeStamp: 2, timeToType: 50 }));
+  const r3 = ime.consume(ch("a", { timeStamp: 3, timeToType: 50 }));
+  const events = [...r1.events, ...r2.events, ...r3.events];
+
+  equal(events.length, 2);
+  equal(events[0].codePoint, "っ".codePointAt(0)!);
+  deepEqual(events[0].timeToTypeStrokes, [{ timeToType: 50 }]);
+  equal(events[1].codePoint, "か".codePointAt(0)!);
+  deepEqual(events[1].timeToTypeStrokes, [{ timeToType: 500, wordStart: true }, { timeToType: 50 }]);
+});
+
 test("xtu/ltu -> っ", () => {
   {
     const ime = new RomajiIme();
