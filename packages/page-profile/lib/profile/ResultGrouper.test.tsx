@@ -1,7 +1,11 @@
 import { test } from "node:test";
 import { FakeIntlProvider } from "@keybr/intl";
-import { keyboardProps, Layout, useKeyboard } from "@keybr/keyboard";
-import { FakePhoneticModel } from "@keybr/phonetic-model";
+import { keyboardProps, Language, Layout, useKeyboard } from "@keybr/keyboard";
+import {
+  FakePhoneticModel,
+  Letter,
+  PhoneticModel,
+} from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
 import {
   FakeResultContext,
@@ -98,6 +102,50 @@ test("select text type", async () => {
   fireEvent.click(await r.findByText("Digits"));
 
   equal((await r.findByTitle("alphabet")).textContent, "0123456789");
+
+  r.unmount();
+});
+
+test("order kana by japanese alphabet", async () => {
+  PhoneticModelLoader.loader = async () =>
+    new (class extends PhoneticModel {
+      constructor() {
+        super(
+          Language.JA,
+          ["が", "ー", "ん", "っ", "ぎ", "ぐ", "わ"].map(
+            (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+          ),
+        );
+      }
+      override nextWord(): never {
+        throw new Error("not used");
+      }
+      override ngram1(): never {
+        throw new Error("not used");
+      }
+      override ngram2(): never {
+        throw new Error("not used");
+      }
+    })();
+
+  const r = render(
+    <FakeIntlProvider>
+      <FakeSettingsContext
+        initialSettings={new Settings().set(
+          keyboardProps.layout,
+          Layout.JA_ROMAJI,
+        )}
+      >
+        <FakeResultContext>
+          <ResultGrouper>
+            {(keyStatsMap) => <TestChild keyStatsMap={keyStatsMap} />}
+          </ResultGrouper>
+        </FakeResultContext>
+      </FakeSettingsContext>
+    </FakeIntlProvider>,
+  );
+
+  equal((await r.findByTitle("alphabet")).textContent, "わんっーがぎぐ");
 
   r.unmount();
 });

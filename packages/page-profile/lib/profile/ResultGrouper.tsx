@@ -2,6 +2,7 @@ import { useCollator } from "@keybr/intl";
 import {
   KeyboardContext,
   keyboardProps,
+  type Language,
   Layout,
   loadKeyboard,
   useFormattedNames,
@@ -132,7 +133,10 @@ export function ResultGrouper({
                 return children(
                   makeKeyStatsMap(
                     selectedLayout.id === "ja-romaji"
-                      ? letters
+                      ? orderLettersByLanguageAlphabet(
+                          letters,
+                          selectedLayout.language,
+                        )
                       : Letter.restrict(letters, keyboard.getCodePoints()),
                     group,
                   ),
@@ -162,4 +166,20 @@ function useLayoutOptions(layouts: Iterable<Layout>) {
       name: formatFullLayoutName(item),
     }))
     .sort((a, b) => compare(a.name, b.name));
+}
+
+function orderLettersByLanguageAlphabet(
+  letters: readonly Letter[],
+  language: Language,
+): Letter[] {
+  const order = new Map<number, number>();
+  for (let i = 0; i < language.alphabet.length; i++) {
+    order.set(language.alphabet[i], i);
+  }
+  const unknown = Number.MAX_SAFE_INTEGER;
+  return [...letters].sort(
+    (a, b) =>
+      (order.get(a.codePoint) ?? unknown) -
+        (order.get(b.codePoint) ?? unknown) || a.codePoint - b.codePoint,
+  );
 }
