@@ -214,35 +214,54 @@ export class GuidedLesson extends Lesson {
       focusedKey != null
         ? japanesePracticeScriptOf(focusedKey.letter.codePoint)
         : null;
-    if (focusedScript != null) {
-      return this.#makeJapaneseScriptWordGenerator(
-        focusedScript,
-        includedKeys,
-        focusedKey,
-        rng,
-      );
-    }
 
-    const scripts: JapanesePracticeScript[] = [];
+    const generators: {
+      readonly script: JapanesePracticeScript;
+      readonly generate: WordGenerator;
+    }[] = [];
     for (const script of ["hiragana", "katakana"] as const) {
       if (
         includedKeys.some(
           ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
         )
       ) {
-        scripts.push(script);
+        generators.push({
+          script,
+          generate: this.#makeJapaneseScriptWordGenerator(
+            script,
+            includedKeys,
+            focusedScript === script ? focusedKey : null,
+            rng,
+          ),
+        });
       }
     }
-    const generators = scripts.map((script) =>
-      this.#makeJapaneseScriptWordGenerator(script, includedKeys, null, rng),
-    );
     if (generators.length === 0) {
       return () => "?";
     }
     if (generators.length === 1) {
-      return generators[0];
+      return generators[0].generate;
     }
-    return () => generators[Math.floor(rng() * generators.length)]();
+    const focusedGenerator =
+      focusedScript != null
+        ? generators.find(({ script }) => script === focusedScript)?.generate
+        : null;
+    const otherGenerators = generators
+      .filter(({ script }) => script !== focusedScript)
+      .map(({ generate }) => generate);
+    if (focusedGenerator != null && otherGenerators.length > 0) {
+      let count = 0;
+      let otherIndex = 0;
+      return () => {
+        count++;
+        if (count % 4 !== 0) {
+          return focusedGenerator();
+        }
+        const gen = otherGenerators[otherIndex++ % otherGenerators.length];
+        return gen();
+      };
+    }
+    return () => generators[Math.floor(rng() * generators.length)].generate();
   }
 
   #makeJapaneseScriptWordGenerator(
@@ -334,11 +353,8 @@ export class GuidedLesson extends Lesson {
     if (focusedKey == null) {
       return baseGenerator;
     }
-    const focusedScript = japanesePracticeScriptOf(focusedKey.letter.codePoint);
     const otherKeys = includedKeys.filter(
-      (key) =>
-        key.letter.codePoint !== focusedKey.letter.codePoint &&
-        japanesePracticeScriptOf(key.letter.codePoint) === focusedScript,
+      (key) => key.letter.codePoint !== focusedKey.letter.codePoint,
     );
     if (otherKeys.length === 0) {
       return baseGenerator;
