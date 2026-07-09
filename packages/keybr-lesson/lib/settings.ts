@@ -19,7 +19,7 @@ export const lessonProps = {
       min: 0,
       max: 1,
     }),
-    recoverKeys: booleanProp("lesson.guided.recoverKeys", false),
+    recoverKeys: booleanProp("lesson.guided.recoverKeys", true),
   } as const,
   wordList: {
     wordListSize: numberProp("lesson.wordList.wordListSize", 1000, {
