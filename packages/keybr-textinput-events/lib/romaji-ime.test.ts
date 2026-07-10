@@ -137,6 +137,18 @@ test("n + space keeps preedit and swallows space", () => {
   deepEqual(cps, []);
 });
 
+test("xn -> ん", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("x", { timeStamp: 1 }), ch("n", { timeStamp: 2 }));
+  deepEqual(cps, ["ん".codePointAt(0)!]);
+});
+
+test("xn disambiguates ん before a vowel", () => {
+  const ime = new RomajiIme();
+  const cps = collect(ime, ch("x", { timeStamp: 1 }), ch("n", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
+  deepEqual(cps, ["ん".codePointAt(0)!, "あ".codePointAt(0)!]);
+});
+
 test("kka -> っか", () => {
   const ime = new RomajiIme();
   const cps = collect(ime, ch("k", { timeStamp: 1 }), ch("k", { timeStamp: 2 }), ch("a", { timeStamp: 3 }));
@@ -307,8 +319,10 @@ test("invalid romaji keeps preedit and swallows boundary", () => {
   deepEqual(r3.events, []);
 });
 
-test("romaji options for ん", () => {
-  deepEqual(romajiOptionsForKana("ん"), ["nn", "n'", "n+consonant"]);
+test("romaji options for ん and ン", () => {
+  const options = ["nn", "n'", "xn", "n+consonant"];
+  deepEqual(romajiOptionsForKana("ん"), options);
+  deepEqual(romajiOptionsForKana("ン"), options);
 });
 
 test("romaji options for っ prioritizes double consonant", () => {
