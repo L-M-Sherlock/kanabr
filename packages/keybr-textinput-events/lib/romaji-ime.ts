@@ -241,7 +241,7 @@ export class RomajiIme {
 
 export function romajiOptionsForKana(kana: string): readonly string[] {
   if (kana === "ん" || kana === "ン") {
-    return ["nn", "n'", "n+consonant"];
+    return ["nn", "n'", "xn", "n+consonant"];
   }
   if (kana === "っ" || kana === "ッ") {
     const list = REVERSE.get("っ") ?? [];
@@ -426,6 +426,7 @@ const ENTRIES = [
   { romaji: "nu", kana: "ぬ", priority: 0 },
   { romaji: "ne", kana: "ね", priority: 0 },
   { romaji: "no", kana: "の", priority: 0 },
+  { romaji: "xn", kana: "ん", priority: 0 },
 
   // H
   { romaji: "ha", kana: "は", priority: 0 },
