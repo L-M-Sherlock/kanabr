@@ -12,10 +12,12 @@ import {
   WhitespaceStyle,
 } from "@keybr/textinput";
 import {
+  isKanaSpeechSupported,
   makeSoundPlayer,
   PlaySounds,
   soundProps,
   SoundTheme,
+  SpeakKana,
 } from "@keybr/textinput-sounds";
 import {
   CheckBox,
@@ -70,6 +72,7 @@ export function TypingSettings() {
         <CursorShapeProp />
         <CursorMovementProp />
         <SoundsProp />
+        <SpeakKanaProp />
         <SoundsThemeProp />
       </FieldSet>
     </>
@@ -523,6 +526,86 @@ function SoundsProp() {
         />
       </Field>
     </FieldList>
+  );
+}
+
+function SpeakKanaProp() {
+  const { formatMessage } = useIntl();
+  const { settings, updateSettings } = useSettings();
+  const { layout } = KeyboardOptions.from(settings);
+  if (layout.id !== "ja-romaji") {
+    return null;
+  }
+  const supported = isKanaSpeechSupported();
+  const speakKana = supported
+    ? settings.get(soundProps.speakKana)
+    : SpeakKana.None;
+  return (
+    <>
+      <FieldList>
+        <Field size={10}>
+          <FormattedMessage
+            id="settings.speakKana.label"
+            defaultMessage="Pronounce kana:"
+          />
+        </Field>
+        <Field>
+          <RadioBox
+            label={formatMessage({
+              id: "settings.speakKana.none",
+              defaultMessage: "Off",
+            })}
+            name="speak-kana"
+            checked={speakKana === SpeakKana.None}
+            onSelect={() => {
+              updateSettings(
+                settings.set(soundProps.speakKana, SpeakKana.None),
+              );
+            }}
+          />
+        </Field>
+        <Field>
+          <RadioBox
+            label={formatMessage({
+              id: "settings.speakKana.all",
+              defaultMessage: "All typed kana",
+            })}
+            name="speak-kana"
+            checked={speakKana === SpeakKana.All}
+            disabled={!supported}
+            onSelect={() => {
+              updateSettings(settings.set(soundProps.speakKana, SpeakKana.All));
+            }}
+          />
+        </Field>
+        <Field>
+          <RadioBox
+            label={formatMessage({
+              id: "settings.speakKana.errorsOnly",
+              defaultMessage: "Incorrect kana only",
+            })}
+            name="speak-kana"
+            checked={speakKana === SpeakKana.ErrorsOnly}
+            disabled={!supported}
+            onSelect={() => {
+              updateSettings(
+                settings.set(soundProps.speakKana, SpeakKana.ErrorsOnly),
+              );
+            }}
+          />
+        </Field>
+      </FieldList>
+      {!supported && (
+        <Explainer>
+          <Description>
+            <FormattedMessage
+              id="settings.speakKana.unsupported"
+              defaultMessage="Kana pronunciation is not supported by your browser."
+            />
+          </Description>
+        </Explainer>
+      )}
+    </>
   );
 }
 

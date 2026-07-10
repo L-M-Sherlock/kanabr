@@ -15,6 +15,7 @@
   "devDependencies": {},
   "scripts": {
     "clean": "rm -fr .types",
-    "compile": "tsc"
+    "compile": "tsc",
+    "test": "tstest --import=@keybr/test-env-browser --test 'lib/**/*.test.{ts,tsx}'"
   }
 }

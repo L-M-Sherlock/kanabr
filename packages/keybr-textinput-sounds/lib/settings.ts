@@ -8,6 +8,12 @@ export enum PlaySounds {
   KeysOnly = 4,
 }
 
+export enum SpeakKana {
+  None = 1,
+  ErrorsOnly = 2,
+  All = 3,
+}
+
 export class SoundTheme implements EnumItem {
   static readonly DEFAULT = new SoundTheme("default", "Default");
   static readonly MECHANICAL1 = new SoundTheme("mechanical1", "Mechanical 1");
@@ -39,6 +45,7 @@ export class SoundTheme implements EnumItem {
 
 export const soundProps = {
   playSounds: enumProp("textInput.playSounds", PlaySounds, PlaySounds.None),
+  speakKana: enumProp("textInput.speakKana", SpeakKana, SpeakKana.None),
   soundVolume: numberProp("textInput.soundVolume", 0.5, { min: 0, max: 1 }),
   soundTheme: itemProp(
     "textInput.soundTheme",

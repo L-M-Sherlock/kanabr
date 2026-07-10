@@ -9,7 +9,7 @@ import {
   RomajiIme,
   romajiOptionsForKana,
 } from "@keybr/textinput-events";
-import { makeSoundPlayer } from "@keybr/textinput-sounds";
+import { makeKanaSpeechPlayer, makeSoundPlayer } from "@keybr/textinput-sounds";
 import { type CodePoint } from "@keybr/unicode";
 import {
   useDocumentEvent,
@@ -17,7 +17,19 @@ import {
   useTimeout,
   useWindowEvent,
 } from "@keybr/widget";
-import { memo, type ReactNode, useMemo, useRef, useState } from "react";
+import {
+  memo,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  isKanaInputIncorrect,
+  type KanaSpeechPart,
+  KanaSpeechSession,
+} from "./kana-speech-session.ts";
 import { Presenter } from "./Presenter.tsx";
 import {
   type LastLesson,
@@ -77,9 +89,26 @@ function useLessonState(
   const onResultRef = useRef(onResult);
   onResultRef.current = onResult;
 
-  return useMemo(() => {
+  const kanaSpeechPlayer = useMemo(
+    () =>
+      keyboard.layout.id === "ja-romaji"
+        ? makeKanaSpeechPlayer(progress.settings)
+        : null,
+    [keyboard.layout.id, progress.settings],
+  );
+  useEffect(
+    () => () => {
+      kanaSpeechPlayer?.cancel();
+    },
+    [kanaSpeechPlayer],
+  );
+
+  const controller = useMemo(() => {
     // New lesson.
     const state = new LessonState(progress, (result, textInput) => {
+      // Clear earlier speech before the final resolved sequence is submitted
+      // below. Preserve the session so a pending small tsu can join it.
+      kanaSpeechPlayer?.cancel();
       setKey(key + 1);
       lastLessonRef.current = makeLastLesson(result, textInput.steps);
       onResultRef.current(result);
@@ -98,7 +127,18 @@ function useLessonState(
     updateImeHints();
     setLines(state.lines);
     setDepressedKeys(state.depressedKeys);
+    const playSounds = makeSoundPlayer(state.settings);
+    const kanaSpeechSession = new KanaSpeechSession({
+      speak: (text, incorrect) => {
+        kanaSpeechPlayer?.speak(text, incorrect);
+      },
+    });
+    const resetKanaSpeech = () => {
+      kanaSpeechSession.reset();
+      kanaSpeechPlayer?.cancel();
+    };
     const handleResetLesson = () => {
+      resetKanaSpeech();
       state.resetLesson();
       ime?.reset();
       state.imePreedit = "";
@@ -109,6 +149,7 @@ function useLessonState(
       timeout.cancel();
     };
     const handleSkipLesson = () => {
+      resetKanaSpeech();
       state.skipLesson();
       ime?.reset();
       state.imePreedit = "";
@@ -118,7 +159,6 @@ function useLessonState(
       setDepressedKeys((state.depressedKeys = []));
       timeout.cancel();
     };
-    const playSounds = makeSoundPlayer(state.settings);
     const { onKeyDown, onKeyUp, onInput } = emulateLayout(
       state.settings,
       keyboard,
@@ -137,6 +177,7 @@ function useLessonState(
           state.lastLesson = null;
           if (ime != null) {
             if (event.inputType === "appendLineBreak") {
+              kanaSpeechSession.reset();
               // Treat Enter as a UI action: it only advances when the current
               // romaji preedit is empty. This avoids cases like `n + Enter`
               // committing ん, which is inconsistent with typical IME usage.
@@ -157,17 +198,41 @@ function useLessonState(
             const res = ime.consume(event, { wordStartStroke });
             state.imePreedit = res.preedit;
             state.imeValid = res.valid;
+            const speechParts: KanaSpeechPart[] = [];
+            const flushKanaSpeech = () => {
+              kanaSpeechSession.accept(speechParts);
+              speechParts.length = 0;
+            };
             for (const ev of res.events) {
               if (ev.inputType === "appendChar" && ev.codePoint === 0x0020) {
+                flushKanaSpeech();
+                kanaSpeechSession.reset();
                 if (state.textInput.isAtWordStart()) {
                   state.onInput(ev);
                 }
                 continue;
               }
               const mapped = mapKanaEventToExpected(ev, state.textInput);
+              if (
+                mapped.inputType === "appendChar" &&
+                mapped.timeToTypeSequenceId != null
+              ) {
+                speechParts.push({
+                  sequenceId: mapped.timeToTypeSequenceId,
+                  text: String.fromCodePoint(mapped.codePoint),
+                  incorrect: isIncorrectInput(mapped, state.textInput),
+                });
+              } else if (
+                mapped.inputType !== "appendChar" ||
+                mapped.codePoint !== 0x30fc
+              ) {
+                flushKanaSpeech();
+                kanaSpeechSession.reset();
+              }
               const feedback = state.onInput(mapped);
               playSounds(feedback);
             }
+            flushKanaSpeech();
             updateImeHints();
             // Force UI update even if no events were emitted (preedit changed).
             setLines(state.lines);
@@ -188,8 +253,20 @@ function useLessonState(
       handleKeyDown: onKeyDown,
       handleKeyUp: onKeyUp,
       handleInput: onInput,
+      resetKanaSpeechSession: () => {
+        kanaSpeechSession.reset();
+      },
     };
-  }, [progress, keyboard, timeout, key]);
+  }, [progress, keyboard, timeout, key, kanaSpeechPlayer]);
+
+  useEffect(
+    () => () => {
+      controller.resetKanaSpeechSession();
+    },
+    [controller],
+  );
+
+  return controller;
 }
 
 function mapKanaEventToExpected(
@@ -222,6 +299,14 @@ function mapKanaCodePointToExpected(
     return (actual + 0x0060) as CodePoint;
   }
   return actual;
+}
+
+function isIncorrectInput(event: IInputEvent, textInput: TextInput): boolean {
+  if (event.inputType !== "appendChar" || textInput.completed) {
+    return false;
+  }
+  const expected = textInput.at(textInput.pos).codePoint as CodePoint;
+  return isKanaInputIncorrect(event.codePoint as CodePoint, expected);
 }
 
 function expectedKana(textInput: TextInput): string {
