@@ -20,7 +20,7 @@ import { flattenStyledText } from "@keybr/textinput";
 import { deepEqual, equal } from "rich-assert";
 import { fakeKeyStatsMap, printLessonKeys } from "./fakes.ts";
 import { GuidedLesson } from "./guided.ts";
-import { LessonKey } from "./key.ts";
+import { LessonKey, LessonKeys } from "./key.ts";
 import { lessonProps } from "./settings.ts";
 
 function fixedRng(value: number): RNGStream<number> {
@@ -600,6 +600,140 @@ test("generate japanese words from both unlocked script word lists", () => {
   equal(printLessonKeys(lessonKeys), "あいうえお[ア]イウエオ");
   equal(text.includes("アイ"), true);
   equal(text.includes("あい"), true);
+});
+
+test("ignore an incomplete japanese script with no available words", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, true)
+    .set(lessonProps.japanese.balanceKana, true);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["あ", "い", "う", "え", "お", "ー"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(filter: any): string {
+      const longMark = "ー".codePointAt(0)!;
+      if (filter.codePoints?.size === 1 && filter.includes(longMark)) {
+        return "";
+      }
+      const codePoint = filter.focusedCodePoint ?? "あ".codePointAt(0)!;
+      return String.fromCodePoint(codePoint).repeat(3);
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  const lesson = new GuidedLesson(
+    settings,
+    keyboard,
+    model,
+    ["あい", "いう", "うえ", "えお", "おあ"],
+    { katakanaWordList: ["アー"] },
+  );
+  const lessonKeys = new LessonKeys(
+    lesson.letters.map(
+      (letter) =>
+        new LessonKey({
+          letter,
+          samples: [],
+          timeToType: null,
+          bestTimeToType: null,
+          confidence: null,
+          bestConfidence: null,
+          isIncluded: letter.codePoint < 0x30a0 || String(letter) === "ー",
+          isFocused: String(letter) === "お",
+        }),
+    ),
+  );
+  const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+  equal(text.includes("?"), false);
+  equal(text.includes("ー"), false);
+  equal(text.includes("お"), true);
+});
+
+test("ignore a japanese script whose generators return no words", () => {
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["あ", "い", "う", "え", "お"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+
+  const model = new (class extends PhoneticModel {
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(filter: any): string {
+      const codePoint = filter.focusedCodePoint;
+      return codePoint != null ? String.fromCodePoint(codePoint).repeat(3) : "";
+    }
+    override ngram1(): Ngram1 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram1(alphabet);
+      for (const codePoint of alphabet) {
+        ngram.set(codePoint, 1);
+      }
+      return ngram;
+    }
+    override ngram2(): Ngram2 {
+      const alphabet = this.letters.map(({ codePoint }) => codePoint);
+      const ngram = new Ngram2(alphabet);
+      for (const a of alphabet) {
+        for (const b of alphabet) {
+          ngram.set(a, b, 1);
+        }
+      }
+      return ngram;
+    }
+  })();
+
+  for (const naturalWords of [true, false]) {
+    const settings = new Settings()
+      .set(lessonProps.guided.naturalWords, naturalWords)
+      .set(lessonProps.japanese.balanceKana, false);
+    const lesson = new GuidedLesson(settings, keyboard, model, [], {
+      katakanaWordList: [],
+    });
+    const lessonKeys = new LessonKeys(
+      lesson.letters.map(
+        (letter) =>
+          new LessonKey({
+            letter,
+            samples: [],
+            timeToType: null,
+            bestTimeToType: null,
+            confidence: null,
+            bestConfidence: null,
+            isIncluded: true,
+            isFocused: String(letter) === "お",
+          }),
+      ),
+    );
+    const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+    equal(text.includes("?"), false);
+    equal(/[ァ-ヿ]/u.test(text), false);
+    equal(text.includes("お"), true);
+  }
 });
 
 test("generate katakana pseudo words for fallback kana outside model alphabet", () => {

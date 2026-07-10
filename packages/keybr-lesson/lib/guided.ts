@@ -222,19 +222,32 @@ export class GuidedLesson extends Lesson {
       readonly generate: WordGenerator;
     }[] = [];
     for (const script of ["hiragana", "katakana"] as const) {
+      const scriptKeys = includedKeys.filter(
+        ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
+      );
+      const availableScriptKeyCount = this.letters.filter(
+        ({ codePoint }) => japanesePracticeScriptOf(codePoint) === script,
+      ).length;
+      const requiredScriptKeyCount = Math.min(
+        japaneseMinLessonKeyCount,
+        availableScriptKeyCount,
+      );
       if (
-        includedKeys.some(
-          ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
-        )
+        scriptKeys.length > 0 &&
+        scriptKeys.length >= requiredScriptKeyCount
       ) {
+        const generate = this.#makeJapaneseScriptWordGenerator(
+          script,
+          includedKeys,
+          focusedScript === script ? focusedKey : null,
+          rng,
+        );
+        if (generate == null) {
+          continue;
+        }
         generators.push({
           script,
-          generate: this.#makeJapaneseScriptWordGenerator(
-            script,
-            includedKeys,
-            focusedScript === script ? focusedKey : null,
-            rng,
-          ),
+          generate,
         });
       }
     }
@@ -271,7 +284,7 @@ export class GuidedLesson extends Lesson {
     includedKeys: readonly LessonKey[],
     focusedKey: LessonKey | null,
     rng: RNGStream,
-  ): WordGenerator {
+  ): WordGenerator | null {
     const scriptKeys = includedKeys.filter(
       ({ letter }) => japanesePracticeScriptOf(letter.codePoint) === script,
     );
@@ -303,11 +316,14 @@ export class GuidedLesson extends Lesson {
         }
       }
       if (words.length === 0) {
-        words.push("?");
+        return null;
       }
       return randomWords(words, rng);
     }
-    return pseudoWords;
+    const mark = rng.mark();
+    const word = pseudoWords();
+    rng.reset(mark);
+    return word != null && word !== "" ? pseudoWords : null;
   }
 
   #makeJapanesePseudoWordGenerator(
