@@ -6,27 +6,49 @@ import {
   type KanaSpeechOptions,
   makeKanaSpeechPlayer,
 } from "./kana-speech.ts";
-import { soundProps, SpeakKana } from "./settings.ts";
+import { PlaySounds, soundProps } from "./settings.ts";
 
-test("speak kana is disabled by default", () => {
+test("incorrect kana speech is disabled by default", () => {
   const backend = new FakeBackend();
   const player = makeKanaSpeechPlayer(new Settings(), backend);
 
-  player.speak("かな", false);
-
-  equal(backend.calls.length, 0);
+  equal(player, null);
 });
 
-test("speaks all kana with Japanese speech options", () => {
+test("creates a player for modes that play error sounds", () => {
   const backend = new FakeBackend();
-  const player = makeKanaSpeechPlayer(
-    new Settings()
-      .set(soundProps.speakKana, SpeakKana.All)
-      .set(soundProps.soundVolume, 0.25),
+
+  for (const playSounds of [PlaySounds.ErrorsOnly, PlaySounds.All]) {
+    const player = makeKanaSpeechPlayer(
+      enabledSettings().set(soundProps.playSounds, playSounds),
+      backend,
+    );
+
+    equal(player != null, true);
+  }
+});
+
+test("does not create a player for modes without error sounds", () => {
+  const backend = new FakeBackend();
+
+  for (const playSounds of [PlaySounds.None, PlaySounds.KeysOnly]) {
+    const player = makeKanaSpeechPlayer(
+      enabledSettings().set(soundProps.playSounds, playSounds),
+      backend,
+    );
+
+    equal(player, null);
+  }
+});
+
+test("speaks incorrect kana with Japanese speech options", () => {
+  const backend = new FakeBackend();
+  const player = makePlayer(
     backend,
+    enabledSettings().set(soundProps.soundVolume, 0.25),
   );
 
-  player.speak("きゃ", false);
+  player.speak("きゃ", true);
 
   equal(backend.calls.length, 1);
   equal(backend.calls[0].text, "きゃ");
@@ -38,12 +60,9 @@ test("speaks all kana with Japanese speech options", () => {
   });
 });
 
-test("speaks only incorrect kana in errors-only mode", () => {
+test("ignores correct kana", () => {
   const backend = new FakeBackend();
-  const player = makeKanaSpeechPlayer(
-    new Settings().set(soundProps.speakKana, SpeakKana.ErrorsOnly),
-    backend,
-  );
+  const player = makePlayer(backend);
 
   player.speak("か", false);
   player.speak("き", true);
@@ -56,9 +75,9 @@ test("keeps only the latest kana while speech is active", () => {
   const backend = new FakeBackend();
   const player = makePlayer(backend);
 
-  player.speak("か", false);
-  player.speak("き", false);
-  player.speak("く", false);
+  player.speak("か", true);
+  player.speak("き", true);
+  player.speak("く", true);
 
   deepEqual(
     backend.calls.map(({ text }) => text),
@@ -77,8 +96,8 @@ test("continues with pending kana after a speech error", () => {
   const backend = new FakeBackend();
   const player = makePlayer(backend);
 
-  player.speak("か", false);
-  player.speak("き", false);
+  player.speak("か", true);
+  player.speak("き", true);
   backend.calls[0].onError();
 
   deepEqual(
@@ -91,35 +110,38 @@ test("cancel clears pending kana and ignores stale callbacks", () => {
   const backend = new FakeBackend();
   const player = makePlayer(backend);
 
-  player.speak("か", false);
-  player.speak("き", false);
+  player.speak("か", true);
+  player.speak("き", true);
   player.cancel();
 
   equal(backend.cancelCount, 1);
   backend.calls[0].onEnd();
   equal(backend.calls.length, 1);
 
-  player.speak("く", false);
+  player.speak("く", true);
   equal(backend.calls.length, 2);
   backend.calls[0].onError();
   equal(backend.calls.length, 2);
 });
 
-test("unsupported speech backend is a safe no-op", () => {
-  const player = makeKanaSpeechPlayer(
-    new Settings().set(soundProps.speakKana, SpeakKana.All),
-    null,
-  );
+test("unsupported speech backend does not create a player", () => {
+  const player = makeKanaSpeechPlayer(enabledSettings(), null);
 
-  player.speak("かな", false);
-  player.cancel();
+  equal(player, null);
 });
 
-function makePlayer(backend: KanaSpeechBackend) {
-  return makeKanaSpeechPlayer(
-    new Settings().set(soundProps.speakKana, SpeakKana.All),
-    backend,
-  );
+function enabledSettings() {
+  return new Settings()
+    .set(soundProps.speakIncorrectKana, true)
+    .set(soundProps.playSounds, PlaySounds.ErrorsOnly);
+}
+
+function makePlayer(backend: KanaSpeechBackend, settings = enabledSettings()) {
+  const player = makeKanaSpeechPlayer(settings, backend);
+  if (player == null) {
+    throw new Error("Expected kana speech player");
+  }
+  return player;
 }
 
 type Call = {

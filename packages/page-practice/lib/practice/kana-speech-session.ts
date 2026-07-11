@@ -1,4 +1,5 @@
 import { filterText } from "@keybr/keyboard";
+import { Feedback } from "@keybr/textinput";
 import { type CodePoint } from "@keybr/unicode";
 
 export type KanaSpeechPart = {
@@ -93,6 +94,18 @@ export function isKanaInputIncorrect(
   expected: CodePoint,
 ): boolean {
   return actual !== expected && actual !== filterText.normalize(expected);
+}
+
+/**
+ * The speech player replaces only the failed sound for the incorrect kana it
+ * will pronounce. All other feedback continues through the regular player.
+ */
+export function shouldPlayKanaInputSound(
+  feedback: Feedback,
+  incorrectKana: boolean,
+  kanaSpeechActive: boolean,
+): boolean {
+  return !(kanaSpeechActive && incorrectKana && feedback === Feedback.Failed);
 }
 
 function isSokuon(text: string): boolean {

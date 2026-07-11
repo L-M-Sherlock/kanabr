@@ -1,5 +1,5 @@
 import { type Settings } from "@keybr/settings";
-import { soundProps, SpeakKana } from "./settings.ts";
+import { PlaySounds, soundProps } from "./settings.ts";
 
 export type KanaSpeechPlayer = {
   speak(text: string, incorrect: boolean): void;
@@ -23,11 +23,6 @@ export type KanaSpeechBackend = {
   cancel(): void;
 };
 
-const nullPlayer: KanaSpeechPlayer = {
-  speak() {},
-  cancel() {},
-};
-
 export function isKanaSpeechSupported(): boolean {
   try {
     return (
@@ -43,14 +38,17 @@ export function isKanaSpeechSupported(): boolean {
 export function makeKanaSpeechPlayer(
   settings: Settings,
   backend: KanaSpeechBackend | null = makeBrowserBackend(),
-): KanaSpeechPlayer {
-  const mode = settings.get(soundProps.speakKana);
-  if (mode === SpeakKana.None || backend == null) {
-    return nullPlayer;
+): KanaSpeechPlayer | null {
+  const playSounds = settings.get(soundProps.playSounds);
+  if (
+    !settings.get(soundProps.speakIncorrectKana) ||
+    (playSounds !== PlaySounds.ErrorsOnly && playSounds !== PlaySounds.All) ||
+    backend == null
+  ) {
+    return null;
   }
   return new QueuedKanaSpeechPlayer(
     backend,
-    mode,
     settings.get(soundProps.soundVolume),
   );
 }
@@ -62,17 +60,13 @@ class QueuedKanaSpeechPlayer implements KanaSpeechPlayer {
 
   constructor(
     readonly backend: KanaSpeechBackend,
-    readonly mode: SpeakKana,
     volume: number,
   ) {
     this.#options = { lang: "ja-JP", volume, rate: 1, pitch: 1 };
   }
 
   speak(text: string, incorrect: boolean): void {
-    if (
-      text.length === 0 ||
-      (this.mode === SpeakKana.ErrorsOnly && !incorrect)
-    ) {
+    if (text.length === 0 || !incorrect) {
       return;
     }
     if (this.#active != null) {

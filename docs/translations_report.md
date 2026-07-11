@@ -1,6 +1,6 @@
 # English
 
-Translated: 371 messages, 4361 words
+Translated: 369 messages, 4368 words
 
 Untranslated: 0 messages, 0 words
 
@@ -8,102 +8,93 @@ Untranslated: 0 messages, 0 words
 
 Translated: 361 messages, 4327 words
 
-Untranslated: 10 messages, 34 words
+Untranslated: 8 messages, 41 words
 
-* *Off*
 * *Volume:*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Arabic
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Bulgarian
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Bangla
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Catalan
 
 Translated: 346 messages, 3996 words
 
-Untranslated: 23 messages, 343 words
+Untranslated: 21 messages, 350 words
 
-* *Off*
 * *Zones:*
 * *Export data*
 * *Import data*
 * *Sound theme:*
-* *All typed kana*
 * *Explain charts*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Relative Accuracy*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *The previous items are also above the target speed*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * *Generate lessons that resemble the specified programming lan...*
 * *Practice punctuation characters that are specific to a progr...*
 * *This is a histogram of the accuracies of all users, and your...*
 * *Show color coding of the keyboard zones. Use this option to ...*
 * *Generate typing lessons from the text of a book. All keys ar...*
 * *Highlight a key that must to be pressed next. Use this optio...*
+* *See how accurate you type relative to other users. The highe...*
+* *<p>This is the accuracy indicator and the difference from th...*
 * ...
 
 # Czech
 
 Translated: 357 messages, 4322 words
 
-Untranslated: 14 messages, 39 words
+Untranslated: 12 messages, 46 words
 
-* *Off*
 * *Font:*
 * *Reset*
 * *Zones:*
@@ -111,20 +102,18 @@ Untranslated: 14 messages, 39 words
 * *Export data*
 * *Import data*
 * *Sound theme:*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Danish
 
 Translated: 355 messages, 4300 words
 
-Untranslated: 14 messages, 39 words
+Untranslated: 12 messages, 46 words
 
-* *Off*
 * *Score*
 * *Layout*
 * *Layout:*
@@ -132,52 +121,46 @@ Untranslated: 14 messages, 39 words
 * *Export data*
 * *Import data*
 * *Download data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # German
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Greek
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Esperanto
 
 Translated: 198 messages, 3194 words
 
-Untranslated: 167 messages, 1112 words
+Untranslated: 165 messages, 1119 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -197,68 +180,64 @@ Untranslated: 167 messages, 1112 words
 * *Numbers*
 * *Options*
 * *Preview*
+* *Profile*
 * ...
 
 # Spanish
 
 Translated: 366 messages, 4344 words
 
-Untranslated: 5 messages, 17 words
+Untranslated: 3 messages, 24 words
 
-* *Off*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Estonian
 
 Translated: 365 messages, 4343 words
 
-Untranslated: 6 messages, 18 words
+Untranslated: 4 messages, 25 words
 
-* *Off*
 * *Font:*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Persian
 
 Translated: 336 messages, 3817 words
 
-Untranslated: 33 messages, 522 words
+Untranslated: 31 messages, 529 words
 
-* *Off*
 * *Books*
 * *Zones:*
 * *Syntax:*
 * *Sound theme:*
 * *Top accuracy*
-* *All typed kana*
 * *Explain charts*
-* *Pronounce kana:*
 * *Accuracy Streaks*
 * *Average accuracy*
 * *Relative Accuracy*
-* *Incorrect kana only*
 * *Keyboard hardware emulates layout*
 * *Switch the current interface layout.*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *Circle color: {label1} – hit count, {label2} – miss count.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * *Generate lessons that resemble the specified programming lan...*
 * *Practice punctuation characters that are specific to a progr...*
 * *This is a histogram of the accuracies of all users, and your...*
+* *Show color coding of the keyboard zones. Use this option to ...*
+* *Bar color: {label1} – hit count, {label2} – miss count, {lab...*
 * ...
 
 # Finnish
 
 Translated: 280 messages, 3386 words
 
-Untranslated: 86 messages, 922 words
+Untranslated: 84 messages, 929 words
 
-* *Off*
 * *Time*
 * *Layouts*
 * *Metrics*
@@ -276,17 +255,17 @@ Untranslated: 86 messages, 922 words
 * *Benford’s law*
 * *Download data*
 * *No whitespace*
-* *All typed kana*
 * *Bar whitespace*
+* *Emulate layout*
+* *Not enough data*
 * ...
 
 # Faroese
 
 Translated: 174 messages, 2968 words
 
-Untranslated: 191 messages, 1338 words
+Untranslated: 189 messages, 1345 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -306,101 +285,89 @@ Untranslated: 191 messages, 1338 words
 * *Layouts*
 * *Lessons*
 * *Lessons*
+* *Metrics*
 * ...
 
 # French
 
 Translated: 361 messages, 4310 words
 
-Untranslated: 10 messages, 51 words
+Untranslated: 8 messages, 58 words
 
-* *Off*
 * *Zones:*
 * *Options*
 * *Volume:*
 * *Alphabet:*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * *Above are listed the longest continuous sequences of lessons...*
 
 # Irish
 
 Translated: 362 messages, 4333 words
 
-Untranslated: 9 messages, 28 words
+Untranslated: 7 messages, 35 words
 
-* *Off*
 * *Zones:*
 * *Smoothness:*
 * *Sound theme:*
 * *M|T|W|T|F|S|S*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Hebrew
 
 Translated: 366 messages, 4344 words
 
-Untranslated: 5 messages, 17 words
+Untranslated: 3 messages, 24 words
 
-* *Off*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Croatian
 
 Translated: 364 messages, 4340 words
 
-Untranslated: 7 messages, 21 words
+Untranslated: 5 messages, 28 words
 
-* *Off*
 * *Font:*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Hungarian
 
 Translated: 365 messages, 4341 words
 
-Untranslated: 6 messages, 20 words
+Untranslated: 4 messages, 27 words
 
-* *Off*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Indonesian
 
 Translated: 364 messages, 4340 words
 
-Untranslated: 7 messages, 21 words
+Untranslated: 5 messages, 28 words
 
-* *Off*
 * *Volume:*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Icelandic
 
 Translated: 201 messages, 3195 words
 
-Untranslated: 164 messages, 1111 words
+Untranslated: 162 messages, 1118 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -420,50 +387,46 @@ Untranslated: 164 messages, 1111 words
 * *Metrics*
 * *Not set*
 * *Options*
+* *Preview*
 * ...
 
 # Italian
 
 Translated: 358 messages, 4333 words
 
-Untranslated: 12 messages, 26 words
+Untranslated: 10 messages, 33 words
 
-* *Off*
 * *Font:*
 * *Layout*
 * *Account*
 * *Layout:*
 * *Layouts*
 * *Volume:*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Japanese
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Korean
 
 Translated: 235 messages, 3324 words
 
-Untranslated: 134 messages, 1015 words
+Untranslated: 132 messages, 1022 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Next*
@@ -483,26 +446,25 @@ Untranslated: 134 messages, 1015 words
 * *Chapters*
 * *Keyboard*
 * *Previous*
+* *Examples:*
 * ...
 
 # Lithuanian
 
 Translated: 346 messages, 4027 words
 
-Untranslated: 22 messages, 303 words
+Untranslated: 20 messages, 310 words
 
-* *Off*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Accuracy Streaks*
 * *Relative Accuracy*
-* *Incorrect kana only*
 * *No accuracy streaks.*
 * *Practice numbers only.*
 * *The difference from the average value.*
 * *Download all your typing data in JSON format.*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * *Permanently delete all of your typing data and reset statist...*
 * *This is a histogram of the accuracies of all users, and your...*
 * *Show color coding of the keyboard zones. Use this option to ...*
@@ -511,15 +473,15 @@ Untranslated: 22 messages, 303 words
 * *Highlight a key that must to be pressed next. Use this optio...*
 * *See how accurate you type relative to other users. The highe...*
 * *Above are listed the longest continuous sequences of lessons...*
-* ...
+* *If enabled, the text cursor stops advancing until the right ...*
+* *<p>This is the accuracy indicator and the difference from th...*
 
 # Mongolian
 
 Translated: 152 messages, 2883 words
 
-Untranslated: 211 messages, 1394 words
+Untranslated: 209 messages, 1401 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -539,15 +501,15 @@ Untranslated: 211 messages, 1394 words
 * *Resend*
 * *Typing*
 * *Zones:*
+* *Account*
 * ...
 
 # Norwegian Bokmål
 
 Translated: 232 messages, 3394 words
 
-Untranslated: 133 messages, 912 words
+Untranslated: 131 messages, 919 words
 
-* *Off*
 * *Done*
 * *Help*
 * *Time*
@@ -567,87 +529,79 @@ Untranslated: 133 messages, 912 words
 * *Sign-In*
 * *Syntax:*
 * *Volume:*
+* *Accuracy*
 * ...
 
 # Nepali
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Dutch
 
 Translated: 356 messages, 4320 words
 
-Untranslated: 14 messages, 39 words
+Untranslated: 12 messages, 46 words
 
-* *Off*
 * *Score*
 * *Zones:*
 * *Account*
 * *Volume:*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
 * *Premium account*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Polish
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Brazilian Portuguese
 
 Translated: 359 messages, 4325 words
 
-Untranslated: 12 messages, 36 words
+Untranslated: 10 messages, 43 words
 
-* *Off*
 * *Layout*
 * *Layout:*
 * *Layouts*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # European Portuguese
 
 Translated: 342 messages, 4212 words
 
-Untranslated: 27 messages, 127 words
+Untranslated: 25 messages, 134 words
 
-* *Off*
 * *Books*
 * *Layout*
 * *Zones:*
@@ -660,22 +614,22 @@ Untranslated: 27 messages, 127 words
 * *Import data*
 * *Sound theme:*
 * *Top accuracy*
-* *All typed kana*
 * *Explain charts*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Average accuracy*
 * *Relative Accuracy*
 * *Daily goal reached!*
+* *Premium account price:*
+* *Enable error sounds to use kana pronunciation.*
+* *Kana pronunciation is not supported by your browser.*
 * ...
 
 # Romanian
 
 Translated: 342 messages, 4228 words
 
-Untranslated: 24 messages, 103 words
+Untranslated: 22 messages, 110 words
 
-* *Off*
 * *Font:*
 * *Layout*
 * *Zones:*
@@ -686,57 +640,53 @@ Untranslated: 24 messages, 103 words
 * *Import data*
 * *Sound theme:*
 * *Top accuracy*
-* *All typed kana*
 * *Forgive errors*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Average accuracy*
 * *Relative Accuracy*
-* *Incorrect kana only*
 * *Premium account price:*
 * *Enter full-screen mode.*
+* *Enable error sounds to use kana pronunciation.*
+* *Kana pronunciation is not supported by your browser.*
+* *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * ...
 
 # Russian
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Slovak
 
 Translated: 361 messages, 4327 words
 
-Untranslated: 10 messages, 34 words
+Untranslated: 8 messages, 41 words
 
-* *Off*
 * *Syntax:*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Slovenian
 
 Translated: 247 messages, 3979 words
 
-Untranslated: 123 messages, 380 words
+Untranslated: 121 messages, 387 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -756,15 +706,15 @@ Untranslated: 123 messages, 380 words
 * *Metrics*
 * *Not set*
 * *Numbers*
+* *Options*
 * ...
 
 # Albanian
 
 Translated: 169 messages, 3050 words
 
-Untranslated: 196 messages, 1256 words
+Untranslated: 194 messages, 1263 words
 
-* *Off*
 * *Copy*
 * *Done*
 * *Help*
@@ -784,48 +734,45 @@ Untranslated: 196 messages, 1256 words
 * *Account*
 * *Layout:*
 * *Layouts*
+* *Lessons*
 * ...
 
 # Swedish
 
 Translated: 359 messages, 4325 words
 
-Untranslated: 12 messages, 36 words
+Untranslated: 10 messages, 43 words
 
-* *Off*
 * *Layout*
 * *Layout:*
 * *Syntax:*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Thai
 
 Translated: 352 messages, 4247 words
 
-Untranslated: 17 messages, 92 words
+Untranslated: 15 messages, 99 words
 
-* *Off*
 * *Zones:*
 * *Export data*
 * *Import data*
 * *Sound theme:*
 * *Top accuracy*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Average accuracy*
 * *Relative Accuracy*
-* *Incorrect kana only*
 * *Premium account price:*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 * *This is a histogram of the accuracies of all users, and your...*
 * *See how accurate you type relative to other users. The highe...*
 
@@ -833,9 +780,8 @@ Untranslated: 17 messages, 92 words
 
 Translated: 293 messages, 3435 words
 
-Untranslated: 74 messages, 882 words
+Untranslated: 72 messages, 889 words
 
-* *Off*
 * *Books*
 * *Font:*
 * *Zones:*
@@ -853,33 +799,31 @@ Untranslated: 74 messages, 882 words
 * *Top accuracy*
 * *No whitespace*
 * *Smooth cursor*
-* *All typed kana*
 * *Bar whitespace*
+* *Emulate layout*
+* *Explain charts*
 * ...
 
 # Ukrainian
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Vietnamese
 
 Translated: 319 messages, 3665 words
 
-Untranslated: 49 messages, 665 words
+Untranslated: 47 messages, 672 words
 
-* *Off*
 * *Visit*
 * *Typing*
 * *Zones:*
@@ -892,56 +836,51 @@ Untranslated: 49 messages, 665 words
 * *Top accuracy*
 * *M|T|W|T|F|S|S*
 * *Smooth cursor*
-* *All typed kana*
 * *Jumping cursor*
 * *Key sounds only*
-* *Pronounce kana:*
 * *Average accuracy*
 * *Underline cursor*
-* *Incorrect kana only*
+* *Premium account price:*
+* *Key Frequency Histogram*
+* *Key Typing Speed Histogram*
+* *Keyboard hardware emulates layout*
 * ...
 
 # Simplified Chinese
 
 Translated: 365 messages, 4335 words
 
-Untranslated: 6 messages, 26 words
+Untranslated: 4 messages, 33 words
 
-* *Off*
-* *All typed kana*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Traditional Chinese
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*
 
 # Chinese (Taiwan)
 
 Translated: 362 messages, 4328 words
 
-Untranslated: 9 messages, 33 words
+Untranslated: 7 messages, 40 words
 
-* *Off*
 * *Export data*
 * *Import data*
-* *All typed kana*
 * *Key sounds only*
-* *Pronounce kana:*
-* *Incorrect kana only*
+* *Enable error sounds to use kana pronunciation.*
 * *Kana pronunciation is not supported by your browser.*
 * *For other languages and keyboard layouts, use keybr.com.*
+* *Pronounce incorrect kana instead of playing an error sound*

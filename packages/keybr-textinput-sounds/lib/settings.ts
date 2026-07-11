@@ -1,17 +1,11 @@
 import { Enum, type EnumItem } from "@keybr/lang";
-import { enumProp, itemProp, numberProp } from "@keybr/settings";
+import { booleanProp, enumProp, itemProp, numberProp } from "@keybr/settings";
 
 export enum PlaySounds {
   None = 1,
   ErrorsOnly = 2,
   All = 3,
   KeysOnly = 4,
-}
-
-export enum SpeakKana {
-  None = 1,
-  ErrorsOnly = 2,
-  All = 3,
 }
 
 export class SoundTheme implements EnumItem {
@@ -45,7 +39,7 @@ export class SoundTheme implements EnumItem {
 
 export const soundProps = {
   playSounds: enumProp("textInput.playSounds", PlaySounds, PlaySounds.None),
-  speakKana: enumProp("textInput.speakKana", SpeakKana, SpeakKana.None),
+  speakIncorrectKana: booleanProp("textInput.speakIncorrectKana", false),
   soundVolume: numberProp("textInput.soundVolume", 0.5, { min: 0, max: 1 }),
   soundTheme: itemProp(
     "textInput.soundTheme",

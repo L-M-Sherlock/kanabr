@@ -1,10 +1,12 @@
 import { test } from "node:test";
+import { Feedback } from "@keybr/textinput";
 import { deepEqual, equal } from "rich-assert";
 import {
   groupKanaSpeechParts,
   isKanaInputIncorrect,
   type KanaSpeechSequence,
   KanaSpeechSession,
+  shouldPlayKanaInputSound,
 } from "./kana-speech-session.ts";
 
 test("groups kana by resolved romaji sequence", () => {
@@ -78,4 +80,20 @@ test("ignores a standalone prolonged sound mark", () => {
 test("matches input with the TextInput normalization rule", () => {
   equal(isKanaInputIncorrect(/* "'" */ 0x0027, /* "‘" */ 0x2018), false);
   equal(isKanaInputIncorrect(/* "き" */ 0x304d, /* "か" */ 0x304b), true);
+});
+
+test("speech replaces the failed sound for an incorrect kana", () => {
+  equal(shouldPlayKanaInputSound(Feedback.Failed, true, true), false);
+});
+
+test("preserves failed sounds when speech cannot replace them", () => {
+  equal(shouldPlayKanaInputSound(Feedback.Failed, true, false), true);
+  equal(shouldPlayKanaInputSound(Feedback.Failed, false, true), true);
+});
+
+test("preserves successful and recovered sounds", () => {
+  equal(shouldPlayKanaInputSound(Feedback.Succeeded, false, true), true);
+  equal(shouldPlayKanaInputSound(Feedback.Succeeded, true, true), true);
+  equal(shouldPlayKanaInputSound(Feedback.Recovered, false, true), true);
+  equal(shouldPlayKanaInputSound(Feedback.Recovered, true, true), true);
 });

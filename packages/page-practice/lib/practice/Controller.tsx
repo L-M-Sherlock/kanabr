@@ -29,6 +29,7 @@ import {
   isKanaInputIncorrect,
   type KanaSpeechPart,
   KanaSpeechSession,
+  shouldPlayKanaInputSound,
 } from "./kana-speech-session.ts";
 import { Presenter } from "./Presenter.tsx";
 import {
@@ -213,14 +214,16 @@ function useLessonState(
                 continue;
               }
               const mapped = mapKanaEventToExpected(ev, state.textInput);
+              let incorrectKana = false;
               if (
                 mapped.inputType === "appendChar" &&
                 mapped.timeToTypeSequenceId != null
               ) {
+                incorrectKana = isIncorrectInput(mapped, state.textInput);
                 speechParts.push({
                   sequenceId: mapped.timeToTypeSequenceId,
                   text: String.fromCodePoint(mapped.codePoint),
-                  incorrect: isIncorrectInput(mapped, state.textInput),
+                  incorrect: incorrectKana,
                 });
               } else if (
                 mapped.inputType !== "appendChar" ||
@@ -230,7 +233,15 @@ function useLessonState(
                 kanaSpeechSession.reset();
               }
               const feedback = state.onInput(mapped);
-              playSounds(feedback);
+              if (
+                shouldPlayKanaInputSound(
+                  feedback,
+                  incorrectKana,
+                  kanaSpeechPlayer != null,
+                )
+              ) {
+                playSounds(feedback);
+              }
             }
             flushKanaSpeech();
             updateImeHints();

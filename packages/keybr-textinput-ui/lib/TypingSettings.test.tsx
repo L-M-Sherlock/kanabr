@@ -2,7 +2,7 @@ import { test } from "node:test";
 import { FakeIntlProvider } from "@keybr/intl";
 import { KeyboardOptions, KeyboardProvider, Language } from "@keybr/keyboard";
 import { FakeSettingsContext, Settings } from "@keybr/settings";
-import { soundProps, SpeakKana } from "@keybr/textinput-sounds";
+import { PlaySounds, soundProps } from "@keybr/textinput-sounds";
 import { fireEvent, render } from "@testing-library/react";
 import { isFalse, isNotNull, isNull, isTrue } from "rich-assert";
 import { TypingSettings } from "./TypingSettings.tsx";
@@ -82,11 +82,15 @@ test("render", () => {
 test("show kana pronunciation settings for the romaji layout", () => {
   const restore = mockKanaSpeechSupport(true);
   try {
-    const r = renderSettings();
+    const r = renderSettings(
+      new Settings().set(soundProps.playSounds, PlaySounds.ErrorsOnly),
+    );
 
-    isNotNull(r.queryByText("Pronounce kana:"));
-    isNotNull(r.queryByText("All typed kana"));
-    isNotNull(r.queryByText("Incorrect kana only"));
+    isNotNull(
+      r.queryByText(
+        "Pronounce incorrect kana instead of playing an error sound",
+      ),
+    );
 
     r.unmount();
   } finally {
@@ -100,40 +104,31 @@ test("hide kana pronunciation settings for other layouts", () => {
     .save(new Settings());
   const r = renderSettings(settings);
 
-  isNull(r.queryByText("Pronounce kana:"));
-  isNull(r.queryByText("All typed kana"));
-  isNull(r.queryByText("Incorrect kana only"));
+  isNull(
+    r.queryByText("Pronounce incorrect kana instead of playing an error sound"),
+  );
 
   r.unmount();
 });
 
-test("select a kana pronunciation mode", () => {
+test("toggle incorrect kana pronunciation", () => {
   const restore = mockKanaSpeechSupport(true);
   try {
     const r = renderSettings(
-      new Settings().set(soundProps.speakKana, SpeakKana.ErrorsOnly),
+      new Settings().set(soundProps.playSounds, PlaySounds.ErrorsOnly),
     );
-    const off = r.getByRole("radio", { name: "Off" }) as HTMLInputElement;
-    const all = r.getByRole("radio", {
-      name: "All typed kana",
-    }) as HTMLInputElement;
-    const errorsOnly = r.getByRole("radio", {
-      name: "Incorrect kana only",
+    const speakIncorrectKana = r.getByRole("checkbox", {
+      name: "Pronounce incorrect kana instead of playing an error sound",
     }) as HTMLInputElement;
 
-    isFalse(off.checked);
-    isFalse(all.checked);
-    isTrue(errorsOnly.checked);
+    isFalse(speakIncorrectKana.checked);
+    isFalse(speakIncorrectKana.disabled);
 
-    fireEvent.click(all);
-    isFalse(off.checked);
-    isTrue(all.checked);
-    isFalse(errorsOnly.checked);
+    fireEvent.click(speakIncorrectKana);
+    isTrue(speakIncorrectKana.checked);
 
-    fireEvent.click(off);
-    isTrue(off.checked);
-    isFalse(all.checked);
-    isFalse(errorsOnly.checked);
+    fireEvent.click(speakIncorrectKana);
+    isFalse(speakIncorrectKana.checked);
 
     r.unmount();
   } finally {
@@ -141,26 +136,20 @@ test("select a kana pronunciation mode", () => {
   }
 });
 
-test("fall back to off when kana pronunciation is unsupported", () => {
+test("preserve the setting when kana pronunciation is unsupported", () => {
   const restore = mockKanaSpeechSupport(false);
   try {
     const r = renderSettings(
-      new Settings().set(soundProps.speakKana, SpeakKana.All),
+      new Settings()
+        .set(soundProps.playSounds, PlaySounds.All)
+        .set(soundProps.speakIncorrectKana, true),
     );
-    const off = r.getByRole("radio", { name: "Off" }) as HTMLInputElement;
-    const all = r.getByRole("radio", {
-      name: "All typed kana",
-    }) as HTMLInputElement;
-    const errorsOnly = r.getByRole("radio", {
-      name: "Incorrect kana only",
+    const speakIncorrectKana = r.getByRole("checkbox", {
+      name: "Pronounce incorrect kana instead of playing an error sound",
     }) as HTMLInputElement;
 
-    isTrue(off.checked);
-    isFalse(off.disabled);
-    isFalse(all.checked);
-    isTrue(all.disabled);
-    isFalse(errorsOnly.checked);
-    isTrue(errorsOnly.disabled);
+    isTrue(speakIncorrectKana.checked);
+    isTrue(speakIncorrectKana.disabled);
     isNotNull(
       r.queryByText("Kana pronunciation is not supported by your browser."),
     );
@@ -170,3 +159,50 @@ test("fall back to off when kana pronunciation is unsupported", () => {
     restore();
   }
 });
+
+for (const playSounds of [PlaySounds.None, PlaySounds.KeysOnly]) {
+  test(`disable kana pronunciation for sound mode ${playSounds}`, () => {
+    const restore = mockKanaSpeechSupport(true);
+    try {
+      const r = renderSettings(
+        new Settings()
+          .set(soundProps.playSounds, playSounds)
+          .set(soundProps.speakIncorrectKana, true),
+      );
+      const speakIncorrectKana = r.getByRole("checkbox", {
+        name: "Pronounce incorrect kana instead of playing an error sound",
+      }) as HTMLInputElement;
+
+      isTrue(speakIncorrectKana.checked);
+      isTrue(speakIncorrectKana.disabled);
+      isNotNull(
+        r.queryByText("Enable error sounds to use kana pronunciation."),
+      );
+
+      r.unmount();
+    } finally {
+      restore();
+    }
+  });
+}
+
+for (const playSounds of [PlaySounds.ErrorsOnly, PlaySounds.All]) {
+  test(`enable kana pronunciation for sound mode ${playSounds}`, () => {
+    const restore = mockKanaSpeechSupport(true);
+    try {
+      const r = renderSettings(
+        new Settings().set(soundProps.playSounds, playSounds),
+      );
+      const speakIncorrectKana = r.getByRole("checkbox", {
+        name: "Pronounce incorrect kana instead of playing an error sound",
+      }) as HTMLInputElement;
+
+      isFalse(speakIncorrectKana.disabled);
+      isNull(r.queryByText("Enable error sounds to use kana pronunciation."));
+
+      r.unmount();
+    } finally {
+      restore();
+    }
+  });
+}
