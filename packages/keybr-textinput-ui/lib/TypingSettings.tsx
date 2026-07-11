@@ -12,6 +12,7 @@ import {
   WhitespaceStyle,
 } from "@keybr/textinput";
 import {
+  isKanaSpeechSupported,
   makeSoundPlayer,
   PlaySounds,
   soundProps,
@@ -70,6 +71,7 @@ export function TypingSettings() {
         <CursorShapeProp />
         <CursorMovementProp />
         <SoundsProp />
+        <SpeakIncorrectKanaProp />
         <SoundsThemeProp />
       </FieldSet>
     </>
@@ -523,6 +525,61 @@ function SoundsProp() {
         />
       </Field>
     </FieldList>
+  );
+}
+
+function SpeakIncorrectKanaProp() {
+  const { formatMessage } = useIntl();
+  const { settings, updateSettings } = useSettings();
+  const { layout } = KeyboardOptions.from(settings);
+  if (layout.id !== "ja-romaji") {
+    return null;
+  }
+  const supported = isKanaSpeechSupported();
+  const playSounds = settings.get(soundProps.playSounds);
+  const errorSoundsEnabled =
+    playSounds === PlaySounds.ErrorsOnly || playSounds === PlaySounds.All;
+  return (
+    <>
+      <FieldList>
+        <Field>
+          <CheckBox
+            label={formatMessage({
+              id: "settings.speakIncorrectKana.label",
+              defaultMessage:
+                "Pronounce incorrect kana instead of playing an error sound",
+            })}
+            checked={settings.get(soundProps.speakIncorrectKana)}
+            disabled={!supported || !errorSoundsEnabled}
+            onChange={(value) => {
+              updateSettings(
+                settings.set(soundProps.speakIncorrectKana, value),
+              );
+            }}
+          />
+        </Field>
+      </FieldList>
+      {!supported && (
+        <Explainer>
+          <Description>
+            <FormattedMessage
+              id="settings.speakIncorrectKana.unsupported"
+              defaultMessage="Kana pronunciation is not supported by your browser."
+            />
+          </Description>
+        </Explainer>
+      )}
+      {supported && !errorSoundsEnabled && (
+        <Explainer>
+          <Description>
+            <FormattedMessage
+              id="settings.speakIncorrectKana.requiresErrorSounds"
+              defaultMessage="Enable error sounds to use kana pronunciation."
+            />
+          </Description>
+        </Explainer>
+      )}
+    </>
   );
 }
 
