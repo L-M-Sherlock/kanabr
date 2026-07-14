@@ -236,7 +236,8 @@ test("extended combos", () => {
   const cases: ReadonlyArray<readonly [string, string]> = [
     ["kyi", "きぃ"],
     ["kye", "きぇ"],
-    ["qwu", "くぅ"],
+    ["qu", "く"],
+    ["kwu", "くぅ"],
     ["gyi", "ぎぃ"],
     ["gye", "ぎぇ"],
     ["gwa", "ぐぁ"],
@@ -301,22 +302,141 @@ test("extended combos", () => {
   }
 });
 
+test("qwu is rejected", () => {
+  const ime = new RomajiIme();
+  const events = ["q", "w", "u"].map((c, i) => ime.consume(ch(c, { timeStamp: i + 1 })));
+
+  equal(events.at(-1)!.rejected, true);
+  equal(events.at(-1)!.preedit, "qwu");
+  deepEqual(
+    events.flatMap(({ events }) => events),
+    [],
+  );
+});
+
 test("invalid romaji keeps preedit and swallows boundary", () => {
   const ime = new RomajiIme();
   const r1 = ime.consume(ch("q", { timeStamp: 1 }));
   equal(r1.valid, true);
+  equal(r1.rejected, false);
   equal(r1.preedit, "q");
   deepEqual(r1.events, []);
 
   const r2 = ime.consume(ch("x", { timeStamp: 2 }));
   equal(r2.valid, false);
+  equal(r2.rejected, true);
   equal(r2.preedit, "qx");
   deepEqual(r2.events, []);
 
-  const r3 = ime.consume(space(3));
+  const r3 = ime.consume(ch("z", { timeStamp: 3 }));
   equal(r3.valid, false);
-  equal(r3.preedit, "qx");
+  equal(r3.rejected, true);
+  equal(r3.preedit, "qxz");
   deepEqual(r3.events, []);
+
+  const r4 = ime.consume(space(4));
+  equal(r4.valid, false);
+  equal(r4.rejected, true);
+  equal(r4.preedit, "qxz");
+  deepEqual(r4.events, []);
+});
+
+test("valid romaji prefixes are not rejected", () => {
+  for (const prefix of ["q", "p", "py"]) {
+    const ime = new RomajiIme();
+    let result = ime.consume(ch(prefix[0], { timeStamp: 1 }));
+    for (let i = 1; i < prefix.length; i++) {
+      result = ime.consume(ch(prefix[i], { timeStamp: i + 1 }));
+    }
+    equal(result.valid, true, prefix);
+    equal(result.rejected, false, prefix);
+    equal(result.preedit, prefix, prefix);
+    deepEqual(result.events, [], prefix);
+  }
+});
+
+test("resolved romaji is not rejected", () => {
+  const ime = new RomajiIme();
+  ime.consume(ch("p", { timeStamp: 1 }));
+  ime.consume(ch("y", { timeStamp: 2 }));
+
+  const result = ime.consume(ch("a", { timeStamp: 3 }));
+  equal(result.valid, true);
+  equal(result.rejected, false);
+  equal(result.preedit, "");
+  deepEqual(
+    result.events.map(({ codePoint }) => codePoint),
+    ["ぴ".codePointAt(0)!, "ゃ".codePointAt(0)!],
+  );
+});
+
+test("boundary characters are rejected while romaji is incomplete", () => {
+  for (const boundary of ["1", ".", "@", "/"]) {
+    const ime = new RomajiIme();
+    const prefix = ime.consume(ch("p", { timeStamp: 1 }));
+    equal(prefix.rejected, false);
+
+    const result = ime.consume(ch(boundary, { timeStamp: 2 }));
+    equal(result.valid, true, boundary);
+    equal(result.rejected, true, boundary);
+    equal(result.preedit, "p", boundary);
+    deepEqual(result.events, [], boundary);
+  }
+});
+
+test("boundary characters are forwarded when preedit is empty", () => {
+  for (const boundary of ["1", ".", "@", "/"]) {
+    const ime = new RomajiIme();
+    const event = ch(boundary, { timeStamp: 1 });
+    const result = ime.consume(event);
+    equal(result.valid, true, boundary);
+    equal(result.rejected, false, boundary);
+    equal(result.preedit, "", boundary);
+    deepEqual(result.events, [event], boundary);
+  }
+});
+
+test("hyphen emits the katakana prolonged sound mark", () => {
+  const ime = new RomajiIme();
+  const result = ime.consume(ch("-", { timeStamp: 1 }));
+
+  equal(result.valid, true);
+  equal(result.rejected, false);
+  equal(result.preedit, "");
+  deepEqual(
+    result.events.map(({ codePoint }) => codePoint),
+    ["ー".codePointAt(0)!],
+  );
+});
+
+test("clear input is not rejected", () => {
+  const ime = new RomajiIme();
+  ime.consume(ch("q", { timeStamp: 1 }));
+  ime.consume(ch("x", { timeStamp: 2 }));
+
+  const clearChar: IInputEvent = {
+    type: "input",
+    timeStamp: 3,
+    inputType: "clearChar",
+    codePoint: 0x0000,
+    timeToType: 100,
+  };
+  const r1 = ime.consume(clearChar);
+  equal(r1.valid, true);
+  equal(r1.rejected, false);
+  equal(r1.preedit, "q");
+  deepEqual(r1.events, []);
+
+  const clearWord: IInputEvent = {
+    ...clearChar,
+    timeStamp: 4,
+    inputType: "clearWord",
+  };
+  const r2 = ime.consume(clearWord);
+  equal(r2.valid, true);
+  equal(r2.rejected, false);
+  equal(r2.preedit, "");
+  deepEqual(r2.events, [clearWord]);
 });
 
 test("romaji options for ん and ン", () => {

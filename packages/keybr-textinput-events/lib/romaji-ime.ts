@@ -5,6 +5,7 @@ export type RomajiImeResult = {
   readonly events: readonly IInputEvent[];
   readonly preedit: string;
   readonly valid: boolean;
+  readonly rejected: boolean;
 };
 
 export type RomajiImeConsumeOptions = {
@@ -52,15 +53,30 @@ export class RomajiIme {
         return this.#flushThenForward(event, /* atBoundary= */ true);
       case "clearWord":
         this.reset();
-        return { events: [event], preedit: this.#buffer, valid: this.#valid };
+        return {
+          events: [event],
+          preedit: this.#buffer,
+          valid: this.#valid,
+          rejected: false,
+        };
       case "clearChar":
         if (this.#buffer.length > 0) {
           this.#buffer = this.#buffer.slice(0, -1);
           this.#strokes.pop();
           this.#valid = this.#isPrefix(this.#buffer);
-          return { events: [], preedit: this.#buffer, valid: this.#valid };
+          return {
+            events: [],
+            preedit: this.#buffer,
+            valid: this.#valid,
+            rejected: false,
+          };
         }
-        return { events: [event], preedit: this.#buffer, valid: this.#valid };
+        return {
+          events: [event],
+          preedit: this.#buffer,
+          valid: this.#valid,
+          rejected: false,
+        };
       case "appendChar":
         return this.#appendChar(event, { wordStartStroke });
     }
@@ -98,7 +114,12 @@ export class RomajiIme {
       });
       const events = this.#flush(/* atBoundary= */ false, event.timeStamp);
       this.#valid = this.#isPrefix(this.#buffer);
-      return { events, preedit: this.#buffer, valid: this.#valid };
+      return {
+        events,
+        preedit: this.#buffer,
+        valid: this.#valid,
+        rejected: !this.#valid,
+      };
     }
 
     // Any other character ends the current romaji sequence.
@@ -108,11 +129,21 @@ export class RomajiIme {
   #flushThenForward(event: IInputEvent, atBoundary: boolean): RomajiImeResult {
     const events = this.#flush(atBoundary, event.timeStamp);
     if (this.#buffer.length === 0 && this.#valid) {
-      return { events: [...events, event], preedit: this.#buffer, valid: true };
+      return {
+        events: [...events, event],
+        preedit: this.#buffer,
+        valid: true,
+        rejected: false,
+      };
     }
     // If romaji is incomplete/invalid, swallow the boundary character to force
     // the user to fix the preedit first.
-    return { events, preedit: this.#buffer, valid: this.#valid };
+    return {
+      events,
+      preedit: this.#buffer,
+      valid: this.#valid,
+      rejected: true,
+    };
   }
 
   #flush(atBoundary: boolean, timeStamp: number): IInputEvent[] {
@@ -376,11 +407,12 @@ const ENTRIES = [
   { romaji: "ka", kana: "か", priority: 0 },
   { romaji: "ki", kana: "き", priority: 0 },
   { romaji: "ku", kana: "く", priority: 0 },
+  { romaji: "qu", kana: "く", priority: 1 },
   { romaji: "ke", kana: "け", priority: 0 },
   { romaji: "ko", kana: "こ", priority: 0 },
   { romaji: "qa", kana: "くぁ", priority: 0 },
   { romaji: "qi", kana: "くぃ", priority: 0 },
-  { romaji: "qwu", kana: "くぅ", priority: 0 },
+  { romaji: "kwu", kana: "くぅ", priority: 0 },
   { romaji: "qe", kana: "くぇ", priority: 0 },
   { romaji: "qo", kana: "くぉ", priority: 0 },
 

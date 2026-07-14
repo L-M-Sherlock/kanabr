@@ -32,6 +32,7 @@ import {
   shouldPlayKanaInputSound,
 } from "./kana-speech-session.ts";
 import { Presenter } from "./Presenter.tsx";
+import { romajiInputFeedback } from "./romaji-input-feedback.ts";
 import {
   type LastLesson,
   LessonState,
@@ -199,6 +200,10 @@ function useLessonState(
             const res = ime.consume(event, { wordStartStroke });
             state.imePreedit = res.preedit;
             state.imeValid = res.valid;
+            const rejectedFeedback = romajiInputFeedback(event, res);
+            if (rejectedFeedback != null) {
+              playSounds(rejectedFeedback);
+            }
             const speechParts: KanaSpeechPart[] = [];
             const flushKanaSpeech = () => {
               kanaSpeechSession.accept(speechParts);
