@@ -236,7 +236,8 @@ test("extended combos", () => {
   const cases: ReadonlyArray<readonly [string, string]> = [
     ["kyi", "きぃ"],
     ["kye", "きぇ"],
-    ["qwu", "くぅ"],
+    ["qu", "く"],
+    ["kwu", "くぅ"],
     ["gyi", "ぎぃ"],
     ["gye", "ぎぇ"],
     ["gwa", "ぐぁ"],
@@ -301,6 +302,18 @@ test("extended combos", () => {
   }
 });
 
+test("qwu is rejected", () => {
+  const ime = new RomajiIme();
+  const events = ["q", "w", "u"].map((c, i) => ime.consume(ch(c, { timeStamp: i + 1 })));
+
+  equal(events.at(-1)!.rejected, true);
+  equal(events.at(-1)!.preedit, "qwu");
+  deepEqual(
+    events.flatMap(({ events }) => events),
+    [],
+  );
+});
+
 test("invalid romaji keeps preedit and swallows boundary", () => {
   const ime = new RomajiIme();
   const r1 = ime.consume(ch("q", { timeStamp: 1 }));
@@ -358,7 +371,7 @@ test("resolved romaji is not rejected", () => {
 });
 
 test("boundary characters are rejected while romaji is incomplete", () => {
-  for (const boundary of ["1", "."]) {
+  for (const boundary of ["1", ".", "@", "/"]) {
     const ime = new RomajiIme();
     const prefix = ime.consume(ch("p", { timeStamp: 1 }));
     equal(prefix.rejected, false);
@@ -372,7 +385,7 @@ test("boundary characters are rejected while romaji is incomplete", () => {
 });
 
 test("boundary characters are forwarded when preedit is empty", () => {
-  for (const boundary of ["1", "."]) {
+  for (const boundary of ["1", ".", "@", "/"]) {
     const ime = new RomajiIme();
     const event = ch(boundary, { timeStamp: 1 });
     const result = ime.consume(event);
@@ -381,6 +394,19 @@ test("boundary characters are forwarded when preedit is empty", () => {
     equal(result.preedit, "", boundary);
     deepEqual(result.events, [event], boundary);
   }
+});
+
+test("hyphen emits the katakana prolonged sound mark", () => {
+  const ime = new RomajiIme();
+  const result = ime.consume(ch("-", { timeStamp: 1 }));
+
+  equal(result.valid, true);
+  equal(result.rejected, false);
+  equal(result.preedit, "");
+  deepEqual(
+    result.events.map(({ codePoint }) => codePoint),
+    ["ー".codePointAt(0)!],
+  );
 });
 
 test("clear input is not rejected", () => {

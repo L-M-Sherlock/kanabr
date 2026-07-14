@@ -30,15 +30,24 @@ const result = (rejected: boolean): RomajiImeResult => ({
   rejected,
 });
 
-test("reports failed feedback for a rejected character", () => {
-  equal(
-    romajiInputFeedback(appendChar(/* "1" */ 0x0031), result(true)),
-    Feedback.Failed,
-  );
+test("reports failed feedback for rejected numbers and symbols", () => {
+  for (const character of ["1", ".", "@", "/"]) {
+    equal(
+      romajiInputFeedback(appendChar(character.codePointAt(0)!), result(true)),
+      Feedback.Failed,
+      character,
+    );
+  }
 });
 
-test("ignores accepted characters", () => {
-  equal(romajiInputFeedback(appendChar(/* "1" */ 0x0031), result(false)), null);
+test("leaves forwarded numbers and symbols to normal input feedback", () => {
+  for (const character of ["1", ".", "@", "/"]) {
+    equal(
+      romajiInputFeedback(appendChar(character.codePointAt(0)!), result(false)),
+      null,
+      character,
+    );
+  }
 });
 
 test("ignores a rejected space", () => {
