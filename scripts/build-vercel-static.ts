@@ -1,5 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
+import { allLocales } from "./locale.js";
 
 type ManifestJson = {
   entrypoints: Record<
@@ -24,6 +25,7 @@ const distAssetsDir = resolve(distDir, "assets");
 const baseUrl = ensureTrailingSlash(
   process.env.KEYBR_BASE_URL ?? "http://localhost:3000/",
 );
+const basePath = new URL(baseUrl).pathname.replace(/\/+$/, "");
 const locale = process.env.KEYBR_LOCALE ?? "en";
 const color = process.env.KEYBR_COLOR ?? "system";
 const font = process.env.KEYBR_FONT ?? "open-sans";
@@ -81,6 +83,20 @@ const manifest: ManifestJson = JSON.parse(
 const html = renderIndexHtml({ manifest, baseUrl, locale });
 await writeFile(join(distDir, "index.html"), html, "utf-8");
 await writeFile(join(distDir, "404.html"), html, "utf-8");
+await writeFile(join(distDir, ".nojekyll"), "", "utf-8");
+
+// Directory entrypoints let Pages serve direct links with HTTP 200.
+// Keep 404.html as the SPA fallback for dynamic or unknown routes.
+for (const prefix of ["", ...allLocales.map((value) => `/${value}`)]) {
+  for (const path of sitemapPaths) {
+    const route = prefix + (path === "/" ? "" : path);
+    if (route !== "") {
+      const directory = join(distDir, route.slice(1));
+      await mkdir(directory, { recursive: true });
+      await writeFile(join(directory, "index.html"), html, "utf-8");
+    }
+  }
+}
 await writeFile(join(distDir, "robots.txt"), renderRobotsTxt(baseUrl), "utf-8");
 await writeFile(
   join(distDir, "sitemap.xml"),
@@ -208,7 +224,8 @@ function ensureTrailingSlash(value: string): string {
 }
 
 function assetPath(manifest: ManifestJson, name: string): string {
-  return manifest.assets[name] ?? name;
+  const path = basePath + name;
+  return manifest.assets[path] ?? path;
 }
 
 function escapeHtmlAttr(value: string): string {

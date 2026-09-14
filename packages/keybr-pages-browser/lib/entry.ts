@@ -1,6 +1,12 @@
 import "./entry.less";
 import { allLocales, defaultLocale, type LocaleId } from "@keybr/intl";
-import { Pages } from "@keybr/pages-shared";
+import {
+  getBasePath,
+  getPageData,
+  localeFromPathname,
+  Pages,
+  stripBasePath,
+} from "@keybr/pages-shared";
 import { main } from "./App.tsx";
 
 redirectToPreferredLocale();
@@ -10,7 +16,9 @@ function redirectToPreferredLocale(): void {
   if (typeof window === "undefined") {
     return;
   }
-  const { pathname, search, hash } = window.location;
+  const { search, hash } = window.location;
+  const basePath = getBasePath(getPageData().base);
+  const pathname = stripBasePath(window.location.pathname, basePath);
   if (localeFromPathname(pathname) != null) {
     return;
   }
@@ -18,7 +26,9 @@ function redirectToPreferredLocale(): void {
   if (preferred === defaultLocale) {
     return;
   }
-  window.location.replace(Pages.intlPath(pathname, preferred) + search + hash);
+  window.location.replace(
+    basePath + Pages.intlPath(pathname, preferred) + search + hash,
+  );
 }
 
 function preferredLocaleFromNavigator(): LocaleId {
@@ -88,15 +98,6 @@ function matchSupportedLocale(language: string): LocaleId | null {
     }
   }
   return allLocales.includes(lang) ? lang : null;
-}
-
-function localeFromPathname(pathname: string): LocaleId | null {
-  const m = /^\/([^/]+)(?:\/|$)/.exec(pathname);
-  if (m == null) {
-    return null;
-  }
-  const segment = decodeURIComponent(m[1]).toLowerCase();
-  return allLocales.includes(segment) ? segment : null;
 }
 
 function normalizeLocaleId(id: string): string {

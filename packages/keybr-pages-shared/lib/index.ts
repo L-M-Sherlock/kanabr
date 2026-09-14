@@ -2,6 +2,7 @@ export * from "./Avatar.tsx";
 export * from "./LoadingProgress.tsx";
 export * from "./pagedata.tsx";
 export * from "./pages.ts";
+export * from "./paths.ts";
 export * from "./Root.tsx";
 export * from "./Screen.tsx";
 export * from "./types.ts";

@@ -1,5 +1,5 @@
-import { allLocales, defaultLocale } from "@keybr/intl";
 import { createContext, type ReactNode, useContext } from "react";
+import { getBasePath, localeFromPathname, stripBasePath } from "./paths.ts";
 import { type AnyUser, type PageData } from "./types.ts";
 
 const pageDataGlobalName = "__PAGE_DATA__";
@@ -12,7 +12,9 @@ export function getPageData(): PageData {
   if (typeof window === "undefined") {
     return pageData;
   }
-  const locale = localeFromPathname(window.location.pathname);
+  const locale = localeFromPathname(
+    stripBasePath(window.location.pathname, getBasePath(pageData.base)),
+  );
   return locale == null || locale === pageData.locale
     ? pageData
     : { ...pageData, locale };
@@ -49,19 +51,4 @@ export function usePageData(): PageData {
 
 export function isPremiumUser(user: AnyUser): boolean {
   return user.id != null && user.premium;
-}
-
-function localeFromPathname(pathname: string): string | null {
-  // Locale is encoded as a leading path segment: `/{locale}/...`.
-  // Default locale has no prefix, so if the segment isn't a known locale,
-  // do not override the server/build-provided value.
-  const m = /^\/([^/]+)(?:\/|$)/.exec(pathname);
-  if (m == null) {
-    return null;
-  }
-  const segment = decodeURIComponent(m[1]).toLowerCase();
-  if (segment === defaultLocale) {
-    return null;
-  }
-  return allLocales.includes(segment) ? segment : null;
 }

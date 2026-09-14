@@ -12,6 +12,12 @@ import webpack from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const mode = process.env.NODE_ENV || "production";
+const staticMode = ["1", "true"].includes(process.env.KEYBR_STATIC);
+const basePath = staticMode
+  ? new URL(
+      process.env.KEYBR_BASE_URL ?? "http://localhost:3000/",
+    ).pathname.replace(/\/+$/, "")
+  : "";
 
 console.log("webpack build time environment", ENV);
 
@@ -174,7 +180,7 @@ export default [
     output: {
       path: join(import.meta.dirname, "root", "public", "assets"),
       clean: true,
-      publicPath: "/assets/",
+      publicPath: `${basePath}/assets/`,
       filename: `${filename}.js`,
       chunkFilename: `${chunkFilename}.js`,
       assetModuleFilename: `${assetModuleFilename}[ext]`,
@@ -221,6 +227,7 @@ export default [
     plugins: [
       new webpack.DefinePlugin({
         ...ENV,
+        "process.env.VERCEL": JSON.stringify(process.env.VERCEL ?? ""),
         "process.env.KEYBR_STATIC": JSON.stringify(
           process.env.KEYBR_STATIC ?? "",
         ),

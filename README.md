@@ -36,7 +36,7 @@ npm install
 Build the static output (written to `vercel-dist/`):
 
 ```bash
-npm run build-vercel
+npm run build-static
 ```
 
 Preview locally (pick one):
@@ -49,9 +49,30 @@ python3 -m http.server 3000 -d vercel-dist
 
 Then open the URL shown in your terminal.
 
-`npm run build-vercel` writes both `index.html` and `404.html`. On static hosts,
-configure direct routes such as `/help` or `/profile` to fall back to one of
-those files.
+`npm run build-static` writes `index.html`, a `404.html` SPA fallback, and
+directory entrypoints for each page and supported locale. Direct links and
+refreshes work on static hosts without rewrite rules.
+
+## Deploy to GitHub Pages
+
+The [GitHub Pages site](https://l-m-sherlock.github.io/kanabr/) is built and
+deployed by `.github/workflows/pages.yml` on pushes to `master`. The workflow
+can also be run manually from the Actions tab. In repository **Settings →
+Pages**, select **GitHub Actions** as the publishing source.
+
+The workflow obtains the site's base URL from GitHub Pages and uses it for
+assets, client-side routes, and language switching. Repository subpaths such
+as `/kanabr/` and custom domains at `/` are supported.
+
+To build the same output locally:
+
+```bash
+KEYBR_BASE_URL=https://l-m-sherlock.github.io/kanabr/ npm run build-static
+```
+
+Publish only `vercel-dist/`. For a local preview of this subpath build, serve
+that directory at `/kanabr/`. Vercel Analytics is enabled only when building
+in Vercel (`VERCEL=1`).
 
 ## Deploy to Vercel (static mode)
 

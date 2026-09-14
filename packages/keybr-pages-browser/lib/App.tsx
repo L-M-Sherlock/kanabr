@@ -1,11 +1,15 @@
 import { ErrorHandler } from "@keybr/debug";
 import { defaultLocale } from "@keybr/intl";
 import {
+  getBasePath,
   getPageData,
   LoadingProgress,
+  localeFromPathname,
   PageDataContext,
   Pages,
   Root,
+  stripBasePath,
+  usePageData,
 } from "@keybr/pages-shared";
 import { SettingsLoader } from "@keybr/settings-loader";
 import { querySelector } from "@keybr/widget";
@@ -41,7 +45,7 @@ export function App() {
             <ThemeProvider>
               <>
                 <PageRoutes />
-                <Analytics />
+                {process.env.VERCEL === "1" && <Analytics />}
               </>
             </ThemeProvider>
           </SettingsLoader>
@@ -53,8 +57,9 @@ export function App() {
 
 function PageRoutes() {
   const { locale } = useIntl();
+  const { base } = usePageData();
   return (
-    <BrowserRouter basename={computeBasename(locale)}>
+    <BrowserRouter basename={computeBasename(locale, base)}>
       <Routes>
         <Route
           index={true}
@@ -172,17 +177,18 @@ function PageRoutes() {
   );
 }
 
-function computeBasename(locale: string): string {
-  const base = Pages.intlBase(locale);
-  if (base !== "") {
-    return base;
+function computeBasename(locale: string, base: string): string {
+  const basePath = getBasePath(base);
+  const intlBase = Pages.intlBase(locale);
+  if (intlBase !== "") {
+    return basePath + intlBase;
   }
   if (typeof window === "undefined") {
-    return base;
+    return basePath;
   }
-  const m = /^\/([^/]+)(?:\/|$)/.exec(window.location.pathname);
-  if (m != null && decodeURIComponent(m[1]).toLowerCase() === defaultLocale) {
-    return `/${defaultLocale}`;
+  const pathname = stripBasePath(window.location.pathname, basePath);
+  if (localeFromPathname(pathname) === defaultLocale) {
+    return `${basePath}/${defaultLocale}`;
   }
-  return base;
+  return basePath;
 }

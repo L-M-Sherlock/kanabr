@@ -1,5 +1,5 @@
 import { allLocales, defaultLocale, usePreferredLocale } from "@keybr/intl";
-import { Pages } from "@keybr/pages-shared";
+import { getBasePath, Pages, usePageData } from "@keybr/pages-shared";
 import { COLORS, FONTS, useTheme } from "@keybr/themes";
 import {
   Dialog,
@@ -25,6 +25,7 @@ import * as styles from "./ThemeSwitcher.module.less";
 const LazyThemeDesigner = lazy(() => import("./LazyThemeDesigner.tsx"));
 
 export function ThemeSwitcher() {
+  const { base } = usePageData();
   const { color, font, switchColor, switchFont } = useTheme();
   const [open, setOpen] = useState(
     null as "color" | "font" | "language" | null,
@@ -109,7 +110,9 @@ export function ThemeSwitcher() {
           onSelect={(value) => {
             setOpen(null);
             const next = intlPathIncludingDefaultLocale(pathname, value);
-            window.location.assign(`${next}${search}${hash}`);
+            window.location.assign(
+              `${getBasePath(base)}${next}${search}${hash}`,
+            );
           }}
         />
       </Popover>
