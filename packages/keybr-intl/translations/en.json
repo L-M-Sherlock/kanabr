@@ -82,7 +82,7 @@
   "metric.difference.description": "The difference from the average value.",
   "metric.score.description": "Score of the last lesson in abstract points. Scores are greater when you type faster and with fewer errors.",
   "metric.speed.description": "Typing speed in the last lesson.",
-  "migration.pages.description": "We recommend moving to our GitHub Pages site. Your progress does not transfer automatically: first choose Export data on this site's Profile page, then choose Import data on the new site's Profile page.",
+  "migration.pages.description": "We recommend moving to our GitHub Pages site. Your progress does not transfer automatically: first choose Export data on this site’s Profile page, then choose Import data on the new site’s Profile page.",
   "migration.pages.export": "Go to Profile to export",
   "migration.pages.open": "Open the new site to import",
   "migration.pages.title": "Continue practicing on GitHub Pages",

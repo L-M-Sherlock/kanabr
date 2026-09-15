@@ -20,7 +20,7 @@ export function MigrationNotice() {
         {formatMessage({
           id: "migration.pages.description",
           defaultMessage:
-            "We recommend moving to our GitHub Pages site. Your progress does not transfer automatically: first choose Export data on this site's Profile page, then choose Import data on the new site's Profile page.",
+            "We recommend moving to our GitHub Pages site. Your progress does not transfer automatically: first choose Export data on this site’s Profile page, then choose Import data on the new site’s Profile page.",
         })}
       </p>
       <div className={styles.actions}>
