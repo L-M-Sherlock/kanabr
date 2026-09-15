@@ -2,6 +2,7 @@ import { isPremiumUser, usePageData } from "@keybr/pages-shared";
 import { AdBanner, adsEnabled } from "@keybr/thirdparties";
 import { PortalContainer, Toaster } from "@keybr/widget";
 import { type ReactNode } from "react";
+import { MigrationNotice } from "./MigrationNotice.tsx";
 import { NavMenu } from "./NavMenu.tsx";
 import * as styles from "./Template.module.less";
 
@@ -16,6 +17,7 @@ export function Template({
   return isPremiumUser(publicUser) || !adsEnabled ? (
     <div className={styles.bodyAlt}>
       <main className={styles.mainAlt}>
+        <MigrationNotice />
         {children}
         <PortalContainer />
         <Toaster />
@@ -28,6 +30,7 @@ export function Template({
   ) : (
     <div className={styles.body}>
       <main className={styles.main}>
+        <MigrationNotice />
         {children}
         <PortalContainer />
         <Toaster />
