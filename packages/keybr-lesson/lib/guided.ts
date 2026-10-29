@@ -307,7 +307,7 @@ export class GuidedLesson extends Lesson {
       const dictionary =
         script === "katakana" ? this.katakanaDictionary : this.dictionary;
       const words = [...(dictionary?.find(filter) ?? [])];
-      while (words.length < minNaturalWordCount) {
+      while (words.length === 0) {
         const word = pseudoWords();
         if (word != null) {
           words.push(word);

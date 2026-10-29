@@ -990,6 +990,7 @@ test("generate japanese natural words from separate script lists without convers
   equal(text.includes("カナタ") || text.includes("カタナ"), true);
   equal(text.includes("かなた"), true);
   equal(text.includes("かたな"), false);
+  equal(text.split(" ").includes("かな"), false);
 });
 
 test("generate japanese natural words from two-kana katakana list", () => {
