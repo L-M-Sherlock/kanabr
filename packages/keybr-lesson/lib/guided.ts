@@ -307,12 +307,14 @@ export class GuidedLesson extends Lesson {
       const dictionary =
         script === "katakana" ? this.katakanaDictionary : this.dictionary;
       const words = [...(dictionary?.find(filter) ?? [])];
-      while (words.length === 0) {
-        const word = pseudoWords();
-        if (word != null) {
-          words.push(word);
-        } else {
-          break;
+      if (words.length === 0) {
+        while (words.length < minNaturalWordCount) {
+          const word = pseudoWords();
+          if (word != null) {
+            words.push(word);
+          } else {
+            break;
+          }
         }
       }
       if (words.length === 0) {
