@@ -934,6 +934,52 @@ test("generate pseudo words only when fewer than ten natural words", () => {
   );
 });
 
+test("generate varied japanese pseudo words when no natural words match", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, true)
+    .set(lessonProps.japanese.balanceKana, false);
+  const keyboard = loadKeyboard(Layout.JA_ROMAJI);
+  const letters = ["あ", "い", "う", "え", "お"].map(
+    (ch, i) => new Letter(ch.codePointAt(0)!, 1 / (i + 1)),
+  );
+  const model = new (class extends PhoneticModel {
+    #count = 0;
+
+    constructor() {
+      super(Language.JA, letters);
+    }
+    override nextWord(): string {
+      return this.#count++ % 2 === 0 ? "あい" : "あう";
+    }
+    override ngram1(): Ngram1 {
+      return new Ngram1(this.letters.map(({ codePoint }) => codePoint));
+    }
+    override ngram2(): Ngram2 {
+      return new Ngram2(this.letters.map(({ codePoint }) => codePoint));
+    }
+  })();
+  const lesson = new GuidedLesson(settings, keyboard, model, []);
+  const lessonKeys = new LessonKeys(
+    lesson.letters.map(
+      (letter) =>
+        new LessonKey({
+          letter,
+          samples: [],
+          timeToType: null,
+          bestTimeToType: null,
+          confidence: null,
+          bestConfidence: null,
+          isIncluded: letter.codePoint < 0x30a0,
+          isFocused: String(letter) === "あ",
+        }),
+    ),
+  );
+  const text = flattenStyledText(lesson.generate(lessonKeys, LCG(1)));
+
+  equal(text.includes("あい"), true);
+  equal(text.includes("あう"), true);
+});
+
 test("generate japanese natural words from separate script lists without conversion", () => {
   const settings = new Settings().set(lessonProps.guided.naturalWords, true);
   const keyboard = loadKeyboard(Layout.JA_ROMAJI);
@@ -990,6 +1036,7 @@ test("generate japanese natural words from separate script lists without convers
   equal(text.includes("カナタ") || text.includes("カタナ"), true);
   equal(text.includes("かなた"), true);
   equal(text.includes("かたな"), false);
+  equal(text.split(" ").includes("かな"), false);
 });
 
 test("generate japanese natural words from two-kana katakana list", () => {

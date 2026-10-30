@@ -302,19 +302,20 @@ test("extended combos", () => {
   }
 });
 
-test("qwu is rejected", () => {
+test("invalid qwu prefix is rejected without blocking the next input", () => {
   const ime = new RomajiIme();
   const events = ["q", "w", "u"].map((c, i) => ime.consume(ch(c, { timeStamp: i + 1 })));
 
-  equal(events.at(-1)!.rejected, true);
-  equal(events.at(-1)!.preedit, "qwu");
+  equal(events[1].rejected, true);
+  equal(events[1].preedit, "q");
+  equal(events[2].rejected, false);
   deepEqual(
-    events.flatMap(({ events }) => events),
-    [],
+    events[2].events.map(({ codePoint }) => codePoint),
+    ["く".codePointAt(0)!],
   );
 });
 
-test("invalid romaji keeps preedit and swallows boundary", () => {
+test("invalid romaji is discarded and a valid continuation can recover", () => {
   const ime = new RomajiIme();
   const r1 = ime.consume(ch("q", { timeStamp: 1 }));
   equal(r1.valid, true);
@@ -323,22 +324,30 @@ test("invalid romaji keeps preedit and swallows boundary", () => {
   deepEqual(r1.events, []);
 
   const r2 = ime.consume(ch("x", { timeStamp: 2 }));
-  equal(r2.valid, false);
+  equal(r2.valid, true);
   equal(r2.rejected, true);
-  equal(r2.preedit, "qx");
+  equal(r2.preedit, "q");
   deepEqual(r2.events, []);
 
   const r3 = ime.consume(ch("z", { timeStamp: 3 }));
-  equal(r3.valid, false);
+  equal(r3.valid, true);
   equal(r3.rejected, true);
-  equal(r3.preedit, "qxz");
+  equal(r3.preedit, "q");
   deepEqual(r3.events, []);
 
   const r4 = ime.consume(space(4));
-  equal(r4.valid, false);
+  equal(r4.valid, true);
   equal(r4.rejected, true);
-  equal(r4.preedit, "qxz");
+  equal(r4.preedit, "q");
   deepEqual(r4.events, []);
+
+  const r5 = ime.consume(ch("a", { timeStamp: 5 }));
+  equal(r5.rejected, false);
+  equal(r5.preedit, "");
+  deepEqual(
+    r5.events.map(({ codePoint }) => codePoint),
+    [..."くぁ"].map((c) => c.codePointAt(0)!),
+  );
 });
 
 test("valid romaji prefixes are not rejected", () => {
@@ -424,7 +433,7 @@ test("clear input is not rejected", () => {
   const r1 = ime.consume(clearChar);
   equal(r1.valid, true);
   equal(r1.rejected, false);
-  equal(r1.preedit, "q");
+  equal(r1.preedit, "");
   deepEqual(r1.events, []);
 
   const clearWord: IInputEvent = {

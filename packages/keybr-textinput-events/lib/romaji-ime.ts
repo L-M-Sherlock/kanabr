@@ -114,11 +114,18 @@ export class RomajiIme {
       });
       const events = this.#flush(/* atBoundary= */ false, event.timeStamp);
       this.#valid = this.#isPrefix(this.#buffer);
+      const rejected = !this.#valid;
+      if (rejected) {
+        // Discard the invalid keystroke so subsequent input can recover.
+        this.#buffer = this.#buffer.slice(0, -1);
+        this.#strokes.pop();
+        this.#valid = this.#isPrefix(this.#buffer);
+      }
       return {
         events,
         preedit: this.#buffer,
         valid: this.#valid,
-        rejected: !this.#valid,
+        rejected,
       };
     }
 
